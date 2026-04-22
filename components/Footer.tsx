@@ -48,6 +48,9 @@ export default function Footer() {
         </div>
         <p className="text-xs text-muted-foreground">
           © {new Date().getFullYear()} Arnav Mahadev
+          {process.env.NEXT_PUBLIC_LAST_UPDATED && (
+            <> &middot; updated {process.env.NEXT_PUBLIC_LAST_UPDATED}</>
+          )}
         </p>
       </div>
     </footer>

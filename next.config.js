@@ -1,5 +1,18 @@
+const { execSync } = require('child_process')
+
+const lastUpdated = (() => {
+  try {
+    return execSync('git log -1 --format=%cd --date=format:"%B %Y"').toString().trim()
+  } catch {
+    return ''
+  }
+})()
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  env: {
+    NEXT_PUBLIC_LAST_UPDATED: lastUpdated,
+  },
   images: {
     remotePatterns: [
       {
