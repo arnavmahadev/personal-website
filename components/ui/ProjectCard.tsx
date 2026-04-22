@@ -30,7 +30,6 @@ export default function ProjectCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.5, delay: index * 0.1, ease: [0.22, 1, 0.36, 1] }}
-      whileHover={{ y: -4 }}
       className="group relative flex flex-col bg-card border border-border rounded-2xl p-6
                  card-glow transition-all duration-300 hover:border-accent/50"
     >
