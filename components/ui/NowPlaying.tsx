@@ -46,7 +46,7 @@ function TrackPanel({ track }: { track: Track | null }) {
           href={track.songUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-row items-center gap-3 group min-w-0 mx-auto"
+          className="flex flex-row items-center gap-3 group min-w-0 w-full sm:w-fit sm:mx-auto"
         >
           {track.albumArt && (
             <Image
