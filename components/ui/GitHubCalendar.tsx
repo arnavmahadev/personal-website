@@ -88,11 +88,10 @@ export default function GitHubCalendar() {
       <div className="text-base text-muted-foreground mb-3 font-mono">
         {total.toLocaleString()} contributions in the last year
       </div>
+      <div className="overflow-x-auto -mx-1 px-1">
       <svg
         viewBox={`0 0 ${totalW} ${totalH}`}
-        width="100%"
-        preserveAspectRatio="xMidYMid meet"
-        style={{ display: 'block' }}
+        style={{ display: 'block', minWidth: `${totalW * 1.4}px`, width: '100%' }}
       >
         {/* Day labels */}
         {DAY_LABELS.map((label, i) => (
@@ -143,6 +142,7 @@ export default function GitHubCalendar() {
           )
         )}
       </svg>
+      </div>
     </div>
   )
 }
