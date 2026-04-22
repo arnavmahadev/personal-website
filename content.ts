@@ -53,9 +53,9 @@ export const EXPERIENCE = [
     location: 'Berkeley, CA',
     link: 'https://www.ipick.ai/nexus/',
     bullets: [
-      'Led development of a graph-based stock and company relationship visualizer, coordinating a team of 15 developers.',
-      'Authored technical design docs, tasks, and workshops, setting goals to keep the team on track.',
-      'Implemented backend features using Python, Neo4j, and FastAPI.',
+      'Architected a graph-based company relationship visualizer for iPick.ai using React, D3.js, and PostgreSQL.',
+      'Built a supplier/subsidiary relationship extraction pipeline across 5,000+ public company tickers, storing structured supplier/subsidiary edges in PostgreSQL to power graph-based visualization in the frontend.',
+      'Led a team of engineers toward a May 2026 live demo milestone for a CEO-facing client deliverable.',
     ],
   },
   {
