@@ -68,7 +68,7 @@ export default function Interests() {
                   We play Valorant most often. We lowkey suck, but that&apos;s beside the point.
                 </p>
               </div>
-              <div>
+              <div className="flex flex-col items-center text-center">
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Current rank</p>
                 {val ? (
                   <div className="flex items-center gap-3">
