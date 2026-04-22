@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Arnav Mahadev',
     description:
-      'EECS student at UC Berkeley. Full-stack developer with experience in backend systems, data pipelines, and product engineering.',
+      'EECS student at UC Berkeley. Full-stack developer with experience in backend systems and data pipelines.',
     type: 'website',
   },
 }
