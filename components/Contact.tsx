@@ -50,7 +50,7 @@ export default function Contact() {
         </p>
       </div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full overflow-hidden">
         {links.map((link, i) => (
           <motion.a
             key={link.label}
@@ -63,7 +63,7 @@ export default function Contact() {
             transition={{ delay: i * 0.08, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             whileHover={{ y: -2 }}
             className="group flex items-center gap-4 p-4 rounded-xl bg-card border border-border
-                       hover:border-accent/50 transition-all duration-200"
+                       hover:border-accent/50 transition-all duration-200 overflow-hidden w-full"
           >
             <div className="w-9 h-9 rounded-lg bg-muted border border-border
                             flex items-center justify-center flex-shrink-0
