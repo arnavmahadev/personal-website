@@ -47,7 +47,7 @@ function TrackPanel({ track }: { track: Track | null }) {
     if (!el) return
     const ro = new ResizeObserver(() => {
       const { width, height } = el.getBoundingClientRect()
-      setImgSize(Math.floor(width < 640 ? Math.min(width * 0.45, height * 0.35) : Math.min(width * 0.35, height - 32)))
+      setImgSize(Math.floor(width < 640 ? Math.min(width * 0.45, height * 0.35) : Math.min(height - 16, 120)))
     })
     ro.observe(el)
     return () => ro.disconnect()
