@@ -11,7 +11,7 @@ export default function SectionWrapper({ id, children, className }: SectionWrapp
   return (
     <section
       id={id}
-      className={clsx('py-10 px-4 sm:px-8', className)}
+      className={clsx('py-10 px-4 sm:px-8 scroll-mt-20', className)}
     >
       <div className="max-w-[96rem] mx-auto">{children}</div>
     </section>
