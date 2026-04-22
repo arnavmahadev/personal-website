@@ -44,8 +44,8 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
-      <div className="max-w-[96rem] mx-auto px-4 sm:px-8 w-full py-16">
-        <div className="grid gap-16">
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-8 w-full py-8 sm:py-16">
+        <div className="grid gap-8 sm:gap-16">
           {/* Left — text */}
           <motion.div
             variants={container}
@@ -53,7 +53,7 @@ export default function Hero() {
             animate="visible"
             className="flex flex-col justify-center items-center text-center"
           >
-            <motion.div variants={item} className="mb-8">
+            <motion.div variants={item} className="mb-4 sm:mb-8">
               <Image
                 src="/avatar.jpg"
                 alt="Arnav Mahadev"
@@ -66,7 +66,7 @@ export default function Hero() {
             <motion.div variants={item}>
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full
                                bg-primary/10 border border-primary/20 text-primary
-                               text-sm font-mono font-medium mb-8">
+                               text-sm font-mono font-medium mb-4 sm:mb-8">
                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
                 Open to Opportunities
               </span>
@@ -74,14 +74,14 @@ export default function Hero() {
 
             <motion.h1
               variants={item}
-              className="text-5xl sm:text-7xl lg:text-8xl font-extrabold font-serif tracking-tight leading-[1.05] mb-6"
+              className="text-5xl sm:text-7xl lg:text-8xl font-extrabold font-serif tracking-tight leading-[1.05] mb-4 sm:mb-6"
             >
               <span className="text-foreground">Arnav</span>
               <br />
               <span className="text-gradient">Mahadev</span>
             </motion.h1>
 
-            <motion.div variants={item} className="mb-8">
+            <motion.div variants={item} className="mb-4 sm:mb-8">
               <p className="text-2xl text-foreground/80 font-medium font-serif">
                 EECS @ UC Berkeley
               </p>
@@ -90,7 +90,7 @@ export default function Hero() {
               </p>
             </motion.div>
 
-            <motion.div variants={item} className="flex justify-center mb-8">
+            <motion.div variants={item} className="flex justify-center mb-4 sm:mb-8">
               <a
                 href={RESUME_URL}
                 target="_blank"
