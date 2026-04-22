@@ -50,19 +50,6 @@ export default function ProjectCard({
 
       <p className="text-base text-muted-foreground leading-relaxed flex-1 mb-6">{description}</p>
 
-      {/* Tech stack */}
-      <div className="flex flex-wrap gap-1.5 mb-6">
-        {tech.map((t) => (
-          <span
-            key={t}
-            className="px-2.5 py-0.5 text-sm font-mono bg-muted text-muted-foreground
-                       rounded-md border border-border"
-          >
-            {t}
-          </span>
-        ))}
-      </div>
-
       {/* Links */}
       <div className="flex items-center gap-3 mt-auto">
         {github && (
@@ -70,8 +57,9 @@ export default function ProjectCard({
             href={github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground
-                       hover:text-foreground transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg
+                       border border-border text-muted-foreground hover:text-foreground
+                       hover:border-foreground/30 transition-colors"
           >
             <Github size={14} />
             GitHub
@@ -82,8 +70,9 @@ export default function ProjectCard({
             href={demo}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm font-medium text-muted-foreground
-                       hover:text-primary transition-colors"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg
+                       border border-border text-muted-foreground hover:text-primary
+                       hover:border-primary/30 transition-colors"
           >
             <ExternalLink size={14} />
             Website
