@@ -46,7 +46,7 @@ function TrackPanel({ track }: { track: Track | null }) {
           href={track.songUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col sm:flex-row items-center gap-3 group min-w-0 w-full"
+          className="flex flex-row items-center gap-3 group min-w-0 w-full"
         >
           {track.albumArt && (
             <Image
@@ -54,11 +54,11 @@ function TrackPanel({ track }: { track: Track | null }) {
               alt={track.album}
               width={96}
               height={96}
-              className="rounded-md flex-shrink-0 w-[min(45vw,8rem)] h-[min(45vw,8rem)] sm:w-24 sm:h-24"
+              className="rounded-md flex-shrink-0 w-16 h-16 sm:w-24 sm:h-24"
             />
           )}
-          <div className="flex-1 min-w-0 text-center sm:text-left">
-            <div className="flex items-center justify-center sm:justify-start gap-1.5 mb-0.5">
+          <div className="flex-1 min-w-0 text-left">
+            <div className="flex items-center justify-start gap-1.5 mb-0.5">
               {track.isPlaying && (
                 <span className="flex gap-0.5 items-end h-3">
                   <span className="w-0.5 bg-green-500 animate-[bounce_0.8s_ease-in-out_infinite]" style={{ height: '60%' }} />
