@@ -24,22 +24,6 @@ interface ValorantRank {
   icon: string | null
 }
 
-const RANK_COLOR: Record<string, string> = {
-  Iron:       'text-zinc-400',
-  Bronze:     'text-orange-400',
-  Silver:     'text-slate-300',
-  Gold:       'text-yellow-400',
-  Platinum:   'text-cyan-400',
-  Diamond:    'text-blue-400',
-  Ascendant:  'text-emerald-400',
-  Immortal:   'text-red-400',
-  Radiant:    'text-yellow-300',
-}
-
-function rankColor(rank: string) {
-  const tier = rank.split(' ')[0]
-  return RANK_COLOR[tier] ?? 'text-zinc-200'
-}
 
 const fade = (i: number) => ({
   initial: { opacity: 0, y: 16 },
@@ -51,150 +35,117 @@ const fade = (i: number) => ({
 export default function Interests() {
   const [barca, setBarca] = useState<BarcaResult | null>(null)
   const [val, setVal] = useState<ValorantRank | null>(null)
-  const [steps, setSteps] = useState<number | null | undefined>(undefined)
 
   useEffect(() => {
     fetch('/api/barca').then(r => r.json()).then(setBarca).catch(() => {})
     fetch('/api/valorant').then(r => r.json()).then(setVal).catch(() => {})
-    fetch('/api/health').then(r => r.json()).then(d => setSteps(d.steps)).catch(() => setSteps(null))
   }, [])
-
-  useEffect(() => {
-    if (steps !== null) return
-    const id = setInterval(() => {
-      fetch('/api/health').then(r => r.json()).then(d => {
-        if (d.steps !== null) setSteps(d.steps)
-      }).catch(() => {})
-    }, 60000)
-    return () => clearInterval(id)
-  }, [steps])
 
   return (
     <SectionWrapper id="interests">
-      <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-50 mb-8">
+      <h2 className="text-4xl sm:text-5xl font-bold font-serif tracking-tight text-foreground mb-5">
         Hobbies
       </h2>
 
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-0 items-stretch">
 
-        {/* Spotify */}
-        <motion.div {...fade(0)} className="col-span-1 h-[108px]">
-          <NowPlaying />
-        </motion.div>
+        {/* Left column: Spotify + Valorant stacked */}
+        <div className="flex flex-col gap-3">
+          <motion.div {...fade(0)} className="flex-1 flex flex-col">
+            <NowPlaying />
+          </motion.div>
 
-        {/* Barca */}
+          {/* Valorant — moved here */}
+          <motion.div
+            {...fade(2)}
+            className="flex-1 rounded-xl border overflow-hidden relative bg-card border-border"
+          >
+            <div className="px-4 py-4 h-full flex items-center gap-6">
+              <div className="flex-1">
+                <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Valorant</p>
+                <p className="text-base text-foreground/80 leading-relaxed">
+                  If I&apos;m not playing sports, I&apos;m probably playing video games with my friends.
+                  We play Valorant most often. We lowkey suck, but that&apos;s beside the point.
+                </p>
+              </div>
+              <div className="flex-shrink-0">
+                <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Current rank</p>
+                {val ? (
+                  <div className="flex items-center gap-3">
+                    {val.icon && (
+                      <Image src={val.icon} alt={val.rank} width={44} height={44} />
+                    )}
+                    <div>
+                      <p className="text-lg font-bold font-serif text-foreground">{val.rank}</p>
+                      <p className="text-xs text-muted-foreground">{val.rr} RR</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="h-7 animate-pulse bg-muted rounded w-32" />
+                )}
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Soccer / Barca */}
         <motion.div
           {...fade(1)}
-          className="col-span-1 h-[108px] rounded-xl border overflow-hidden relative bg-zinc-900 border-zinc-800"
+          className="rounded-xl border overflow-hidden relative bg-card border-border"
         >
-          <div className="absolute left-0 top-0 bottom-0 w-1 flex flex-col">
-            <div className="flex-1 bg-[#A50044]" />
-            <div className="flex-1 bg-[#004D98]" />
-            <div className="flex-1 bg-[#A50044]" />
-            <div className="flex-1 bg-[#004D98]" />
-            <div className="flex-1 bg-[#A50044]" />
-          </div>
-          <div className="pl-5 pr-4 py-4">
-            <p className="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-3">FC Barcelona&apos;s Latest Match</p>
-            {barca ? (
-              <>
-                <div className="flex items-center gap-3 mb-1">
-                  <span className={`text-xs font-mono font-bold px-1.5 py-0.5 rounded ${
-                    barca.result === 'W' ? 'bg-green-500/15 text-green-400' :
-                    barca.result === 'L' ? 'bg-red-500/15 text-red-400' :
-                    'bg-zinc-700 text-zinc-400'
-                  }`}>{barca.result}</span>
-                  <p className="text-xs text-zinc-500">{barca.league}</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  {/* Home team */}
-                  <div className="flex items-center gap-1.5">
-                    {(barca.barcaHome ? barca.barcaLogo : barca.oppLogo) && (
-                      <Image src={(barca.barcaHome ? barca.barcaLogo : barca.oppLogo)!} alt="" width={20} height={20} className="object-contain" />
-                    )}
-                    <p className="text-sm font-bold text-zinc-100">
-                      {barca.barcaHome ? 'Barcelona' : barca.opponent}
-                    </p>
-                  </div>
-                  <p className="text-xl font-bold text-zinc-100">
-                    {barca.barcaHome ? barca.barcaScore : barca.oppScore}
-                    <span className="text-zinc-600 mx-1">–</span>
-                    {barca.barcaHome ? barca.oppScore : barca.barcaScore}
-                  </p>
-                  {/* Away team */}
-                  <div className="flex items-center gap-1.5">
-                    <p className="text-sm font-bold text-zinc-100">
-                      {barca.barcaHome ? barca.opponent : 'Barcelona'}
-                    </p>
-                    {(barca.barcaHome ? barca.oppLogo : barca.barcaLogo) && (
-                      <Image src={(barca.barcaHome ? barca.oppLogo : barca.barcaLogo)!} alt="" width={20} height={20} className="object-contain" />
-                    )}
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className="h-10 animate-pulse bg-zinc-800 rounded w-48" />
-            )}
-          </div>
-        </motion.div>
+          <div className="px-4 py-6 h-full flex flex-col justify-center space-y-3">
+            <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Soccer &amp; FC Barcelona</p>
+            <p className="text-base text-foreground/80 leading-relaxed">
+              I&apos;ve loved soccer since I was 4, I played competitively until college.
+              I was captain of both my club team and high school varsity, and finished my senior year as the
+              top goalscorer in my high school league: <span className="font-semibold text-foreground">17 goals, 5 assists</span>. You can still find me playing pickup or intramural games :)
+            </p>
+            <p className="text-base text-foreground/80 leading-relaxed">
+              I&apos;ve been a Barça fan since age 4 because of my brother (although I&apos;ll never
+              admit that to him). I catch most of their games, and honestly my mood heavily
+              depends on the result. (jk… mostly.)
+            </p>
 
-        {/* Valorant */}
-        <motion.div
-          {...fade(2)}
-          className="col-span-1 h-[108px] rounded-xl border overflow-hidden relative bg-zinc-900 border-zinc-800"
-        >
-          <div className="absolute left-0 top-0 bottom-0 w-1 flex flex-col">
-            <div className="flex-1 bg-[#FF4655]" />
-            <div className="flex-1 bg-[#7B1E26]" />
-            <div className="flex-1 bg-[#FF4655]" />
-            <div className="flex-1 bg-[#7B1E26]" />
-            <div className="flex-1 bg-[#FF4655]" />
-          </div>
-          <div className="pl-5 pr-4 py-4">
-            <p className="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-3">Valorant</p>
-            {val ? (
-              <div className="flex items-center gap-3">
-                {val.icon && (
-                  <Image src={val.icon} alt={val.rank} width={40} height={40} />
-                )}
-                <div>
-                  <p className={`text-xl font-bold ${rankColor(val.rank)}`}>{val.rank}</p>
-                  <p className="text-xs text-zinc-500">{val.rr} RR</p>
-                </div>
-              </div>
-            ) : (
-              <div className="h-7 animate-pulse bg-zinc-800 rounded w-32" />
-            )}
-          </div>
-        </motion.div>
-
-        {/* Steps */}
-        <motion.div
-          {...fade(3)}
-          className="col-span-1 h-[108px] rounded-xl border overflow-hidden relative bg-zinc-900 border-zinc-800"
-        >
-          <div className="absolute left-0 top-0 bottom-0 w-1 flex flex-col">
-            <div className="flex-1 bg-[#FF9500]" />
-            <div className="flex-1 bg-[#CC6A00]" />
-            <div className="flex-1 bg-[#FF9500]" />
-            <div className="flex-1 bg-[#CC6A00]" />
-            <div className="flex-1 bg-[#FF9500]" />
-          </div>
-          <div className="pl-5 pr-4 py-4">
-            <p className="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-3">Steps Today</p>
-            {steps === undefined ? (
-              <div className="h-7 animate-pulse bg-zinc-800 rounded w-24" />
-            ) : steps === null ? (
-              <p className="text-sm text-zinc-600">No data yet</p>
-            ) : (
-              <div className="flex items-center gap-3">
-                <span className="text-3xl">👣</span>
-                <div>
-                  <p className="text-xl font-bold text-zinc-100">{steps.toLocaleString()}</p>
-                  <p className="text-xs text-zinc-500">steps</p>
-                </div>
-              </div>
-            )}
+            <div>
+              <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2 text-center">Latest result</p>
+              {barca ? (
+                <>
+                  <div className="flex items-center justify-center gap-3 mb-1">
+                    <span className={`text-xs font-mono font-bold px-1.5 py-0.5 rounded ${
+                      barca.result === 'W' ? 'bg-green-500/15 text-green-500' :
+                      barca.result === 'L' ? 'bg-red-500/15 text-red-500' :
+                      'bg-muted text-muted-foreground'
+                    }`}>{barca.result}</span>
+                    <p className="text-sm text-muted-foreground">{barca.league}</p>
+                  </div>
+                  <div className="flex items-center justify-center gap-3">
+                    <div className="flex items-center gap-1.5">
+                      {(barca.barcaHome ? barca.barcaLogo : barca.oppLogo) && (
+                        <Image src={(barca.barcaHome ? barca.barcaLogo : barca.oppLogo)!} alt="" width={20} height={20} className="object-contain" />
+                      )}
+                      <p className="text-base font-medium text-foreground/90">
+                        {barca.barcaHome ? 'FC Barcelona' : barca.opponent}
+                      </p>
+                    </div>
+                    <p className="text-xl font-bold text-foreground">
+                      {barca.barcaHome ? barca.barcaScore : barca.oppScore}
+                      <span className="text-muted-foreground mx-1">–</span>
+                      {barca.barcaHome ? barca.oppScore : barca.barcaScore}
+                    </p>
+                    <div className="flex items-center gap-1.5">
+                      <p className="text-base font-medium text-foreground/90">
+                        {barca.barcaHome ? barca.opponent : 'FC Barcelona'}
+                      </p>
+                      {(barca.barcaHome ? barca.oppLogo : barca.barcaLogo) && (
+                        <Image src={(barca.barcaHome ? barca.oppLogo : barca.barcaLogo)!} alt="" width={20} height={20} className="object-contain" />
+                      )}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="h-10 animate-pulse bg-muted rounded w-48" />
+              )}
+            </div>
           </div>
         </motion.div>
 
