@@ -2,7 +2,7 @@ const { execSync } = require('child_process')
 
 const lastUpdated = (() => {
   try {
-    return execSync('git log -1 --format=%cd --date=format:"%B %Y"').toString().trim()
+    return execSync('git log -1 --format=%cd --date=format:"%B %e, %Y"').toString().trim()
   } catch {
     return ''
   }
