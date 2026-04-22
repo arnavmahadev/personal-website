@@ -3,10 +3,28 @@
 import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, ArrowRight, Download } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import CodeGrid from './ui/CodeGrid'
+import Image from 'next/image'
+
+function SpotifyIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+    </svg>
+  )
+}
+
+function InstagramIcon({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
+      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+    </svg>
+  )
+}
 
 const GITHUB_URL = 'https://github.com/arnavmahadev'
 const LINKEDIN_URL = 'https://www.linkedin.com/in/arnavmahadev/'
+const SPOTIFY_URL = 'https://open.spotify.com/user/qjzz2wqvhzmjkjitps4vilhrm?si=485b1738bb864b7b'
+const INSTAGRAM_URL = 'https://www.instagram.com/arnav.mahadev/'
 const EMAIL = 'arnavrmahadev@gmail.com'
 const RESUME_URL = 'https://drive.google.com/file/d/1g9jVD6AIIQGwrUabWjQY9Y-ybVZBRLnh/view?usp=sharing'
 
@@ -31,125 +49,100 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
-      {/* Dot grid background */}
-      <div className="absolute inset-0 dot-grid opacity-60" />
-
-      {/* Radial gradient overlay to fade the dots toward center */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-zinc-950/40 to-zinc-950" />
-
-      {/* Blue glow orb — top left */}
-      <div className="absolute -top-32 -left-32 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
-      {/* Cyan glow orb — right */}
-      <div className="absolute top-1/3 -right-24 w-72 h-72 bg-cyan-500/8 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="relative z-10 max-w-5xl mx-auto px-6 w-full py-20">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+      <div className="max-w-[96rem] mx-auto px-8 w-full py-16">
+        <div className="grid gap-16">
           {/* Left — text */}
           <motion.div
             variants={container}
             initial="hidden"
             animate="visible"
+            className="flex flex-col justify-center items-center text-center"
           >
+            <motion.div variants={item} className="mb-8">
+              <Image
+                src="/avatar.jpg"
+                alt="Arnav Mahadev"
+                width={120}
+                height={120}
+                className="rounded-full object-cover border-2 border-border"
+              />
+            </motion.div>
+
             <motion.div variants={item}>
-              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full
-                               bg-blue-500/10 border border-blue-500/20 text-blue-400
-                               text-xs font-mono font-medium mb-6">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
-                Open to 2027 Internships
+              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full
+                               bg-primary/10 border border-primary/20 text-primary
+                               text-sm font-mono font-medium mb-8">
+                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                Open to Internships
               </span>
             </motion.div>
 
             <motion.h1
               variants={item}
-              className="text-5xl sm:text-6xl lg:text-[4rem] font-extrabold tracking-tight leading-[1.08] mb-5"
+              className="text-6xl sm:text-7xl lg:text-8xl font-extrabold font-serif tracking-tight leading-[1.05] mb-6"
             >
-              <span className="text-zinc-50">Arnav</span>
+              <span className="text-foreground">Arnav</span>
               <br />
               <span className="text-gradient">Mahadev</span>
             </motion.h1>
 
-            <motion.div variants={item} className="mb-6">
-              <p className="text-lg text-zinc-300 font-medium">
+            <motion.div variants={item} className="mb-8">
+              <p className="text-2xl text-foreground/80 font-medium font-serif">
                 EECS @ UC Berkeley
               </p>
-              <p className="text-zinc-500 text-base mt-0.5">
-                Software Engineer &amp; Builder
+              <p className="text-muted-foreground text-xl mt-1 font-serif">
+                Software Engineer
               </p>
             </motion.div>
 
-            <motion.p
-              variants={item}
-              className="text-zinc-400 text-base leading-relaxed max-w-md mb-10"
-            >
-              I build full-stack applications that turn complex systems into simple, usable tools.
-            </motion.p>
-
-            <motion.div variants={item} className="flex flex-wrap gap-3 mb-10">
+            <motion.div variants={item} className="flex flex-wrap gap-4 mb-8">
               <a
                 href="#projects"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl
-                           bg-blue-500 hover:bg-blue-400 text-white text-sm font-semibold
-                           transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/25"
+                className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
+                           bg-primary text-primary-foreground text-base font-semibold
+                           transition-all duration-200 hover:opacity-90 hover:shadow-lg"
               >
                 View Projects
-                <ArrowRight size={15} />
+                <ArrowRight size={17} />
               </a>
               <a
                 href={RESUME_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl
-                           bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-sm font-semibold
-                           border border-zinc-700 hover:border-zinc-600
+                className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
+                           bg-card text-foreground text-base font-semibold
+                           border border-border hover:border-border/80
                            transition-all duration-200"
               >
-                <Download size={14} />
-                Resume
+                <Download size={16} />
+                Résumé
               </a>
             </motion.div>
 
             {/* Social icons */}
-            <motion.div variants={item} className="flex items-center gap-4">
-              <a
-                href={GITHUB_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800
-                           transition-all duration-200"
-                aria-label="GitHub"
-              >
-                <Github size={18} />
-              </a>
-              <a
-                href={LINKEDIN_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-2 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800
-                           transition-all duration-200"
-                aria-label="LinkedIn"
-              >
-                <Linkedin size={18} />
-              </a>
-              <a
-                href={`mailto:${EMAIL}`}
-                className="p-2 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800
-                           transition-all duration-200"
-                aria-label="Email"
-              >
-                <Mail size={18} />
-              </a>
+            <motion.div variants={item} className="flex items-center gap-3">
+              {[
+                { href: GITHUB_URL, label: 'GitHub', icon: <Github size={20} />, external: true },
+                { href: LINKEDIN_URL, label: 'LinkedIn', icon: <Linkedin size={20} />, external: true },
+                { href: SPOTIFY_URL, label: 'Spotify', icon: <SpotifyIcon />, external: true },
+                { href: INSTAGRAM_URL, label: 'Instagram', icon: <InstagramIcon />, external: true },
+                { href: `mailto:${EMAIL}`, label: 'Email', icon: <Mail size={20} />, external: false },
+              ].map(({ href, label, icon, external }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={external ? '_blank' : undefined}
+                  rel={external ? 'noopener noreferrer' : undefined}
+                  className="p-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-card
+                             transition-all duration-200"
+                  aria-label={label}
+                >
+                  {icon}
+                </a>
+              ))}
             </motion.div>
           </motion.div>
 
-          {/* Right — bento grid */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.96 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="hidden lg:flex justify-center items-center"
-          >
-            <CodeGrid />
-          </motion.div>
         </div>
 
         {/* Scroll cue */}
@@ -157,18 +150,18 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: scrolled ? 0 : 1 }}
           transition={{ delay: 0, duration: 0.3 }}
-          className="absolute bottom-2 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
         >
           <motion.div
             animate={{ y: [0, -5, 0] }}
             transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-            className="w-px h-6 bg-gradient-to-b from-transparent to-zinc-600"
+            className="w-px h-6 bg-gradient-to-b from-transparent to-border"
           />
-          <span className="text-[10px] font-mono text-zinc-600 tracking-widest uppercase">scroll</span>
+          <span className="text-[10px] font-mono text-muted-foreground tracking-widest uppercase">scroll</span>
           <motion.div
             animate={{ y: [0, 5, 0] }}
             transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-            className="w-px h-6 bg-gradient-to-b from-zinc-600 to-transparent"
+            className="w-px h-6 bg-gradient-to-b from-border to-transparent"
           />
         </motion.div>
       </div>
