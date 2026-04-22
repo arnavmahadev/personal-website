@@ -65,9 +65,9 @@ export const EXPERIENCE = [
     location: 'San Mateo, CA',
     link: undefined as string | undefined,
     bullets: [
-      'Worked on the AI-driven 3D character model generation pipeline, enabling automated creation of production-ready assets.',
-      'Implemented modular systems to integrate generated models into an interactive environment, reducing future implementation time by 40%.',
-      'Presented the pipeline to 15 stakeholders and potential clients, demonstrating the product\'s capabilities.',
+      "Developed a Unity-based game showcasing Claythis’s AI-driven 3D model generation pipeline.",
+      'Implemented modular weapon & health systems (reload, recoil, animations, armor, healing) enhancing code maintainability and reducing future implementation time by 40%.',
+      "Presented the project to 15 stakeholders and potential clients, demonstrating the product’s capabilities.",
     ],
   },
 ]
