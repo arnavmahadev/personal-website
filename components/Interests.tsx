@@ -98,7 +98,7 @@ export default function Interests() {
           <div className="px-4 py-6 h-full flex flex-col justify-center space-y-3">
             <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Soccer &amp; FC Barcelona</p>
             <p className="text-base text-foreground/80 leading-relaxed">
-              I&apos;ve loved soccer since I was 4, I played competitively until college.
+              I&apos;ve loved soccer since I was 4 and I played competitively until college.
               I was captain of both my club team and high school varsity, and finished my senior year as the
               top goalscorer in my high school league: <span className="font-semibold text-foreground">17 goals, 5 assists</span>. You can still find me playing pickup or intramural games :)
             </p>
