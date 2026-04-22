@@ -46,7 +46,7 @@ function TrackPanel({ track }: { track: Track | null }) {
           href={track.songUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col sm:flex-row items-center gap-3 group min-w-0 w-full"
+          className="flex flex-col sm:flex-row items-center gap-3 group min-w-0 w-full sm:w-fit sm:mx-auto"
         >
           {track.albumArt && (
             <Image
@@ -105,9 +105,9 @@ export default function NowPlaying() {
       <div className="px-4 py-4 h-full flex flex-col gap-3">
         <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Spotify</p>
 
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-8 flex-1">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-12 flex-1">
           {/* Music taste blurb */}
-          <div className="sm:flex-[0_0_auto] sm:w-[32%] flex flex-col justify-center">
+          <div className="sm:flex-[0_0_auto] sm:w-[28%] flex flex-col justify-center">
             <p className="text-base text-foreground/80 leading-relaxed">
               I don&apos;t know what my music taste is. The best way I can describe it is &ldquo;I like what I like.&rdquo;
             </p>
