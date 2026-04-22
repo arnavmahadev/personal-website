@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     description:
       'EECS student at UC Berkeley. Full-stack developer with experience in backend systems and data pipelines.',
     type: 'website',
+    images: [{ url: 'https://arnavmaha.dev/avatar.jpg' }],
   },
 }
 
