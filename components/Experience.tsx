@@ -1,4 +1,4 @@
-import { ExternalLink } from 'lucide-react'
+import { Github, ExternalLink } from 'lucide-react'
 import SectionWrapper from './ui/SectionWrapper'
 import SectionHeading from './ui/SectionHeading'
 import { EXPERIENCE as experiences } from '@/content'
@@ -32,17 +32,32 @@ export default function Experience() {
                     </li>
                   ))}
                 </ul>
-                {'nexusLink' in exp && exp.nexusLink && (
-                  <a
-                    href={exp.nexusLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/30 transition-colors w-fit"
-                  >
-                    <ExternalLink size={14} />
-                    Website
-                  </a>
-                )}
+                {('github' in exp && exp.github) || ('nexusLink' in exp && exp.nexusLink) ? (
+                  <div className="flex items-center gap-3">
+                    {'github' in exp && exp.github && (
+                      <a
+                        href={exp.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors"
+                      >
+                        <Github size={14} />
+                        GitHub
+                      </a>
+                    )}
+                    {'nexusLink' in exp && exp.nexusLink && (
+                      <a
+                        href={exp.nexusLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/30 transition-colors"
+                      >
+                        <ExternalLink size={14} />
+                        Website
+                      </a>
+                    )}
+                  </div>
+                ) : null}
               </div>
             </div>
           ))}
