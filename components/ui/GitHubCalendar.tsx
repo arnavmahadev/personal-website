@@ -88,7 +88,7 @@ export default function GitHubCalendar() {
       <div className="text-base text-muted-foreground mb-3 font-mono">
         {total.toLocaleString()} contributions in the last year
       </div>
-      <div className="overflow-x-auto -mx-1 px-1">
+      <div className="overflow-x-auto -mx-1 px-1 pb-3">
       <svg
         viewBox={`0 0 ${totalW} ${totalH}`}
         style={{ display: 'block', minWidth: `${totalW * 1.4}px`, width: '100%' }}
