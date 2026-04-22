@@ -1,96 +1,55 @@
-# Arnav Mahadev — Portfolio
+# arnavmaha.dev
 
-Personal portfolio website built with Next.js 14, TypeScript, Tailwind CSS, and Framer Motion.
+My personal portfolio site — built to be fast, clean, and easy to maintain.
 
 ## Stack
 
-- **Framework**: Next.js 14 (App Router)
-- **Language**: TypeScript
-- **Styling**: Tailwind CSS
-- **Animations**: Framer Motion
-- **Icons**: Lucide React
+- **Framework** — Next.js 15 (App Router)
+- **Language** — TypeScript
+- **Styling** — Tailwind CSS
+- **Animations** — Framer Motion
+- **Analytics** — Vercel Analytics
+- **Deployment** — Vercel
 
-## Getting Started
+## Features
 
-```bash
-# Install dependencies
-npm install
+- Live Spotify now-playing widget
+- Valorant rank tracker
+- FC Barcelona latest result widget
+- Countdown timers for upcoming trips
+- Collapsible photo galleries for past adventures
+- Dark / light theme with no flash on load
+- Fully responsive
 
-# Run development server
-npm run dev
-```
+## Content
 
-Open [http://localhost:3000](http://localhost:3000).
+All site content (projects, experience, links, trips) lives in [`content.ts`](./content.ts) — edit that file to update anything.
 
 ## Project Structure
 
 ```
-portfolio/
 ├── app/
-│   ├── globals.css       # Global styles, custom utilities
-│   ├── layout.tsx        # Root layout, metadata
-│   └── page.tsx          # Home page — assembles all sections
+│   ├── globals.css        # Global styles and theme variables
+│   ├── layout.tsx         # Root layout and metadata
+│   └── page.tsx           # Page — assembles all sections
 │
 ├── components/
-│   ├── Navbar.tsx        # Sticky nav with scroll/active state
-│   ├── Hero.tsx          # Landing section with CTAs
-│   ├── About.tsx         # Bio + highlights grid
-│   ├── Projects.tsx      # Featured project cards
-│   ├── Experience.tsx    # Timeline-style experience section
-│   ├── Skills.tsx        # Skill chips grouped by category
-│   ├── HowIBuild.tsx     # Philosophy / 3-pillar section
-│   ├── Contact.tsx       # Contact links
-│   ├── Footer.tsx        # Minimal footer
-│   │
-│   └── ui/
-│       ├── CodeGrid.tsx      # Animated hero visual
-│       ├── ProjectCard.tsx   # Reusable project card component
-│       ├── SectionHeading.tsx # Consistent section headers
-│       ├── SectionWrapper.tsx # Scroll-reveal wrapper with Framer Motion
-│       └── SkillChip.tsx     # Skill tag component
+│   ├── Navbar.tsx
+│   ├── Hero.tsx
+│   ├── About.tsx
+│   ├── Experience.tsx
+│   ├── Projects.tsx
+│   ├── Skills.tsx
+│   ├── HowIBuild.tsx
+│   ├── Interests.tsx      # Spotify, Valorant, Barca widgets
+│   ├── Adventures.tsx     # Upcoming + past trips
+│   ├── Contact.tsx
+│   └── ui/                # Shared UI components
+│
+├── app/api/
+│   ├── spotify/           # Now-playing endpoint
+│   ├── valorant/          # Rank endpoint
+│   └── barca/             # Latest result endpoint
+│
+└── content.ts             # All editable site content
 ```
-
-## Customizing Content
-
-### Links to update (marked with `TODO` comments)
-
-| File | What to change |
-|------|---------------|
-| `components/Navbar.tsx` | `RESUME_URL`, `GITHUB_URL`, `LINKEDIN_URL` |
-| `components/Hero.tsx` | `RESUME_URL`, `GITHUB_URL`, `LINKEDIN_URL`, `EMAIL` |
-| `components/Contact.tsx` | `EMAIL`, `GITHUB_URL`, `LINKEDIN_URL`, `RESUME_URL` |
-| `components/Projects.tsx` | GitHub repo URLs per project |
-
-### To add/edit projects
-Edit the `projects` array in `components/Projects.tsx`.
-
-Each project object accepts:
-```ts
-{
-  name: string
-  hook: string        // one-liner value prop
-  description: string
-  tech: string[]
-  github: string
-  demo?: string       // optional live demo URL
-  featured?: boolean  // shows "Featured" badge
-}
-```
-
-### To add/edit experience
-Edit the `experiences` array in `components/Experience.tsx`.
-
-### To update skills
-Edit `skillGroups` and `interests` in `components/Skills.tsx`.
-
-## Deployment
-
-```bash
-# Build for production
-npm run build
-
-# Deploy to Vercel (recommended)
-npx vercel
-```
-
-Or connect your GitHub repo to [Vercel](https://vercel.com) for automatic deploys.
