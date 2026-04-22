@@ -44,7 +44,7 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
-      <div className="max-w-[96rem] mx-auto px-4 sm:px-8 w-full py-8 sm:py-16">
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-8 w-full py-2 sm:py-16">
         <div className="grid gap-8 sm:gap-16">
           {/* Left — text */}
           <motion.div
