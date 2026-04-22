@@ -90,7 +90,7 @@ export default function Hero() {
               </p>
             </motion.div>
 
-            <motion.div variants={item} className="flex flex-wrap gap-4 mb-8">
+            <motion.div variants={item} className="flex flex-wrap justify-center gap-4 mb-8">
               <a
                 href="#projects"
                 className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
