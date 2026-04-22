@@ -62,17 +62,17 @@ export default function Interests() {
               <div className="flex flex-col items-center text-center sm:flex-1 sm:items-center sm:justify-center">
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Current rank</p>
                 {val ? (
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-4">
                     {val.icon && (
-                      <Image src={val.icon} alt={val.rank} width={44} height={44} />
+                      <Image src={val.icon} alt={val.rank} width={72} height={72} />
                     )}
                     <div>
-                      <p className="text-lg font-bold font-serif text-foreground">{val.rank}</p>
-                      <p className="text-xs text-muted-foreground">{val.rr} RR</p>
+                      <p className="text-2xl font-bold font-serif text-foreground">{val.rank}</p>
+                      <p className="text-sm text-muted-foreground">{val.rr} RR</p>
                     </div>
                   </div>
                 ) : (
-                  <div className="h-7 animate-pulse bg-muted rounded w-32" />
+                  <div className="h-10 animate-pulse bg-muted rounded w-36" />
                 )}
               </div>
             </div>
