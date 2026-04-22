@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, ArrowRight, Download } from 'lucide-react'
+import { Github, Linkedin, Mail, Download } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { RESUME_URL, SOCIALS } from '@/content'
@@ -90,24 +90,14 @@ export default function Hero() {
               </p>
             </motion.div>
 
-            <motion.div variants={item} className="flex flex-wrap justify-center gap-4 mb-8">
-              <a
-                href="#projects"
-                className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
-                           bg-primary text-primary-foreground text-base font-semibold
-                           transition-all duration-200 hover:opacity-90 hover:shadow-lg"
-              >
-                View Projects
-                <ArrowRight size={17} />
-              </a>
+            <motion.div variants={item} className="flex justify-center mb-8">
               <a
                 href={RESUME_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-7 py-3 rounded-xl
-                           bg-card text-foreground text-base font-semibold
-                           border border-border hover:border-border/80
-                           transition-all duration-200"
+                           bg-primary text-primary-foreground text-base font-semibold
+                           transition-all duration-200 hover:opacity-90 hover:shadow-lg"
               >
                 <Download size={16} />
                 Résumé
