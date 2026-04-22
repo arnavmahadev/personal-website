@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, ArrowRight, Download } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
+import { RESUME_URL, SOCIALS } from '@/content'
 
 function SpotifyIcon({ size = 20 }: { size?: number }) {
   return (
@@ -21,12 +22,6 @@ function InstagramIcon({ size = 20 }: { size?: number }) {
   )
 }
 
-const GITHUB_URL = 'https://github.com/arnavmahadev'
-const LINKEDIN_URL = 'https://www.linkedin.com/in/arnavmahadev/'
-const SPOTIFY_URL = 'https://open.spotify.com/user/qjzz2wqvhzmjkjitps4vilhrm?si=485b1738bb864b7b'
-const INSTAGRAM_URL = 'https://www.instagram.com/arnav.mahadev/'
-const EMAIL = 'arnavrmahadev@gmail.com'
-const RESUME_URL = 'https://drive.google.com/file/d/1g9jVD6AIIQGwrUabWjQY9Y-ybVZBRLnh/view?usp=sharing'
 
 const container = {
   hidden: {},
@@ -49,7 +44,7 @@ export default function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-16">
-      <div className="max-w-[96rem] mx-auto px-8 w-full py-16">
+      <div className="max-w-[96rem] mx-auto px-4 sm:px-8 w-full py-16">
         <div className="grid gap-16">
           {/* Left — text */}
           <motion.div
@@ -79,7 +74,7 @@ export default function Hero() {
 
             <motion.h1
               variants={item}
-              className="text-6xl sm:text-7xl lg:text-8xl font-extrabold font-serif tracking-tight leading-[1.05] mb-6"
+              className="text-5xl sm:text-7xl lg:text-8xl font-extrabold font-serif tracking-tight leading-[1.05] mb-6"
             >
               <span className="text-foreground">Arnav</span>
               <br />
@@ -122,11 +117,11 @@ export default function Hero() {
             {/* Social icons */}
             <motion.div variants={item} className="flex items-center gap-3">
               {[
-                { href: GITHUB_URL, label: 'GitHub', icon: <Github size={20} />, external: true },
-                { href: LINKEDIN_URL, label: 'LinkedIn', icon: <Linkedin size={20} />, external: true },
-                { href: SPOTIFY_URL, label: 'Spotify', icon: <SpotifyIcon />, external: true },
-                { href: INSTAGRAM_URL, label: 'Instagram', icon: <InstagramIcon />, external: true },
-                { href: `mailto:${EMAIL}`, label: 'Email', icon: <Mail size={20} />, external: false },
+                { href: SOCIALS.github, label: 'GitHub', icon: <Github size={20} />, external: true },
+                { href: SOCIALS.linkedin, label: 'LinkedIn', icon: <Linkedin size={20} />, external: true },
+                { href: SOCIALS.spotify, label: 'Spotify', icon: <SpotifyIcon />, external: true },
+                { href: SOCIALS.instagram, label: 'Instagram', icon: <InstagramIcon />, external: true },
+                { href: `mailto:${SOCIALS.email}`, label: 'Email', icon: <Mail size={20} />, external: false },
               ].map(({ href, label, icon, external }) => (
                 <a
                   key={label}

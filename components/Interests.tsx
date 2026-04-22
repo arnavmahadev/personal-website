@@ -60,7 +60,7 @@ export default function Interests() {
             {...fade(2)}
             className="flex-1 rounded-xl border overflow-hidden relative bg-card border-border"
           >
-            <div className="px-4 py-4 h-full flex items-center gap-6">
+            <div className="px-4 py-4 h-full flex flex-wrap items-center gap-4">
               <div className="flex-1">
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Valorant</p>
                 <p className="text-base text-foreground/80 leading-relaxed">

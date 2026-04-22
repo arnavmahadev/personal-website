@@ -3,32 +3,28 @@
 import { motion } from 'framer-motion'
 import { Mail, Github, Linkedin, FileText, ArrowUpRight } from 'lucide-react'
 import SectionWrapper from './ui/SectionWrapper'
-
-const EMAIL = 'arnavrmahadev@gmail.com'
-const GITHUB_URL = 'https://github.com/arnavmahadev'
-const LINKEDIN_URL = 'https://www.linkedin.com/in/arnavmahadev/'
-const RESUME_URL = 'https://drive.google.com/file/d/1g9jVD6AIIQGwrUabWjQY9Y-ybVZBRLnh/view?usp=sharing'
+import { RESUME_URL, SOCIALS } from '@/content'
 
 const links = [
   {
     icon: Mail,
     label: 'Email',
-    value: EMAIL,
-    href: `mailto:${EMAIL}`,
+    value: SOCIALS.email,
+    href: `mailto:${SOCIALS.email}`,
     external: false,
   },
   {
     icon: Github,
     label: 'GitHub',
     value: 'github.com/arnavmahadev',
-    href: GITHUB_URL,
+    href: SOCIALS.github,
     external: true,
   },
   {
     icon: Linkedin,
     label: 'LinkedIn',
     value: 'linkedin.com/in/arnavmahadev',
-    href: LINKEDIN_URL,
+    href: SOCIALS.linkedin,
     external: true,
   },
   {

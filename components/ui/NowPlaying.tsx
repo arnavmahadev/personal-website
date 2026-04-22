@@ -120,9 +120,9 @@ export default function NowPlaying() {
       <div className="px-4 py-4 h-full flex flex-col gap-3">
         <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Spotify</p>
 
-        <div className="flex gap-2 flex-1">
-          {/* Music taste blurb — left */}
-          <div className="flex-[0_0_auto] w-[45%] flex flex-col justify-center">
+        <div className="flex flex-col sm:flex-row gap-3 flex-1">
+          {/* Music taste blurb */}
+          <div className="sm:flex-[0_0_auto] sm:w-[45%] flex flex-col justify-center">
             <p className="text-base text-foreground/80 leading-relaxed">
               I don&apos;t know what my music taste is. The best way I can describe it is &ldquo;I like what I like.&rdquo;
             </p>
@@ -139,10 +139,11 @@ export default function NowPlaying() {
             </a>
           </div>
 
-          {/* Divider */}
-          <div className="w-px bg-border flex-shrink-0" />
+          {/* Divider — vertical on sm+, horizontal on mobile */}
+          <div className="hidden sm:block w-px bg-border flex-shrink-0" />
+          <div className="sm:hidden h-px bg-border flex-shrink-0" />
 
-          {/* Track info — right */}
+          {/* Track info */}
           <TrackPanel track={track} />
         </div>
       </div>

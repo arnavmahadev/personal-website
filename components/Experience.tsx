@@ -4,35 +4,7 @@ import { motion } from 'framer-motion'
 import { ExternalLink } from 'lucide-react'
 import SectionWrapper from './ui/SectionWrapper'
 import SectionHeading from './ui/SectionHeading'
-
-const experiences = [
-  {
-    role: 'Software Developer & Project Manager',
-    org: 'iPick.ai',
-    period: 'Jan 2026 — Present',
-    location: 'Berkeley, CA',
-    link: 'https://www.ipick.ai/nexus/',
-    bullets: [
-      'Led development of a graph-based stock and company relationship visualizer, coordinating a team of 15 developers.',
-      'Authored technical design docs, tasks, and workshops, setting goals to keep the team on track.',
-      'Oversaw migration of 8,000+ JSON company records into a PostgreSQL database with a React/D3.js frontend for interactive graph exploration.',
-    ],
-    accent: true,
-  },
-  {
-    role: 'Software Engineering Intern',
-    org: 'Claythis',
-    link: undefined,
-    period: 'May 2025 — Aug 2025',
-    location: 'San Mateo, CA',
-    bullets: [
-      'Worked on the AI-driven 3D character model generation pipeline, enabling automated creation of production-ready assets.',
-      'Implemented modular systems to integrate generated models into an interactive environment, reducing future implementation time by 40%.',
-      'Presented the pipeline to 15 stakeholders and potential clients, demonstrating the product\'s capabilities.',
-    ],
-    accent: true,
-  },
-]
+import { EXPERIENCE as experiences } from '@/content'
 
 export default function Experience() {
   return (

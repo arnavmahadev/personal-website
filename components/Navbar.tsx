@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Github, Linkedin, Mail, Menu, X, Sun, Moon } from 'lucide-react'
+import { RESUME_URL, SOCIALS } from '@/content'
 
 function SpotifyIcon({ size = 17 }: { size?: number }) {
   return (
@@ -29,12 +30,6 @@ const navLinks = [
   { label: 'Contact', href: '#contact' },
 ]
 
-const RESUME_URL = 'https://drive.google.com/file/d/1g9jVD6AIIQGwrUabWjQY9Y-ybVZBRLnh/view?usp=sharing'
-const GITHUB_URL = 'https://github.com/arnavmahadev'
-const LINKEDIN_URL = 'https://www.linkedin.com/in/arnavmahadev/'
-const SPOTIFY_URL = 'https://open.spotify.com/user/qjzz2wqvhzmjkjitps4vilhrm?si=485b1738bb864b7b'
-const INSTAGRAM_URL = 'https://www.instagram.com/arnav.mahadev/'
-const EMAIL = 'arnavrmahadev@gmail.com'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
@@ -88,7 +83,7 @@ export default function Navbar() {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300
           ${scrolled ? 'glass border-b border-border/40' : 'bg-transparent'}`}
       >
-        <nav className="max-w-[96rem] mx-auto px-8 h-16 flex items-center justify-between">
+        <nav className="max-w-[96rem] mx-auto px-4 sm:px-8 h-16 flex items-center justify-between">
           {/* Logo */}
           <a
             href="#"
@@ -118,7 +113,7 @@ export default function Navbar() {
           {/* Right side */}
           <div className="hidden md:flex items-center gap-4">
             <a
-              href={GITHUB_URL}
+              href={SOCIALS.github}
               target="_blank"
               rel="noopener noreferrer"
               className="p-1.5 text-muted-foreground hover:text-foreground transition-colors"
@@ -127,7 +122,7 @@ export default function Navbar() {
               <Github size={17} />
             </a>
             <a
-              href={LINKEDIN_URL}
+              href={SOCIALS.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               className="p-1.5 text-muted-foreground hover:text-foreground transition-colors"
@@ -136,7 +131,7 @@ export default function Navbar() {
               <Linkedin size={17} />
             </a>
             <a
-              href={SPOTIFY_URL}
+              href={SOCIALS.spotify}
               target="_blank"
               rel="noopener noreferrer"
               className="p-1.5 text-muted-foreground hover:text-foreground transition-colors"
@@ -145,7 +140,7 @@ export default function Navbar() {
               <SpotifyIcon size={17} />
             </a>
             <a
-              href={INSTAGRAM_URL}
+              href={SOCIALS.instagram}
               target="_blank"
               rel="noopener noreferrer"
               className="p-1.5 text-muted-foreground hover:text-foreground transition-colors"
@@ -154,7 +149,7 @@ export default function Navbar() {
               <InstagramIcon size={17} />
             </a>
             <a
-              href={`mailto:${EMAIL}`}
+              href={`mailto:${SOCIALS.email}`}
               className="p-1.5 text-muted-foreground hover:text-foreground transition-colors"
               aria-label="Email"
             >
@@ -221,23 +216,23 @@ export default function Navbar() {
                 </a>
               ))}
               <div className="pt-3 mt-2 border-t border-border flex items-center gap-4">
-                <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer"
+                <a href={SOCIALS.github} target="_blank" rel="noopener noreferrer"
                    className="text-muted-foreground hover:text-foreground transition-colors">
                   <Github size={18} />
                 </a>
-                <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer"
+                <a href={SOCIALS.linkedin} target="_blank" rel="noopener noreferrer"
                    className="text-muted-foreground hover:text-foreground transition-colors">
                   <Linkedin size={18} />
                 </a>
-                <a href={SPOTIFY_URL} target="_blank" rel="noopener noreferrer"
+                <a href={SOCIALS.spotify} target="_blank" rel="noopener noreferrer"
                    className="text-muted-foreground hover:text-foreground transition-colors">
                   <SpotifyIcon size={18} />
                 </a>
-                <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"
+                <a href={SOCIALS.instagram} target="_blank" rel="noopener noreferrer"
                    className="text-muted-foreground hover:text-foreground transition-colors">
                   <InstagramIcon size={18} />
                 </a>
-                <a href={`mailto:${EMAIL}`}
+                <a href={`mailto:${SOCIALS.email}`}
                    className="text-muted-foreground hover:text-foreground transition-colors">
                   <Mail size={18} />
                 </a>

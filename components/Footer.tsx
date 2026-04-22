@@ -15,38 +15,33 @@ function InstagramIcon({ size = 15 }: { size?: number }) {
 }
 
 import { Github, Linkedin, Mail } from 'lucide-react'
-
-const GITHUB_URL = 'https://github.com/arnavmahadev'
-const LINKEDIN_URL = 'https://www.linkedin.com/in/arnavmahadev/'
-const SPOTIFY_URL = 'https://open.spotify.com/user/qjzz2wqvhzmjkjitps4vilhrm?si=485b1738bb864b7b'
-const INSTAGRAM_URL = 'https://www.instagram.com/arnav.mahadev/'
-const EMAIL = 'arnavrmahadev@gmail.com'
+import { SOCIALS } from '@/content'
 
 export default function Footer() {
   return (
-    <footer className="border-t border-border py-8 px-6">
+    <footer className="border-t border-border py-8 px-4 sm:px-8">
       <div className="max-w-[96rem] mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
         <span className="font-mono text-sm text-muted-foreground">
           arnavmaha<span className="text-primary">.</span>dev
         </span>
         <div className="flex items-center gap-4">
-          <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer"
+          <a href={SOCIALS.github} target="_blank" rel="noopener noreferrer"
              className="text-muted-foreground hover:text-foreground transition-colors" aria-label="GitHub">
             <Github size={15} />
           </a>
-          <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer"
+          <a href={SOCIALS.linkedin} target="_blank" rel="noopener noreferrer"
              className="text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
             <Linkedin size={15} />
           </a>
-          <a href={SPOTIFY_URL} target="_blank" rel="noopener noreferrer"
+          <a href={SOCIALS.spotify} target="_blank" rel="noopener noreferrer"
              className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Spotify">
             <SpotifyIcon />
           </a>
-          <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer"
+          <a href={SOCIALS.instagram} target="_blank" rel="noopener noreferrer"
              className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Instagram">
             <InstagramIcon />
           </a>
-          <a href={`mailto:${EMAIL}`}
+          <a href={`mailto:${SOCIALS.email}`}
              className="text-muted-foreground hover:text-foreground transition-colors" aria-label="Email">
             <Mail size={15} />
           </a>

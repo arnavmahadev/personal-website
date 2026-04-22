@@ -27,7 +27,7 @@ export default function SectionWrapper({ id, children, className }: SectionWrapp
       whileInView="visible"
       viewport={{ once: true, margin: '-80px' }}
       variants={fadeUp}
-      className={clsx('py-10 px-8', className)}
+      className={clsx('py-10 px-4 sm:px-8', className)}
     >
       <div className="max-w-[96rem] mx-auto">{children}</div>
     </motion.section>
