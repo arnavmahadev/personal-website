@@ -47,7 +47,7 @@ function TrackPanel({ track }: { track: Track | null }) {
     if (!el) return
     const ro = new ResizeObserver(() => {
       const { width, height } = el.getBoundingClientRect()
-      setImgSize(Math.floor(width < 640 ? Math.min(width * 0.45, height * 0.35) : Math.min(width * 0.45, height - 32)))
+      setImgSize(Math.floor(width < 640 ? Math.min(width * 0.45, height * 0.35) : Math.min(width * 0.35, height - 32)))
     })
     ro.observe(el)
     return () => ro.disconnect()
@@ -122,7 +122,7 @@ export default function NowPlaying() {
 
         <div className="flex flex-col sm:flex-row gap-3 flex-1">
           {/* Music taste blurb */}
-          <div className="sm:flex-[0_0_auto] sm:w-[45%] flex flex-col justify-center">
+          <div className="sm:flex-[0_0_auto] sm:w-[38%] flex flex-col justify-center">
             <p className="text-base text-foreground/80 leading-relaxed">
               I don&apos;t know what my music taste is. The best way I can describe it is &ldquo;I like what I like.&rdquo;
             </p>
