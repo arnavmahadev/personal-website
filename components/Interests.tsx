@@ -85,7 +85,7 @@ export default function Interests() {
             <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Soccer &amp; FC Barcelona</p>
             <p className="text-base text-foreground/80 leading-relaxed">
               I&apos;ve loved soccer since I was 4 and I played competitively until college.
-              I was captain of both my club team and high school varsity, and finished my senior year as the
+              I was captain of both my club team and high school varsity team, and finished my senior year as the
               top goalscorer in my high school league: <span className="font-semibold text-foreground">17 goals, 5 assists</span>. You can still find me playing pickup or intramural games :)
             </p>
             <p className="text-base text-foreground/80 leading-relaxed">
