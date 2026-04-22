@@ -101,7 +101,7 @@ export default function NowPlaying() {
   }, [])
 
   return (
-    <div className="relative rounded-xl bg-card border border-border overflow-hidden h-full sm:min-h-[220px]">
+    <div className="relative rounded-xl bg-card border border-border overflow-hidden h-full">
       <div className="px-4 py-4 h-full flex flex-col gap-3">
         <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Spotify</p>
 
