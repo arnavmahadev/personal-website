@@ -60,15 +60,17 @@ export default function Interests() {
             {...fade(2)}
             className="flex-1 rounded-xl border overflow-hidden relative bg-card border-border"
           >
-            <div className="px-4 py-4 h-full flex flex-col gap-4">
-              <div>
+            <div className="px-4 py-4 h-full flex flex-col sm:flex-row sm:items-center gap-4">
+              <div className="sm:flex-1">
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Valorant</p>
                 <p className="text-base text-foreground/80 leading-relaxed">
                   If I&apos;m not playing sports, I&apos;m probably playing video games with my friends.
                   We play Valorant most often. We lowkey suck, but that&apos;s beside the point.
                 </p>
               </div>
-              <div className="flex flex-col items-center text-center">
+              <div className="hidden sm:block w-px bg-border self-stretch flex-shrink-0" />
+              <div className="sm:hidden h-px bg-border flex-shrink-0" />
+              <div className="flex flex-col items-center text-center sm:flex-shrink-0">
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Current rank</p>
                 {val ? (
                   <div className="flex items-center gap-3">
