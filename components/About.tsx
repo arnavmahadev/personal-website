@@ -25,7 +25,7 @@ export default function About() {
             Claythis as a Software Engineer, where I worked on their AI-driven 3D model generation technology.
           </p>
           <p>
-            I&apos;m currently looking for an internship where I can
+            I&apos;m currently looking for opportunities where I can
             contribute to real products, learn from experienced engineers, and work
             on software that genuinely helps people.
           </p>

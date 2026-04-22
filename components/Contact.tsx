@@ -41,7 +41,7 @@ export default function Contact() {
           Contact
         </h2>
         <p className="text-muted-foreground text-base leading-relaxed mb-10">
-          I&apos;m actively looking for SWE internships. If you&apos;re a recruiter,
+          I&apos;m actively looking for SWE opportunities. If you&apos;re a recruiter,
           engineer, or just want to chat about a project or opportunity, please don&apos;t
           hesitate to reach out!
         </p>

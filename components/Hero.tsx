@@ -68,7 +68,7 @@ export default function Hero() {
                                bg-primary/10 border border-primary/20 text-primary
                                text-sm font-mono font-medium mb-8">
                 <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                Open to Internships
+                Open to Opportunities
               </span>
             </motion.div>
 
