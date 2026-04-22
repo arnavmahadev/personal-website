@@ -105,9 +105,9 @@ export default function NowPlaying() {
       <div className="px-4 py-4 h-full flex flex-col gap-3">
         <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Spotify</p>
 
-        <div className="flex flex-col sm:flex-row gap-3 flex-1">
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-8 flex-1">
           {/* Music taste blurb */}
-          <div className="sm:flex-[0_0_auto] sm:w-[38%] flex flex-col justify-center">
+          <div className="sm:flex-[0_0_auto] sm:w-[32%] flex flex-col justify-center">
             <p className="text-base text-foreground/80 leading-relaxed">
               I don&apos;t know what my music taste is. The best way I can describe it is &ldquo;I like what I like.&rdquo;
             </p>
