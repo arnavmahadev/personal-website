@@ -10,19 +10,44 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+        sans: ['Libre Baskerville', 'serif'],
+        serif: ['Lora', 'serif'],
+        mono: ['IBM Plex Mono', 'monospace'],
       },
       colors: {
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        card: {
+          DEFAULT: 'var(--card)',
+          foreground: 'var(--card-foreground)',
+        },
+        popover: {
+          DEFAULT: 'var(--popover)',
+          foreground: 'var(--popover-foreground)',
+        },
+        primary: {
+          DEFAULT: 'var(--primary)',
+          foreground: 'var(--primary-foreground)',
+        },
+        secondary: {
+          DEFAULT: 'var(--secondary)',
+          foreground: 'var(--secondary-foreground)',
+        },
+        muted: {
+          DEFAULT: 'var(--muted)',
+          foreground: 'var(--muted-foreground)',
+        },
         accent: {
-          blue: '#3b82f6',
-          cyan: '#22d3ee',
+          DEFAULT: 'var(--accent)',
+          foreground: 'var(--accent-foreground)',
         },
-        surface: {
-          DEFAULT: '#09090b',
-          card: '#111115',
-          border: '#1f1f23',
+        destructive: {
+          DEFAULT: 'var(--destructive)',
+          foreground: 'var(--destructive-foreground)',
         },
+        border: 'var(--border)',
+        input: 'var(--input)',
+        ring: 'var(--ring)',
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',
@@ -38,14 +63,6 @@ const config: Config = {
           '0%, 100%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
         },
-      },
-      backgroundImage: {
-        'dot-pattern': 'radial-gradient(circle, #27272a 1px, transparent 1px)',
-        'grid-pattern': 'linear-gradient(rgba(63,63,70,0.15) 1px, transparent 1px), linear-gradient(90deg, rgba(63,63,70,0.15) 1px, transparent 1px)',
-      },
-      backgroundSize: {
-        'dot-sm': '24px 24px',
-        'grid-sm': '40px 40px',
       },
     },
   },
