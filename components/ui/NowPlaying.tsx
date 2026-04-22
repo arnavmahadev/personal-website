@@ -39,22 +39,8 @@ interface Track {
 }
 
 function TrackPanel({ track }: { track: Track | null }) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [imgSize, setImgSize] = useState(40)
-
-  useEffect(() => {
-    const el = containerRef.current
-    if (!el) return
-    const ro = new ResizeObserver(() => {
-      const { width, height } = el.getBoundingClientRect()
-      setImgSize(Math.floor(width < 640 ? Math.min(width * 0.45, height * 0.35) : Math.min(height - 16, 120)))
-    })
-    ro.observe(el)
-    return () => ro.disconnect()
-  }, [])
-
   return (
-    <div ref={containerRef} className="flex-1 min-w-0 flex items-center justify-center">
+    <div className="flex-1 min-w-0 flex items-center justify-center">
       {track?.title ? (
         <a
           href={track.songUrl}
@@ -66,10 +52,9 @@ function TrackPanel({ track }: { track: Track | null }) {
             <Image
               src={track.albumArt}
               alt={track.album}
-              width={imgSize}
-              height={imgSize}
-              className="rounded-md flex-shrink-0"
-              style={{ width: imgSize, height: imgSize }}
+              width={96}
+              height={96}
+              className="rounded-md flex-shrink-0 w-[min(45vw,8rem)] h-[min(45vw,8rem)] sm:w-24 sm:h-24"
             />
           )}
           <div className="flex-1 min-w-0 text-center sm:text-left">
@@ -89,7 +74,7 @@ function TrackPanel({ track }: { track: Track | null }) {
         </a>
       ) : (
         <div className="flex items-center gap-3">
-          <div className="rounded-md bg-muted flex-shrink-0 animate-pulse" style={{ width: imgSize, height: imgSize }} />
+          <div className="rounded-md bg-muted flex-shrink-0 animate-pulse w-24 h-24" />
           <div className="flex-1 min-w-0">
             <p className="text-xs text-muted-foreground mb-1">Not playing</p>
             <p className="text-sm text-muted-foreground truncate">—</p>
