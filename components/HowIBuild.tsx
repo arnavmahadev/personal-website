@@ -1,6 +1,3 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import { Target, Layers, Zap } from 'lucide-react'
 import SectionWrapper from './ui/SectionWrapper'
 import SectionHeading from './ui/SectionHeading'
@@ -33,13 +30,9 @@ export default function HowIBuild() {
         <SectionHeading title="How I Build" />
 
         <div className="grid md:grid-cols-3 gap-4">
-          {pillars.map((pillar, i) => (
-            <motion.div
+          {pillars.map((pillar) => (
+            <div
               key={pillar.number}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ delay: i * 0.15, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
               className="relative p-5 rounded-2xl bg-card border border-border
                          hover:border-accent/50 transition-colors duration-300 group"
             >
@@ -55,7 +48,7 @@ export default function HowIBuild() {
 
               <h3 className="text-base font-semibold text-foreground mb-2">{pillar.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed">{pillar.body}</p>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

@@ -1,6 +1,3 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import SectionWrapper from './ui/SectionWrapper'
 import SectionHeading from './ui/SectionHeading'
 import SkillChip from './ui/SkillChip'
@@ -34,14 +31,8 @@ export default function Skills() {
       <SectionHeading title="Skills" />
 
       <div className="grid sm:grid-cols-2 gap-6">
-        {skillGroups.map((group, gi) => (
-          <motion.div
-            key={group.category}
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: gi * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          >
+        {skillGroups.map((group) => (
+          <div key={group.category}>
             <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-3">
               {group.category}
             </p>
@@ -50,7 +41,7 @@ export default function Skills() {
                 <SkillChip key={skill} label={skill} accent={group.accent} />
               ))}
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
     </SectionWrapper>

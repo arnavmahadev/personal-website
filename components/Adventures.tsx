@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { motion } from 'framer-motion'
 import Image from 'next/image'
 import SectionWrapper from './ui/SectionWrapper'
 import { UPCOMING_TRIPS as TRIPS, PAST_TRIPS as PAST } from '@/content'
@@ -51,21 +50,14 @@ function Countdown({ target }: { target: Date }) {
   )
 }
 
-const fade = (i: number) => ({
-  initial: { opacity: 0, y: 16 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { delay: i * 0.07, duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
-})
-
 type PastTripData = typeof PAST[number]
 
-function PastTrip({ past, index }: { past: PastTripData; index: number }) {
+function PastTrip({ past, index: _index }: { past: PastTripData; index: number }) {
   const [open, setOpen] = useState(false)
   const gridRef = useRef<HTMLDivElement>(null)
 
   return (
-    <motion.div {...fade(TRIPS.length + index)}>
+    <div>
       {/* Clickable header card */}
       <button
         onClick={() => setOpen((v) => !v)}
@@ -118,7 +110,7 @@ function PastTrip({ past, index }: { past: PastTripData; index: number }) {
           </div>
         </div>
       )}
-    </motion.div>
+    </div>
   )
 }
 
@@ -134,10 +126,9 @@ export default function Adventures() {
         Upcoming
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
-        {TRIPS.map((trip, i) => (
-          <motion.div
+        {TRIPS.map((trip) => (
+          <div
             key={trip.id}
-            {...fade(i)}
             className="rounded-xl border border-border bg-card overflow-hidden relative flex flex-col"
           >
             {trip.image && (
@@ -159,7 +150,7 @@ export default function Adventures() {
               </div>
               <Countdown target={trip.target} />
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
 

@@ -1,6 +1,3 @@
-'use client'
-
-import { motion } from 'framer-motion'
 import SectionWrapper from './ui/SectionWrapper'
 import SectionHeading from './ui/SectionHeading'
 import { EXPERIENCE as experiences } from '@/content'
@@ -12,14 +9,8 @@ export default function Experience() {
 
       <div className="relative">
         <div className="space-y-4">
-          {experiences.map((exp, i) => (
-            <motion.div
-              key={exp.role + exp.org}
-              initial={{ opacity: 0, x: -16 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: '-60px' }}
-              transition={{ delay: i * 0.15, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-            >
+          {experiences.map((exp) => (
+            <div key={exp.role + exp.org}>
               <div className="rounded-2xl border p-5 transition-colors duration-200 bg-card border-border hover:border-accent/50">
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-2 mb-3">
                   <div>
@@ -52,7 +43,7 @@ export default function Experience() {
                   ))}
                 </ul>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

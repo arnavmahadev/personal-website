@@ -1,7 +1,6 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
 import Image from 'next/image'
 import SectionWrapper from './ui/SectionWrapper'
 import NowPlaying from './ui/NowPlaying'
@@ -25,13 +24,6 @@ interface ValorantRank {
 }
 
 
-const fade = (i: number) => ({
-  initial: { opacity: 0, y: 16 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { delay: i * 0.08, duration: 0.45, ease: [0.22, 1, 0.36, 1] as const },
-})
-
 export default function Interests() {
   const [barca, setBarca] = useState<BarcaResult | null>(null)
   const [val, setVal] = useState<ValorantRank | null>(null)
@@ -51,15 +43,12 @@ export default function Interests() {
 
         {/* Left column: Spotify + Valorant stacked */}
         <div className="flex flex-col gap-3">
-          <motion.div {...fade(0)} className="flex-1 flex flex-col">
+          <div className="flex-1 flex flex-col">
             <NowPlaying />
-          </motion.div>
+          </div>
 
           {/* Valorant — moved here */}
-          <motion.div
-            {...fade(2)}
-            className="flex-1 rounded-xl border overflow-hidden relative bg-card border-border"
-          >
+          <div className="flex-1 rounded-xl border overflow-hidden relative bg-card border-border">
             <div className="px-4 py-4 h-full flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="sm:flex-1">
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Valorant</p>
@@ -87,14 +76,11 @@ export default function Interests() {
                 )}
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Soccer / Barca */}
-        <motion.div
-          {...fade(1)}
-          className="rounded-xl border overflow-hidden relative bg-card border-border"
-        >
+        <div className="rounded-xl border overflow-hidden relative bg-card border-border">
           <div className="px-4 py-6 h-full flex flex-col justify-center space-y-3">
             <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Soccer &amp; FC Barcelona</p>
             <p className="text-base text-foreground/80 leading-relaxed">
@@ -154,7 +140,7 @@ export default function Interests() {
               )}
             </div>
           </div>
-        </motion.div>
+        </div>
 
       </div>
     </SectionWrapper>
