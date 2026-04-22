@@ -34,17 +34,6 @@ export default function Experience() {
                 </ul>
                 {('github' in exp && exp.github) || ('nexusLink' in exp && exp.nexusLink) ? (
                   <div className="flex items-center gap-3">
-                    {'github' in exp && exp.github && (
-                      <a
-                        href={exp.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors"
-                      >
-                        <Github size={14} />
-                        GitHub
-                      </a>
-                    )}
                     {'nexusLink' in exp && exp.nexusLink && (
                       <a
                         href={exp.nexusLink}
@@ -54,6 +43,17 @@ export default function Experience() {
                       >
                         <ExternalLink size={14} />
                         Website
+                      </a>
+                    )}
+                    {'github' in exp && exp.github && (
+                      <a
+                        href={exp.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors"
+                      >
+                        <Github size={14} />
+                        GitHub
                       </a>
                     )}
                   </div>
