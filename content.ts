@@ -27,7 +27,7 @@ export const PROJECTS = [
     name: 'Hexapod Robot',
     hook: 'A 6-legged robot that moves, senses, and avoids obstacles.',
     description:
-      'Engineered a hexapod robot with multi-directional movement, obstacle avoidance, and real-time sensor integration. Designed the breadboard layout and soldered connections for 18 servo motors, an ultrasonic sensor, and an LCD display.',
+      'A hexapod robot with multi-directional movement, obstacle avoidance, and real-time sensor integration. I designed the breadboard layout and soldered connections for 18 servo motors, an ultrasonic sensor, and an LCD display.',
     tech: ['C++'],
     github: 'https://github.com/arnavmahadev/Arnav_BlueStampPortfolio',
     demo: 'https://arnavmahadev.github.io/Arnav_BlueStampPortfolio/' as string | undefined,
@@ -36,7 +36,7 @@ export const PROJECTS = [
     name: 'Wordle',
     hook: 'A web-based Wordle clone with real-time feedback.',
     description:
-      'Designed and built a browser-based Wordle game with game state management, guess validation, and real-time visual feedback. Features a clean, robust UI presented to 30+ peers.',
+      'A browser-based Wordle game with game state management, guess validation, and real-time visual feedback. Features 3 different modes, and a clean, robust UI presented to 30+ peers.',
     tech: ['JavaScript', 'HTML', 'CSS'],
     github: 'https://github.com/arnavmahadev/Wordle',
     demo: 'https://arnavmahadev.github.io/Wordle/' as string | undefined,
