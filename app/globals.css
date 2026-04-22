@@ -109,11 +109,6 @@
 
   .card-glow {
     box-shadow: 0 0 0 1px transparent;
-    transition: box-shadow 0.3s ease;
-  }
-  .card-glow:hover {
-    box-shadow: 0 0 0 1px color-mix(in oklch, var(--accent) 40%, transparent),
-                0 8px 32px color-mix(in oklch, var(--accent) 10%, transparent);
   }
 
   @keyframes marquee-slide {
