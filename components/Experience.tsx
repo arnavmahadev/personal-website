@@ -1,15 +1,17 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import { ExternalLink } from 'lucide-react'
 import SectionWrapper from './ui/SectionWrapper'
 import SectionHeading from './ui/SectionHeading'
 
 const experiences = [
   {
-    role: 'Project Manager',
+    role: 'Software Developer & Project Manager',
     org: 'iPick.ai',
     period: 'Jan 2026 — Present',
     location: 'Berkeley, CA',
+    link: 'https://www.ipick.ai/nexus/',
     bullets: [
       'Led development of a graph-based stock and company relationship visualizer, coordinating a team of 15 developers.',
       'Authored technical design docs, tasks, and workshops, setting goals to keep the team on track.',
@@ -20,12 +22,13 @@ const experiences = [
   {
     role: 'Software Engineering Intern',
     org: 'Claythis',
+    link: undefined,
     period: 'May 2025 — Aug 2025',
     location: 'San Mateo, CA',
     bullets: [
-      'Developed a Unity-based game showcasing Claythis\'s AI-driven 3D model generation pipeline.',
-      'Implemented modular weapon & health systems (reload, recoil, animations, armor, healing), reducing future implementation time by 40%.',
-      'Presented the project to 15 stakeholders and potential clients, demonstrating the product\'s capabilities.',
+      'Worked on the AI-driven 3D character model generation pipeline, enabling automated creation of production-ready assets.',
+      'Implemented modular systems to integrate generated models into an interactive environment, reducing future implementation time by 40%.',
+      'Presented the pipeline to 15 stakeholders and potential clients, demonstrating the product\'s capabilities.',
     ],
     accent: true,
   },
@@ -34,12 +37,10 @@ const experiences = [
 export default function Experience() {
   return (
     <SectionWrapper id="experience">
-      <SectionHeading
-        title="Experience"
-      />
+      <SectionHeading title="Experience" />
 
       <div className="relative">
-        <div className="space-y-8">
+        <div className="space-y-4">
           {experiences.map((exp, i) => (
             <motion.div
               key={exp.role + exp.org}
@@ -48,35 +49,37 @@ export default function Experience() {
               viewport={{ once: true, margin: '-60px' }}
               transition={{ delay: i * 0.15, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
             >
-              {/* Card */}
-              <div
-                className={`rounded-2xl border p-6 transition-colors duration-200
-                            ${exp.accent
-                              ? 'bg-zinc-900 border-zinc-700 hover:border-zinc-600'
-                              : 'bg-zinc-900/60 border-zinc-800 hover:border-zinc-700'
-                            }`}
-              >
-                <div className="flex flex-wrap items-start justify-between gap-2 mb-4">
+              <div className="rounded-2xl border p-5 transition-colors duration-200 bg-card border-border hover:border-accent/50">
+                <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
                   <div>
-                    <h3 className="text-base font-semibold text-zinc-100">{exp.role}</h3>
-                    <p className={`text-sm font-medium ${exp.accent ? 'text-blue-400' : 'text-zinc-400'}`}>
-                      {exp.org}
-                    </p>
+                    <h3 className="text-lg font-semibold font-serif text-foreground">{exp.role}</h3>
+                    <p className="text-base font-medium text-primary">{exp.org}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-xs font-mono text-zinc-500">{exp.period}</p>
-                    <p className="text-xs text-zinc-600">{exp.location}</p>
+                    <p className="text-sm font-mono text-muted-foreground">{exp.period}</p>
+                    <p className="text-sm text-muted-foreground/70">{exp.location}</p>
                   </div>
                 </div>
 
-                <ul className="space-y-2">
+                <ul className="space-y-2 mb-3">
                   {exp.bullets.map((bullet, j) => (
-                    <li key={j} className="flex gap-3 text-sm text-zinc-400 leading-relaxed">
-                      <span className="mt-1.5 flex-shrink-0 w-1 h-1 rounded-full bg-zinc-600" />
+                    <li key={j} className="flex gap-3 text-base text-muted-foreground leading-relaxed">
+                      <span className="mt-1.5 flex-shrink-0 w-1 h-1 rounded-full bg-border" />
                       {bullet}
                     </li>
                   ))}
                 </ul>
+                {exp.link && (
+                  <a
+                    href={exp.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    <ExternalLink size={13} />
+                    Website
+                  </a>
+                )}
               </div>
             </motion.div>
           ))}
