@@ -51,7 +51,7 @@ export const EXPERIENCE = [
     org: 'iPick.ai',
     period: 'Jan 2026 — Present',
     location: 'Berkeley, CA',
-    link: 'https://www.ipick.ai/nexus/',
+    nexusLink: 'https://www.ipick.ai/nexus/',
     bullets: [
       'Architected a graph-based company relationship visualizer for iPick.ai using React, D3.js, and PostgreSQL.',
       'Built a supplier/subsidiary relationship extraction pipeline across 5,000+ public company tickers, storing structured supplier/subsidiary edges in PostgreSQL to power graph-based visualization in the frontend.',

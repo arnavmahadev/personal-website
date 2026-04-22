@@ -1,3 +1,4 @@
+import { ExternalLink } from 'lucide-react'
 import SectionWrapper from './ui/SectionWrapper'
 import SectionHeading from './ui/SectionHeading'
 import { EXPERIENCE as experiences } from '@/content'
@@ -15,18 +16,7 @@ export default function Experience() {
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-2 mb-3">
                   <div>
                     <h3 className="text-lg font-semibold font-serif text-foreground">{exp.role}</h3>
-                    {exp.link ? (
-                      <a
-                        href={exp.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-base font-medium text-primary hover:underline"
-                      >
-                        {exp.org}
-                      </a>
-                    ) : (
-                      <p className="text-base font-medium text-primary">{exp.org}</p>
-                    )}
+                    <p className="text-base font-medium text-primary">{exp.org}</p>
                   </div>
                   <div className="sm:text-right shrink-0">
                     <p className="text-sm font-mono text-muted-foreground">{exp.period}</p>
@@ -42,6 +32,17 @@ export default function Experience() {
                     </li>
                   ))}
                 </ul>
+                {'nexusLink' in exp && exp.nexusLink && (
+                  <a
+                    href={exp.nexusLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/30 transition-colors w-fit"
+                  >
+                    <ExternalLink size={14} />
+                    Website
+                  </a>
+                )}
               </div>
             </div>
           ))}
