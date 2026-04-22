@@ -39,7 +39,7 @@ export default function Interests() {
         Hobbies
       </h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-0 items-stretch">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-0 items-stretch sm:gap-5">
 
         {/* Left column: Spotify + Valorant stacked */}
         <div className="flex flex-col gap-3">
@@ -48,8 +48,8 @@ export default function Interests() {
           </div>
 
           {/* Valorant — moved here */}
-          <div className="flex-1 rounded-xl border overflow-hidden relative bg-card border-border">
-            <div className="px-4 py-4 sm:h-full flex flex-col sm:flex-row sm:items-center gap-4">
+          <div className="flex-1 rounded-xl border overflow-hidden relative bg-card border-border sm:min-h-[220px] flex flex-col">
+            <div className="px-4 py-6 flex-1 flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="sm:flex-1">
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Valorant</p>
                 <p className="text-base text-foreground/80 leading-relaxed">
@@ -80,7 +80,7 @@ export default function Interests() {
         </div>
 
         {/* Soccer / Barca */}
-        <div className="rounded-xl border overflow-hidden relative bg-card border-border">
+        <div className="rounded-xl border overflow-hidden relative bg-card border-border sm:min-h-[480px]">
           <div className="px-4 py-6 h-full flex flex-col justify-center space-y-3">
             <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Soccer &amp; FC Barcelona</p>
             <p className="text-base text-foreground/80 leading-relaxed">
