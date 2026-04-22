@@ -34,12 +34,12 @@ export default function Experience() {
                         {exp.org}
                       </a>
                     ) : (
-                      <p className="text-base font-medium text-foreground">{exp.org}</p>
+                      <p className="text-base font-medium text-primary">{exp.org}</p>
                     )}
                   </div>
                   <div className="sm:text-right shrink-0">
                     <p className="text-sm font-mono text-muted-foreground">{exp.period}</p>
-                    <p className="text-sm text-muted-foreground/70">{exp.location}</p>
+                    <p className="text-sm text-muted-foreground/70" translate="no">{exp.location}</p>
                   </div>
                 </div>
 
