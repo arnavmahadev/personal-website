@@ -59,7 +59,7 @@ export default function Interests() {
               </div>
               <div className="hidden sm:block w-px bg-border self-stretch flex-shrink-0" />
               <div className="sm:hidden h-px bg-border flex-shrink-0" />
-              <div className="flex flex-col items-center text-center sm:flex-shrink-0">
+              <div className="flex flex-col items-center text-center sm:flex-1 sm:items-center sm:justify-center">
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Current rank</p>
                 {val ? (
                   <div className="flex items-center gap-3">
