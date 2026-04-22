@@ -31,11 +31,9 @@ const skillGroups = [
 export default function Skills() {
   return (
     <SectionWrapper id="skills">
-      <SectionHeading
-        title="Skills"
-      />
+      <SectionHeading title="Skills" />
 
-      <div className="grid sm:grid-cols-2 gap-10">
+      <div className="grid sm:grid-cols-2 gap-6">
         {skillGroups.map((group, gi) => (
           <motion.div
             key={group.category}
@@ -44,7 +42,7 @@ export default function Skills() {
             viewport={{ once: true }}
             transition={{ delay: gi * 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <p className="text-xs font-mono text-zinc-500 uppercase tracking-widest mb-3">
+            <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-3">
               {group.category}
             </p>
             <div className="flex flex-wrap gap-2">

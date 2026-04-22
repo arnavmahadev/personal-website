@@ -20,7 +20,7 @@ const projects = [
       'Engineered a hexapod robot with multi-directional movement, obstacle avoidance, and real-time sensor integration. Designed the breadboard layout and soldered connections for 18 servo motors, an ultrasonic sensor, and an LCD display.',
     tech: ['C++'],
     github: 'https://github.com/arnavmahadev/Arnav_BlueStampPortfolio',
-    demo: undefined,
+    demo: 'https://arnavmahadev.github.io/Arnav_BlueStampPortfolio/',
     featured: false,
   },
   {
@@ -30,18 +30,15 @@ const projects = [
       'Designed and built a browser-based Wordle game with game state management, guess validation, and real-time visual feedback. Features a clean, robust UI presented to 30+ peers.',
     tech: ['JavaScript', 'HTML', 'CSS'],
     github: 'https://github.com/arnavmahadev/Wordle',
-    demo: undefined,
+    demo: 'https://arnavmahadev.github.io/Wordle/',
     featured: false,
   },
 ]
 
 export default function Projects() {
   return (
-    <SectionWrapper id="projects" className="relative">
-      {/* Subtle section grid background */}
-      <div className="absolute inset-0 section-grid opacity-40 pointer-events-none" />
-
-      <div className="relative z-10">
+    <SectionWrapper id="projects">
+      <div>
         <SectionHeading
           title="Projects"
         />

@@ -29,15 +29,10 @@ const pillars = [
 export default function HowIBuild() {
   return (
     <SectionWrapper id="how-i-build" className="relative">
-      {/* Subtle blue glow behind this section */}
-      <div className="absolute inset-x-0 top-0 bottom-0 bg-gradient-to-b from-blue-950/10 via-transparent to-transparent pointer-events-none" />
+<div className="relative z-10">
+        <SectionHeading title="How I Build" />
 
-      <div className="relative z-10">
-        <SectionHeading
-          title="How I Build"
-        />
-
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-3 gap-4">
           {pillars.map((pillar, i) => (
             <motion.div
               key={pillar.number}
@@ -45,22 +40,21 @@ export default function HowIBuild() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ delay: i * 0.15, duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-              className="relative p-6 rounded-2xl bg-zinc-900 border border-zinc-800
-                         hover:border-zinc-700 transition-colors duration-300 group"
+              className="relative p-5 rounded-2xl bg-card border border-border
+                         hover:border-accent/50 transition-colors duration-300 group"
             >
-              {/* Number watermark */}
               <span className="absolute top-5 right-5 font-mono text-4xl font-bold
-                               text-zinc-800 group-hover:text-zinc-700 transition-colors select-none">
+                               text-border group-hover:text-border/70 transition-colors select-none">
                 {pillar.number}
               </span>
 
-              <div className="w-10 h-10 rounded-xl bg-blue-500/10 border border-blue-500/20
+              <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20
                               flex items-center justify-center mb-5">
-                <pillar.icon size={18} className="text-blue-400" />
+                <pillar.icon size={18} className="text-primary" />
               </div>
 
-              <h3 className="text-base font-semibold text-zinc-100 mb-2">{pillar.title}</h3>
-              <p className="text-sm text-zinc-500 leading-relaxed">{pillar.body}</p>
+              <h3 className="text-base font-semibold text-foreground mb-2">{pillar.title}</h3>
+              <p className="text-sm text-muted-foreground leading-relaxed">{pillar.body}</p>
             </motion.div>
           ))}
         </div>
