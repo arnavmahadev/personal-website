@@ -60,15 +60,15 @@ export default function Interests() {
             {...fade(2)}
             className="flex-1 rounded-xl border overflow-hidden relative bg-card border-border"
           >
-            <div className="px-4 py-4 h-full flex flex-wrap items-center gap-4">
-              <div className="flex-1">
+            <div className="px-4 py-4 h-full flex flex-col gap-4">
+              <div>
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Valorant</p>
                 <p className="text-base text-foreground/80 leading-relaxed">
                   If I&apos;m not playing sports, I&apos;m probably playing video games with my friends.
                   We play Valorant most often. We lowkey suck, but that&apos;s beside the point.
                 </p>
               </div>
-              <div className="flex-shrink-0">
+              <div>
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Current rank</p>
                 {val ? (
                   <div className="flex items-center gap-3">
@@ -107,10 +107,10 @@ export default function Interests() {
             </p>
 
             <div>
-              <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2 text-center">Latest result</p>
+              <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-3">Latest result</p>
               {barca ? (
-                <>
-                  <div className="flex items-center justify-center gap-3 mb-1">
+                <div className="flex flex-col items-start gap-2">
+                  <div className="flex items-center gap-2">
                     <span className={`text-xs font-mono font-bold px-1.5 py-0.5 rounded ${
                       barca.result === 'W' ? 'bg-green-500/15 text-green-500' :
                       barca.result === 'L' ? 'bg-red-500/15 text-red-500' :
@@ -118,30 +118,35 @@ export default function Interests() {
                     }`}>{barca.result}</span>
                     <p className="text-sm text-muted-foreground">{barca.league}</p>
                   </div>
-                  <div className="flex items-center justify-center gap-3">
-                    <div className="flex items-center gap-1.5">
+                  {/* Home team */}
+                  <div className="flex items-center justify-between w-full gap-3">
+                    <div className="flex items-center gap-2 min-w-0">
                       {(barca.barcaHome ? barca.barcaLogo : barca.oppLogo) && (
-                        <Image src={(barca.barcaHome ? barca.barcaLogo : barca.oppLogo)!} alt="" width={20} height={20} className="object-contain" />
+                        <Image src={(barca.barcaHome ? barca.barcaLogo : barca.oppLogo)!} alt="" width={22} height={22} className="object-contain shrink-0" />
                       )}
-                      <p className="text-base font-medium text-foreground/90">
+                      <p className="text-base font-medium text-foreground/90 truncate">
                         {barca.barcaHome ? 'FC Barcelona' : barca.opponent}
                       </p>
                     </div>
-                    <p className="text-xl font-bold text-foreground">
+                    <p className="text-xl font-bold text-foreground shrink-0">
                       {barca.barcaHome ? barca.barcaScore : barca.oppScore}
-                      <span className="text-muted-foreground mx-1">–</span>
-                      {barca.barcaHome ? barca.oppScore : barca.barcaScore}
                     </p>
-                    <div className="flex items-center gap-1.5">
-                      <p className="text-base font-medium text-foreground/90">
+                  </div>
+                  {/* Away team */}
+                  <div className="flex items-center justify-between w-full gap-3">
+                    <div className="flex items-center gap-2 min-w-0">
+                      {(barca.barcaHome ? barca.oppLogo : barca.barcaLogo) && (
+                        <Image src={(barca.barcaHome ? barca.oppLogo : barca.barcaLogo)!} alt="" width={22} height={22} className="object-contain shrink-0" />
+                      )}
+                      <p className="text-base font-medium text-foreground/90 truncate">
                         {barca.barcaHome ? barca.opponent : 'FC Barcelona'}
                       </p>
-                      {(barca.barcaHome ? barca.oppLogo : barca.barcaLogo) && (
-                        <Image src={(barca.barcaHome ? barca.oppLogo : barca.barcaLogo)!} alt="" width={20} height={20} className="object-contain" />
-                      )}
                     </div>
+                    <p className="text-xl font-bold text-foreground shrink-0">
+                      {barca.barcaHome ? barca.oppScore : barca.barcaScore}
+                    </p>
                   </div>
-                </>
+                </div>
               ) : (
                 <div className="h-10 animate-pulse bg-muted rounded w-48" />
               )}
