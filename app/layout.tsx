@@ -2,11 +2,11 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Arnav Mahadev — Software Engineer',
+  title: 'Arnav Mahadev',
   description:
     'EECS student at UC Berkeley. I build full-stack tools and data-driven products that make complex systems more usable.',
   openGraph: {
-    title: 'Arnav Mahadev — Software Engineer',
+    title: 'Arnav Mahadev',
     description:
       'EECS student at UC Berkeley. Full-stack developer with experience in backend systems, data pipelines, and product engineering.',
     type: 'website',
