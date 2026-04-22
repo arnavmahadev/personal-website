@@ -62,7 +62,7 @@ export default function Interests() {
               <div className="flex flex-col items-center text-center sm:flex-1 sm:items-center sm:justify-center">
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Current rank</p>
                 {val ? (
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center justify-center gap-4">
                     {val.icon && (
                       <Image src={val.icon} alt={val.rank} width={72} height={72} />
                     )}
