@@ -50,8 +50,8 @@ export default function Interests() {
           {/* Valorant — moved here */}
           <div className="flex-1 rounded-xl border overflow-hidden relative bg-card border-border">
             <div className="px-4 py-4 pb-6 sm:pb-4 sm:h-full flex flex-col sm:flex-row sm:items-start gap-4">
-              <div className="sm:flex-1 sm:self-center">
-                <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Valorant</p>
+              <div className="sm:flex-1 sm:self-stretch sm:relative flex flex-col sm:justify-center">
+                <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2 sm:mb-0 sm:absolute sm:top-0 sm:left-0">Valorant</p>
                 <p className="text-base text-foreground/80 leading-relaxed">
                   If I&apos;m not playing sports, I&apos;m probably playing video games with my friends.
                   We play Valorant most often. We lowkey suck, but that&apos;s beside the point.
