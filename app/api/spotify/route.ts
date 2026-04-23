@@ -66,7 +66,8 @@ async function fetchTrack(): Promise<TrackResult> {
   })
 
   if (!recentRes.ok) {
-    return { isPlaying: false, title: null, error: `recent-${recentRes.status}` }
+    const body = await recentRes.text()
+    return { isPlaying: false, title: null, error: `recent-${recentRes.status}: ${body}` }
   }
 
   const recentData = await recentRes.json()
