@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server'
 
-export const dynamic = 'force-dynamic'
-
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID!
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET!
 const REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN!
@@ -10,12 +8,7 @@ const TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token'
 const NOW_PLAYING_ENDPOINT = 'https://api.spotify.com/v1/me/player/currently-playing'
 const RECENTLY_PLAYED_ENDPOINT = 'https://api.spotify.com/v1/me/player/recently-played?limit=1'
 
-let cachedToken: { access_token: string; expires_at: number } | null = null
-
 async function getAccessToken() {
-  if (cachedToken && Date.now() < cachedToken.expires_at) {
-    return { access_token: cachedToken.access_token }
-  }
   const basic = Buffer.from(`${CLIENT_ID}:${CLIENT_SECRET}`).toString('base64')
   const res = await fetch(TOKEN_ENDPOINT, {
     method: 'POST',
@@ -27,11 +20,9 @@ async function getAccessToken() {
       grant_type: 'refresh_token',
       refresh_token: REFRESH_TOKEN,
     }),
-    cache: 'no-store',
+    next: { revalidate: 3500 },
   })
-  const data = await res.json()
-  cachedToken = { access_token: data.access_token, expires_at: Date.now() + (data.expires_in - 60) * 1000 }
-  return data
+  return res.json()
 }
 
 export async function GET() {
@@ -76,10 +67,8 @@ export async function GET() {
       })
     }
 
-    console.error('[spotify] no track found, recentData:', JSON.stringify(recentData))
     return NextResponse.json({ isPlaying: false, title: null })
-  } catch (e) {
-    console.error('[spotify] caught error:', e)
+  } catch {
     return NextResponse.json({ isPlaying: false, title: null })
   }
 }
