@@ -109,7 +109,7 @@ export default function NowPlaying() {
           {/* Music taste blurb */}
           <div className="sm:flex-1 flex flex-col justify-center">
             <p className="text-base text-foreground/80 leading-relaxed">
-              I don&apos;t know what my music taste is. The best way I can describe it is &ldquo;I like what I like.&rdquo;
+              The best way I can describe my music taste is &ldquo;I like what I like.&rdquo;
             </p>
           </div>
 
