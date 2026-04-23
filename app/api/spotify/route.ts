@@ -76,8 +76,10 @@ export async function GET() {
       })
     }
 
+    console.error('[spotify] no track found, recentData:', JSON.stringify(recentData))
     return NextResponse.json({ isPlaying: false, title: null })
-  } catch {
+  } catch (e) {
+    console.error('[spotify] caught error:', e)
     return NextResponse.json({ isPlaying: false, title: null })
   }
 }
