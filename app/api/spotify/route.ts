@@ -88,7 +88,7 @@ async function fetchTrack(): Promise<TrackResult> {
 }
 
 const getSpotifyTrack = unstable_cache(fetchTrack, ['spotify-track-v2'], {
-  revalidate: 60,
+  revalidate: 10,
 })
 
 export async function GET() {
