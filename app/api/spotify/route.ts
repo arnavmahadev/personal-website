@@ -15,6 +15,7 @@ type TrackResult = {
   album?: string
   albumArt?: string
   songUrl?: string
+  error?: string
 }
 
 async function fetchAccessToken(): Promise<string | null> {
@@ -39,7 +40,7 @@ async function fetchAccessToken(): Promise<string | null> {
 async function fetchTrack(): Promise<TrackResult> {
   const access_token = await fetchAccessToken()
   if (!access_token) {
-    return { isPlaying: false, title: null }
+    return { isPlaying: false, title: null, error: 'token-unavailable' }
   }
 
   const nowRes = await fetch(NOW_PLAYING_ENDPOINT, {
@@ -67,7 +68,7 @@ async function fetchTrack(): Promise<TrackResult> {
   })
 
   if (!recentRes.ok) {
-    return { isPlaying: false, title: null }
+    return { isPlaying: false, title: null, error: `recent-${recentRes.status}` }
   }
 
   const recentData = await recentRes.json()
