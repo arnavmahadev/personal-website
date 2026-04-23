@@ -43,13 +43,13 @@ export default function Interests() {
 
         {/* Left column: Spotify + Valorant stacked */}
         <div className="flex flex-col gap-3">
-          <div className="flex-1 flex flex-col">
+          <div className="flex flex-col">
             <NowPlaying />
           </div>
 
           {/* Valorant — moved here */}
           <div className="flex-1 rounded-xl border overflow-hidden relative bg-card border-border">
-            <div className="px-4 py-4 sm:h-full flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="px-4 py-4 pb-6 sm:pb-4 sm:h-full flex flex-col sm:flex-row sm:items-center gap-4">
               <div className="sm:flex-1">
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Valorant</p>
                 <p className="text-base text-foreground/80 leading-relaxed">
