@@ -96,7 +96,7 @@ export default function NowPlaying() {
         .catch(() => {})
     }
     poll()
-    const interval = setInterval(poll, 30_000)
+    const interval = setInterval(poll, 15_000)
     return () => clearInterval(interval)
   }, [])
 
