@@ -46,7 +46,7 @@ function TrackPanel({ track }: { track: Track | null }) {
           href={track.songUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-row items-center gap-3 group min-w-0 w-full sm:w-fit sm:mx-auto"
+          className="flex flex-row items-center gap-3 group min-w-0 w-fit mx-auto"
         >
           {track.albumArt && (
             <Image
@@ -102,8 +102,11 @@ export default function NowPlaying() {
 
   return (
     <div className="relative rounded-xl bg-card border border-border overflow-hidden h-full">
-      <div className="px-4 py-4 h-full flex flex-col gap-3">
+      <div className="px-4 py-4 h-full flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-8">
         <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Spotify</p>
+
+        <div className="hidden sm:block w-px bg-border self-stretch flex-shrink-0" />
+        <div className="sm:hidden h-px bg-border flex-shrink-0" />
 
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-8 flex-1">
           {/* Music taste blurb */}
@@ -112,10 +115,6 @@ export default function NowPlaying() {
               The best way I can describe my music taste is &ldquo;I like what I like.&rdquo;
             </p>
           </div>
-
-          {/* Divider — vertical on sm+, horizontal on mobile */}
-          <div className="hidden sm:block w-px bg-border flex-shrink-0" />
-          <div className="sm:hidden h-px bg-border flex-shrink-0" />
 
           {/* Track info */}
           <TrackPanel track={track} />
