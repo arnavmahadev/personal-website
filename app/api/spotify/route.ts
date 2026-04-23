@@ -70,7 +70,8 @@ export async function GET() {
     }
 
     return NextResponse.json({ isPlaying: false, title: null })
-  } catch {
+  } catch (e) {
+    console.error('[spotify]', e)
     return NextResponse.json({ isPlaying: false, title: null })
   }
 }
