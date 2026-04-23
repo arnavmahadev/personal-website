@@ -1,4 +1,3 @@
-import { unstable_cache } from 'next/cache'
 import { NextResponse } from 'next/server'
 
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID!
@@ -16,7 +15,6 @@ type TrackResult = {
   album?: string
   albumArt?: string
   songUrl?: string
-  error?: string
 }
 
 async function fetchAccessToken(): Promise<string | null> {
@@ -31,6 +29,7 @@ async function fetchAccessToken(): Promise<string | null> {
       grant_type: 'refresh_token',
       refresh_token: REFRESH_TOKEN,
     }),
+    next: { revalidate: 3400 },
   })
   if (!res.ok) return null
   const data = await res.json()
@@ -40,11 +39,12 @@ async function fetchAccessToken(): Promise<string | null> {
 async function fetchTrack(): Promise<TrackResult> {
   const access_token = await fetchAccessToken()
   if (!access_token) {
-    return { isPlaying: false, title: null, error: 'token-unavailable' }
+    return { isPlaying: false, title: null }
   }
 
   const nowRes = await fetch(NOW_PLAYING_ENDPOINT, {
     headers: { Authorization: `Bearer ${access_token}` },
+    next: { revalidate: 10 },
   })
 
   if (nowRes.status === 200) {
@@ -63,11 +63,11 @@ async function fetchTrack(): Promise<TrackResult> {
 
   const recentRes = await fetch(RECENTLY_PLAYED_ENDPOINT, {
     headers: { Authorization: `Bearer ${access_token}` },
+    next: { revalidate: 10 },
   })
 
   if (!recentRes.ok) {
-    const body = await recentRes.text()
-    return { isPlaying: false, title: null, error: `recent-${recentRes.status}: ${body}` }
+    return { isPlaying: false, title: null }
   }
 
   const recentData = await recentRes.json()
@@ -87,11 +87,7 @@ async function fetchTrack(): Promise<TrackResult> {
   return { isPlaying: false, title: null }
 }
 
-const getSpotifyTrack = unstable_cache(fetchTrack, ['spotify-track-v2'], {
-  revalidate: 10,
-})
-
 export async function GET() {
-  const track = await getSpotifyTrack()
+  const track = await fetchTrack()
   return NextResponse.json(track)
 }
