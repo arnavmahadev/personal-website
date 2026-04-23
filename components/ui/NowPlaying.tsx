@@ -102,24 +102,24 @@ export default function NowPlaying() {
 
   return (
     <div className="relative rounded-xl bg-card border border-border overflow-hidden h-full">
-      <div className="px-4 py-4 h-full flex flex-col gap-3">
-        <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Spotify</p>
+      <div className="px-4 py-4 h-full flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-8">
+        {/* Mobile-only title */}
+        <p className="sm:hidden text-sm font-mono text-muted-foreground uppercase tracking-widest">Spotify</p>
 
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-8 flex-1">
-          {/* Music taste blurb */}
-          <div className="sm:flex-1 flex flex-col justify-center">
-            <p className="text-base text-foreground/80 leading-relaxed">
-              The best way I can describe my music taste is &ldquo;I like what I like.&rdquo;
-            </p>
-          </div>
-
-          {/* Divider — vertical on sm+, horizontal on mobile */}
-          <div className="hidden sm:block w-px bg-border self-stretch flex-shrink-0" />
-          <div className="sm:hidden h-px bg-border flex-shrink-0" />
-
-          {/* Track info */}
-          <TrackPanel track={track} />
+        {/* Music taste blurb (with desktop title) */}
+        <div className="sm:flex-1">
+          <p className="hidden sm:block text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Spotify</p>
+          <p className="text-base text-foreground/80 leading-relaxed">
+            The best way I can describe my music taste is &ldquo;I like what I like.&rdquo;
+          </p>
         </div>
+
+        {/* Divider — vertical on sm+, horizontal on mobile */}
+        <div className="hidden sm:block w-px bg-border self-stretch flex-shrink-0" />
+        <div className="sm:hidden h-px bg-border flex-shrink-0" />
+
+        {/* Track info */}
+        <TrackPanel track={track} />
       </div>
     </div>
   )
