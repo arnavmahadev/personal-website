@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion'
 import { Github, Linkedin, Mail, Download } from 'lucide-react'
-import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import { RESUME_URL, SOCIALS } from '@/content'
 
@@ -18,13 +17,6 @@ const item = {
 }
 
 export default function Hero() {
-  const [scrolled, setScrolled] = useState(false)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   return (
     <section className="relative h-screen sm:min-h-screen flex items-start sm:items-center overflow-hidden pt-16">
@@ -114,25 +106,6 @@ export default function Hero() {
 
       </div>
 
-        {/* Scroll cue */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: scrolled ? 0 : 1 }}
-          transition={{ delay: 1, duration: 0.6 }}
-          className="fixed bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none z-10"
-        >
-          <motion.div
-            animate={{ y: [0, -5, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-            className="w-px h-6 bg-gradient-to-b from-transparent to-border"
-          />
-          <span className="text-[10px] font-mono text-muted-foreground tracking-widest uppercase">scroll</span>
-          <motion.div
-            animate={{ y: [0, 5, 0] }}
-            transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-            className="w-px h-6 bg-gradient-to-b from-border to-transparent"
-          />
-        </motion.div>
     </section>
   )
 }
