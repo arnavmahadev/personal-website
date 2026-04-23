@@ -49,7 +49,7 @@ export default function Interests() {
 
           {/* Valorant — moved here */}
           <div className="flex-1 rounded-xl border overflow-hidden relative bg-card border-border">
-            <div className="px-4 py-4 pb-6 sm:pb-4 sm:h-full flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="px-4 py-4 pb-6 sm:pb-4 sm:h-full flex flex-col sm:flex-row sm:items-start gap-4">
               <div className="sm:flex-1">
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Valorant</p>
                 <p className="text-base text-foreground/80 leading-relaxed">
@@ -59,7 +59,7 @@ export default function Interests() {
               </div>
               <div className="hidden sm:block w-px bg-border self-stretch flex-shrink-0" />
               <div className="sm:hidden h-px bg-border flex-shrink-0" />
-              <div className="flex flex-col items-center text-center sm:flex-1 sm:items-center sm:justify-center">
+              <div className="flex flex-col items-center text-center sm:flex-1 sm:items-center sm:justify-center sm:self-stretch">
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Current rank</p>
                 {val ? (
                   <div className="flex items-center justify-center gap-4">
@@ -81,7 +81,7 @@ export default function Interests() {
 
         {/* Soccer / Barca */}
         <div className="rounded-xl border overflow-hidden relative bg-card border-border">
-          <div className="px-4 py-6 h-full flex flex-col justify-center space-y-3">
+          <div className="px-4 py-4 sm:py-4 h-full flex flex-col space-y-3">
             <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Soccer &amp; FC Barcelona</p>
             <p className="text-base text-foreground/80 leading-relaxed">
               I&apos;ve loved soccer since I was 4 and I played competitively until college.

@@ -114,7 +114,7 @@ export default function NowPlaying() {
           </div>
 
           {/* Divider — vertical on sm+, horizontal on mobile */}
-          <div className="hidden sm:block w-px bg-border flex-shrink-0" />
+          <div className="hidden sm:block w-px bg-border self-stretch flex-shrink-0" />
           <div className="sm:hidden h-px bg-border flex-shrink-0" />
 
           {/* Track info */}
