@@ -73,7 +73,7 @@ export async function GET() {
     }
 
     return NextResponse.json({ isPlaying: false, title: null })
-  } catch {
-    return NextResponse.json({ isPlaying: false, title: null })
+  } catch (err) {
+    return NextResponse.json({ isPlaying: false, title: null, error: String(err) })
   }
 }
