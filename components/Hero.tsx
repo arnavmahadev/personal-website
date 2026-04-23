@@ -1,9 +1,9 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, Download } from 'lucide-react'
+import { Download } from 'lucide-react'
 import Image from 'next/image'
-import { RESUME_URL, SOCIALS } from '@/content'
+import { RESUME_URL } from '@/content'
 
 
 const container = {
@@ -80,26 +80,6 @@ export default function Hero() {
               </a>
             </motion.div>
 
-            {/* Social icons */}
-            <motion.div variants={item} className="flex items-center gap-3">
-              {[
-                { href: SOCIALS.github, label: 'GitHub', icon: <Github size={20} />, external: true },
-                { href: SOCIALS.linkedin, label: 'LinkedIn', icon: <Linkedin size={20} />, external: true },
-                { href: `mailto:${SOCIALS.email}`, label: 'Email', icon: <Mail size={20} />, external: false },
-              ].map(({ href, label, icon, external }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={external ? '_blank' : undefined}
-                  rel={external ? 'noopener noreferrer' : undefined}
-                  className="p-2.5 rounded-lg text-muted-foreground hover:text-foreground hover:bg-card
-                             transition-all duration-200"
-                  aria-label={label}
-                >
-                  {icon}
-                </a>
-              ))}
-            </motion.div>
           </motion.div>
 
         </div>
