@@ -88,8 +88,7 @@ export default function Interests() {
               I was captain of both my club team and high school varsity team, made the all league first team all 4 years of high school, and finished with <span className="font-semibold text-foreground">45 goals and 20 assists</span> over 4 years. You can still find me playing pickup or intramural games :)
             </p>
             <p className="text-base text-foreground/80 leading-relaxed">
-              I&apos;ve been a Barça fan since age 4 because of my brother (although I&apos;ll never
-              admit that to him). I catch most of their games, and honestly my mood heavily
+              I&apos;ve been a Barça fan since age 4 because of my older brother. I catch most of their games, and honestly my mood heavily
               depends on the result. (jk… mostly.)
             </p>
 
