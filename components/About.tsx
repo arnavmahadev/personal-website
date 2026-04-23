@@ -27,7 +27,7 @@ export default function About() {
           <p>
             I&apos;m currently looking for opportunities where I can
             contribute to real products, learn from experienced engineers, and work
-            on software that genuinely helps people.
+            on projects that make a difference.
           </p>
         </div>
 
