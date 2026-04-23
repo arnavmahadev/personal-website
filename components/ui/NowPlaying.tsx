@@ -107,7 +107,7 @@ export default function NowPlaying() {
         <p className="sm:hidden text-sm font-mono text-muted-foreground uppercase tracking-widest">Spotify</p>
 
         {/* Music taste blurb (with desktop title) */}
-        <div className="sm:flex-1">
+        <div className="sm:flex-1 sm:self-center">
           <p className="hidden sm:block text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Spotify</p>
           <p className="text-base text-foreground/80 leading-relaxed">
             The best way I can describe my music taste is &ldquo;I like what I like.&rdquo;
