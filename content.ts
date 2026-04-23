@@ -1,7 +1,7 @@
 // ─── Edit this file to update your site content ───────────────────────────────
 
 export const RESUME_URL =
-  'https://drive.google.com/file/d/11v-tvvHh2CdliPNZNIdr01ewvaVRyWiD/view?usp=sharing'
+  'https://drive.google.com/file/d/1f5nck1-dcLVkcI7P7tIVvtUHmlYw4Yrs/view?usp=sharing'
 
 export const SOCIALS = {
   github:    'https://github.com/arnavmahadev',
