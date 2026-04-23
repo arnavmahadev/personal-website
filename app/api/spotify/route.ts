@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server'
 
+export const revalidate = 30
+
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID!
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET!
 const REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN!
@@ -20,7 +22,6 @@ async function getAccessToken() {
       grant_type: 'refresh_token',
       refresh_token: REFRESH_TOKEN,
     }),
-    next: { revalidate: 3500 },
   })
   return res.json()
 }
