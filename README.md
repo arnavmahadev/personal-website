@@ -1,6 +1,6 @@
 # arnavmaha.dev
 
-My personal portfolio site — built to be fast, clean, and easy to maintain.
+My personal portfolio site.
 
 ## Stack
 
@@ -18,12 +18,7 @@ My personal portfolio site — built to be fast, clean, and easy to maintain.
 - FC Barcelona latest result widget
 - Countdown timers for upcoming trips
 - Collapsible photo galleries for past adventures
-- Dark / light theme with no flash on load
-- Fully responsive
-
-## Content
-
-All site content (projects, experience, links, trips) lives in [`content.ts`](./content.ts) — edit that file to update anything.
+- Dark / light theme
 
 ## Project Structure
 
@@ -34,16 +29,15 @@ All site content (projects, experience, links, trips) lives in [`content.ts`](./
 │   └── page.tsx           # Page — assembles all sections
 │
 ├── components/
-│   ├── Navbar.tsx
-│   ├── Hero.tsx
-│   ├── About.tsx
-│   ├── Experience.tsx
-│   ├── Projects.tsx
-│   ├── Skills.tsx
-│   ├── HowIBuild.tsx
+│   ├── Navbar.tsx         # Header
+│   ├── Hero.tsx           # Hero page
+│   ├── About.tsx          # About me
+│   ├── Experience.tsx     # Work experience
+│   ├── Projects.tsx       # Featured projects
 │   ├── Interests.tsx      # Spotify, Valorant, Barca widgets
-│   ├── Adventures.tsx     # Upcoming + past trips
-│   ├── Contact.tsx
+│   ├── Adventures.tsx     # Upcoming and past trips
+│   ├── Contact.tsx        # Contact info
+│   ├── Footer.tsx         # Footer
 │   └── ui/                # Shared UI components
 │
 ├── app/api/
