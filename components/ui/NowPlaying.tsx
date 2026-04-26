@@ -73,11 +73,12 @@ function TrackPanel({ track }: { track: Track | null }) {
           </div>
         </a>
       ) : (
-        <div className="flex items-center gap-3">
-          <div className="rounded-md bg-muted flex-shrink-0 animate-pulse w-24 h-24" />
-          <div className="flex-1 min-w-0">
-            <p className="text-xs text-muted-foreground mb-1">Not playing</p>
-            <p className="text-sm text-muted-foreground truncate">—</p>
+        <div className="flex flex-row items-center gap-3 min-w-0 w-fit mx-auto">
+          <div className="rounded-md bg-muted flex-shrink-0 animate-pulse w-16 h-16 sm:w-24 sm:h-24" />
+          <div className="flex-1 min-w-0 text-left space-y-1.5">
+            <div className="h-4 w-24 rounded animate-pulse bg-muted" />
+            <div className="h-5 w-40 rounded animate-pulse bg-muted" />
+            <div className="h-4 w-28 rounded animate-pulse bg-muted" />
           </div>
         </div>
       )}

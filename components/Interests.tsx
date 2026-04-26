@@ -72,7 +72,13 @@ export default function Interests() {
                     </div>
                   </div>
                 ) : (
-                  <div className="h-10 animate-pulse bg-muted rounded w-36" />
+                  <div className="flex items-center justify-center gap-4">
+                    <div className="w-[72px] h-[72px] rounded animate-pulse bg-muted" />
+                    <div className="space-y-2">
+                      <div className="h-6 w-24 rounded animate-pulse bg-muted" />
+                      <div className="h-4 w-14 rounded animate-pulse bg-muted" />
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
@@ -134,7 +140,26 @@ export default function Interests() {
                   </div>
                 </div>
               ) : (
-                <div className="h-10 animate-pulse bg-muted rounded w-48" />
+                <div className="flex flex-col items-start gap-2">
+                  <div className="flex items-center gap-2">
+                    <div className="h-5 w-7 rounded animate-pulse bg-muted" />
+                    <div className="h-4 w-28 rounded animate-pulse bg-muted" />
+                  </div>
+                  <div className="flex items-center justify-between w-full gap-3">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="w-[22px] h-[22px] rounded animate-pulse bg-muted" />
+                      <div className="h-5 w-32 rounded animate-pulse bg-muted" />
+                    </div>
+                    <div className="h-7 w-5 rounded animate-pulse bg-muted" />
+                  </div>
+                  <div className="flex items-center justify-between w-full gap-3">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="w-[22px] h-[22px] rounded animate-pulse bg-muted" />
+                      <div className="h-5 w-32 rounded animate-pulse bg-muted" />
+                    </div>
+                    <div className="h-7 w-5 rounded animate-pulse bg-muted" />
+                  </div>
+                </div>
               )}
             </div>
           </div>

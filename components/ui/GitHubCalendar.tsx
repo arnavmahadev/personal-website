@@ -72,7 +72,17 @@ export default function GitHubCalendar() {
 
   if (!weeks.length) {
     return (
-      <div className="h-32 animate-pulse bg-muted rounded-lg" />
+      <div className="w-full">
+        <div className="text-base text-muted-foreground mb-3 font-mono opacity-0 select-none" aria-hidden>
+          0 contributions in the last year
+        </div>
+        <div className="overflow-x-auto -mx-1 px-1 pb-3">
+          <div
+            className="animate-pulse bg-muted rounded-lg w-full"
+            style={{ aspectRatio: '53 / 8' }}
+          />
+        </div>
+      </div>
     )
   }
 
