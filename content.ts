@@ -1,7 +1,41 @@
 // ─── Edit this file to update your site content ───────────────────────────────
 
-export const RESUME_URL =
-  'https://drive.google.com/file/d/1f5nck1-dcLVkcI7P7tIVvtUHmlYw4Yrs/view?usp=sharing'
+// ─── Coursework ───────────────────────────────────────────────────────────────
+
+export type Course = {
+  code: string
+  name: string
+  semester: string
+  cheatsheet?: string  // URL to PDF — leave undefined if not yet uploaded
+}
+
+export const COURSES: Course[] = [
+  // ── Fall 2024 ──────────────────────────────────────────────────────────────
+  { code: 'CS 61A',    name: 'Structure and Interpretation of Computer Programs', semester: 'Fall 2024',   cheatsheet: undefined },
+  { code: 'EECS 16A',  name: 'Designing Information Devices and Systems I',       semester: 'Fall 2024',   cheatsheet: '/cheatsheets/EECS 16A Cheatsheet.pdf' },
+
+  // ── Spring 2025 ────────────────────────────────────────────────────────────
+  { code: 'CS 61B',    name: 'Data Structures',                                   semester: 'Spring 2025', cheatsheet: undefined },
+  { code: 'EECS 16B',  name: 'Designing Information Devices and Systems II',      semester: 'Spring 2025', cheatsheet: '/cheatsheets/EECS 16B Cheatsheet.pdf' },
+  { code: 'MATH 53',   name: 'Multivariable Calculus',                            semester: 'Spring 2025', cheatsheet: undefined },
+
+  // ── Fall 2025 ──────────────────────────────────────────────────────────────
+  { code: 'CS 61C',    name: 'Great Ideas of Computer Architecture',              semester: 'Fall 2025',   cheatsheet: '/cheatsheets/CS 61C Cheatsheet.pdf' },
+  { code: 'CS 70',     name: 'Discrete Mathematics and Probability Theory',       semester: 'Fall 2025',   cheatsheet: '/cheatsheets/CS 70 Cheatsheet.pdf' },
+  { code: 'PHYSICS 7B',name: 'Physics for Scientists and Engineers',              semester: 'Fall 2025',   cheatsheet: undefined },
+
+  // ── Spring 2026 ────────────────────────────────────────────────────────────
+  { code: 'CS 170',    name: 'Efficient Algorithms and Intractable Problems',     semester: 'Spring 2026', cheatsheet: '/cheatsheets/CS 170 Cheatsheet.pdf' },
+  { code: 'CS 186',    name: 'Introduction to Database Systems',                  semester: 'Spring 2026', cheatsheet: '/cheatsheets/CS 186 Cheatsheet.pdf' },
+  { code: 'EECS 126',  name: 'Probability and Random Processes',                  semester: 'Spring 2026', cheatsheet: '/cheatsheets/EECS 126 Cheatsheet.pdf' },
+
+  // ── Fall 2026 ──────────────────────────────────────────────────────────────
+  { code: 'CS 161',    name: 'Computer Security',                                 semester: 'Fall 2026',   cheatsheet: undefined },
+  { code: 'CS 168',    name: 'Internet Architecture and Protocols',               semester: 'Fall 2026',   cheatsheet: undefined },
+  { code: 'CS 189',    name: 'Introduction to Machine Learning',                  semester: 'Fall 2026',   cheatsheet: undefined },
+]
+
+export const RESUME_URL = '/resume/Arnav Mahadev Resume.pdf'
 
 export const SOCIALS = {
   github:    'https://github.com/arnavmahadev',
