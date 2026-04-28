@@ -10,9 +10,9 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Libre Baskerville', 'serif'],
-        serif: ['Lora', 'serif'],
-        mono: ['IBM Plex Mono', 'monospace'],
+        sans: ['var(--font-libre-baskerville)', 'serif'],
+        serif: ['var(--font-lora)', 'serif'],
+        mono: ['var(--font-ibm-plex-mono)', 'monospace'],
       },
       colors: {
         background: 'var(--background)',

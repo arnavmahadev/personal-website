@@ -1,7 +1,31 @@
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
+import { Libre_Baskerville, Lora, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
+
+const libreBaskerville = Libre_Baskerville({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-libre-baskerville',
+  display: 'swap',
+})
+
+const lora = Lora({
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+  style: ['normal', 'italic'],
+  variable: '--font-lora',
+  display: 'swap',
+})
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  variable: '--font-ibm-plex-mono',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'Arnav Mahadev',
@@ -22,7 +46,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth" suppressHydrationWarning>
+    <html lang="en" className={`scroll-smooth ${libreBaskerville.variable} ${lora.variable} ${ibmPlexMono.variable}`} suppressHydrationWarning>
       <head>
         {/* Prevent flash of wrong theme */}
         <meta name="format-detection" content="telephone=no, address=no, email=no" />
