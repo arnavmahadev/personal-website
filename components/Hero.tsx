@@ -35,6 +35,7 @@ export default function Hero() {
                 alt="Arnav Mahadev"
                 width={120}
                 height={120}
+                priority
                 className="rounded-full object-cover border-2 border-border"
               />
             </motion.div>

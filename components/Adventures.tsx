@@ -26,7 +26,18 @@ function useCountdown(target: Date) {
 
 function Countdown({ target }: { target: Date }) {
   const time = useCountdown(target)
-  if (!time) return <div className="h-10" />
+  if (!time) return (
+    <div className="flex items-end gap-3">
+      {['days', 'hrs', 'min', 'sec'].map((label) => (
+        <div key={label} className="flex flex-col items-center">
+          <div className="h-8 w-8 rounded animate-pulse bg-muted mb-0.5" />
+          <span className="text-xs font-mono text-muted-foreground uppercase tracking-widest mt-0.5 opacity-0 select-none">
+            {label}
+          </span>
+        </div>
+      ))}
+    </div>
+  )
   const { days, hours, minutes, seconds, done } = time
   if (done) return <p className="text-sm font-semibold text-green-400">It&apos;s happening! 🎉</p>
 
