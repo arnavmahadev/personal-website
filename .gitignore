@@ -12,4 +12,4 @@ out/
 # misc
 .DS_Store
 *.pem
-tsconfig.tsbuildinfo
+*.tsbuildinfo
