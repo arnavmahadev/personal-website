@@ -15,8 +15,9 @@ function useCountdown(target: Date) {
     const seconds = Math.floor((diff % 60_000)     / 1_000)
     return { days, hours, minutes, seconds, done: false }
   }
-  const [time, setTime] = useState(calc)
+  const [time, setTime] = useState<ReturnType<typeof calc> | null>(null)
   useEffect(() => {
+    setTime(calc())
     const id = setInterval(() => setTime(calc()), 1_000)
     return () => clearInterval(id)
   }, [target])
@@ -24,7 +25,9 @@ function useCountdown(target: Date) {
 }
 
 function Countdown({ target }: { target: Date }) {
-  const { days, hours, minutes, seconds, done } = useCountdown(target)
+  const time = useCountdown(target)
+  if (!time) return <div className="h-10" />
+  const { days, hours, minutes, seconds, done } = time
   if (done) return <p className="text-sm font-semibold text-green-400">It&apos;s happening! 🎉</p>
 
   const units = [
