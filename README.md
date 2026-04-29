@@ -48,8 +48,7 @@ My personal portfolio site.
 │   ├── spotify/           # Now-playing endpoint
 │   ├── valorant/          # Rank endpoint (Redis-cached)
 │   ├── barca/             # Latest result endpoint
-│   ├── github/            # Contribution activity endpoint
-│   └── health/            # Health check endpoint
+│   └── github/            # Contribution activity endpoint
 │
 └── content.ts             # All editable site content
 ```
