@@ -8,16 +8,19 @@ My personal portfolio site.
 - **Language** — TypeScript
 - **Styling** — Tailwind CSS
 - **Animations** — Framer Motion
+- **Cache** — Upstash Redis
 - **Analytics** — Vercel Analytics
 - **Deployment** — Vercel
 
 ## Features
 
 - Live Spotify now-playing widget
-- Valorant rank tracker
+- Valorant rank tracker (Redis-cached)
 - FC Barcelona latest result widget
+- GitHub contribution activity
 - Countdown timers for upcoming trips
 - Collapsible photo galleries for past adventures
+- Scroll-triggered fade-in animations
 - Dark / light theme
 
 ## Project Structure
@@ -30,10 +33,11 @@ My personal portfolio site.
 │
 ├── components/
 │   ├── Navbar.tsx         # Header
-│   ├── Hero.tsx           # Hero page
+│   ├── Hero.tsx           # Hero section
 │   ├── About.tsx          # About me
 │   ├── Experience.tsx     # Work experience
 │   ├── Projects.tsx       # Featured projects
+│   ├── Coursework.tsx     # Relevant coursework
 │   ├── Interests.tsx      # Spotify, Valorant, Barca widgets
 │   ├── Adventures.tsx     # Upcoming and past trips
 │   ├── Contact.tsx        # Contact info
@@ -42,8 +46,10 @@ My personal portfolio site.
 │
 ├── app/api/
 │   ├── spotify/           # Now-playing endpoint
-│   ├── valorant/          # Rank endpoint
-│   └── barca/             # Latest result endpoint
+│   ├── valorant/          # Rank endpoint (Redis-cached)
+│   ├── barca/             # Latest result endpoint
+│   ├── github/            # Contribution activity endpoint
+│   └── health/            # Health check endpoint
 │
 └── content.ts             # All editable site content
 ```
