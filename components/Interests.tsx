@@ -54,7 +54,7 @@ export default function Interests() {
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2 sm:mb-0 sm:absolute sm:top-0 sm:left-0">Valorant</p>
                 <p className="text-base text-foreground/80 leading-relaxed">
                   If I&apos;m not playing sports, I&apos;m probably playing video games with my friends.
-                  We play Valorant most often. We lowkey suck, but that&apos;s beside the point.
+                  We play Valorant most often. We're lowkey terrible, but that&apos;s beside the point.
                 </p>
               </div>
               <div className="hidden sm:block w-px bg-border self-stretch flex-shrink-0" />
