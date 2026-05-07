@@ -118,6 +118,13 @@ export const UPCOMING_TRIPS = [
     description: 'Zion · Bryce · Arches · Canyonlands · Capitol Reef · La Sal',
   },
   {
+    id: 'dana',
+    label: 'Summit Mt. Dana',
+    image: '/adventures/dana.jpg' as string | null,
+    target: new Date('2026-06-19T14:00:00Z'),
+    description: '3,979 m (13,061 ft) · Yosemite National Park · California',
+  },
+  {
     id: 'kili',
     label: 'Summit Mt. Kilimanjaro',
     image: '/adventures/kili.jpg' as string | null,
