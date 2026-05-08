@@ -197,4 +197,16 @@ export const PAST_TRIPS = [
       { src: '/adventures/colorado/f1ae8af3-956d-4921-ab75-c7389fdb2e39.jpg', caption: '' },
     ],
   },
+  {
+    id: 'yosemite',
+    label: 'Yosemite National Park',
+    date: 'April 2025',
+    description: 'Vernal Falls · Nevada Falls · Mist Trail · John Muir Trail',
+    photos: [
+      { src: '/adventures/yosemite/IMG_8996.jpg', caption: '' },
+      { src: '/adventures/yosemite/IMG_9169.jpg', caption: '' },
+      { src: '/adventures/yosemite/e9493737-9685-4d20-9f04-985601cdd59c.jpg', caption: '' },
+      { src: '/adventures/yosemite/ec668a3e-0f73-43a2-92b6-a9bc89a4603b.jpg', caption: '' },
+    ],
+  },
 ]
