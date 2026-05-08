@@ -209,4 +209,16 @@ export const PAST_TRIPS = [
       { src: '/adventures/yosemite/ec668a3e-0f73-43a2-92b6-a9bc89a4603b.jpg', caption: '' },
     ],
   },
+  {
+    id: 'cabo',
+    label: 'Cabo San Lucas, Mexico',
+    date: 'December 2024',
+    description: 'El Arco · ATVs· Ziplining · Rappelling · Snorkeling',
+    photos: [
+      { src: '/adventures/cabo/IMG_7420.JPG', caption: '' },
+      { src: '/adventures/cabo/IMG_7478.JPG', caption: '' },
+      { src: '/adventures/cabo/IMG_7866.JPG', caption: '' },
+      { src: '/adventures/cabo/IMG_8166.JPG', caption: '' },
+    ],
+  },
 ]
