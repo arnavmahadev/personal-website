@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from 'react-simple-maps'
 
-const GEO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json'
+const GEO_URL = '/world-110m.json'
 const MIN_ZOOM = 1
 const MAX_ZOOM = 8
 
