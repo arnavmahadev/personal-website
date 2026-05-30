@@ -111,13 +111,6 @@ export const EXPERIENCE = [
 
 export const UPCOMING_TRIPS = [
   {
-    id: 'utah',
-    label: 'Utah Road Trip',
-    image: '/adventures/utah.jpg' as string | null,
-    target: new Date('2026-05-21T03:00:00Z'),
-    description: 'Zion · Bryce · Arches · Canyonlands · Capitol Reef · La Sal',
-  },
-  {
     id: 'dana',
     label: 'Summit Mt. Dana',
     image: '/adventures/dana.jpg' as string | null,
@@ -143,6 +136,21 @@ export const UPCOMING_TRIPS = [
 // ─── Past Adventures ──────────────────────────────────────────────────────────
 
 export const PAST_TRIPS = [
+  {
+    id: 'utah',
+    label: 'Utah Road Trip',
+    date: 'May 2026',
+    description: 'Zion · Bryce · Arches · Canyonlands · Capitol Reef · Dead Horse Point · La Sal',
+    photos: [
+      { src: '/adventures/utah/IMG_4189.JPG', caption: 'Utah' },
+      { src: '/adventures/utah/IMG_4661.JPG', caption: 'Utah' },
+      { src: '/adventures/utah/IMG_4919.JPG', caption: 'Utah' },
+      { src: '/adventures/utah/IMG_5023.JPG', caption: 'Utah' },
+      { src: '/adventures/utah/IMG_5157.JPG', caption: 'Utah' },
+      { src: '/adventures/utah/IMG_5158.JPG', caption: 'Utah' },
+      { src: '/adventures/utah/IMG_5203.JPG', caption: 'Utah' },
+    ],
+  },
   {
     id: 'barcelona',
     label: 'Barcelona, Spain',
