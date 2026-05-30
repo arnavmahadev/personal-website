@@ -116,6 +116,7 @@ export const UPCOMING_TRIPS = [
     image: '/adventures/dana.jpg' as string | null,
     target: new Date('2026-06-19T14:00:00Z'),
     description: '3,979 m (13,061 ft) · Yosemite National Park · California',
+    coordinates: [-119.22, 37.90] as [number, number],
   },
   {
     id: 'kili',
@@ -123,6 +124,7 @@ export const UPCOMING_TRIPS = [
     image: '/adventures/kili.jpg' as string | null,
     target: new Date('2026-08-02T05:00:00Z'),
     description: '5,895 m (19,341 ft) · Uhuru Peak · Tanzania',
+    coordinates: [37.36, -3.07] as [number, number],
   },
   {
     id: 'safari',
@@ -130,6 +132,7 @@ export const UPCOMING_TRIPS = [
     image: '/adventures/safari.jpg' as string | null,
     target: new Date('2026-08-10T03:00:00Z'),
     description: 'Serengeti · Tarangire · Ngorongoro Crater',
+    coordinates: [34.83, -2.33] as [number, number],
   },
 ]
 
@@ -141,6 +144,7 @@ export const PAST_TRIPS = [
     label: 'Utah Road Trip',
     date: 'May 2026',
     description: 'Zion · Bryce · Arches · Canyonlands · Capitol Reef · Dead Horse Point · La Sal',
+    coordinates: [-111.09, 39.32] as [number, number],
     photos: [
       { src: '/adventures/utah/IMG_4189.JPG', caption: 'Utah' },
       { src: '/adventures/utah/IMG_4661.JPG', caption: 'Utah' },
@@ -156,6 +160,7 @@ export const PAST_TRIPS = [
     label: 'Barcelona, Spain',
     date: 'January 2026',
     description: 'Gothic Quarter · La Sagrada Família · Park Güell · Montserrat · Sitges · Costa Brava · Castell de Montjuïc · Bunkers del Carmel · Camp Nou',
+    coordinates: [2.17, 41.39] as [number, number],
     photos: [
       { src: '/adventures/barcelona/IMG_2134.jpg', caption: 'Barcelona' },
       { src: '/adventures/barcelona/IMG_2212_2.jpg', caption: 'Barcelona' },
@@ -179,6 +184,7 @@ export const PAST_TRIPS = [
     label: 'Northern California Road Trip',
     date: 'December 2025',
     description: 'Redwood National Park · Avenue of the Giants · Humboldt Redwoods · Eureka',
+    coordinates: [-124.00, 41.21] as [number, number],
     photos: [
       { src: '/adventures/norcal/IMG_1050_2.jpg', caption: '' },
       { src: '/adventures/norcal/IMG_1287_3.jpg', caption: '' },
@@ -192,6 +198,7 @@ export const PAST_TRIPS = [
     label: 'Colorado Road Trip',
     date: 'August 2025',
     description: 'Rocky Mountain · Maroon Bells · Grand Mesa · Black Canyon · Garden of the Gods · Pikes Peak · Great Sand Dunes',
+    coordinates: [-105.78, 39.55] as [number, number],
     photos: [
       { src: '/adventures/colorado/IMG_0014_2.jpg', caption: '' },
       { src: '/adventures/colorado/IMG_0131.jpg', caption: '' },
@@ -210,6 +217,7 @@ export const PAST_TRIPS = [
     label: 'Yosemite National Park',
     date: 'April 2025',
     description: 'Vernal Falls · Nevada Falls · Mist Trail · John Muir Trail',
+    coordinates: [-119.54, 37.87] as [number, number],
     photos: [
       { src: '/adventures/yosemite/IMG_8996.jpg', caption: '' },
       { src: '/adventures/yosemite/IMG_9169.jpg', caption: '' },
@@ -222,6 +230,7 @@ export const PAST_TRIPS = [
     label: 'Cabo San Lucas, Mexico',
     date: 'December 2024',
     description: 'El Arco · ATVs· Ziplining · Rappelling · Snorkeling',
+    coordinates: [-109.92, 22.89] as [number, number],
     photos: [
       { src: '/adventures/cabo/IMG_7420.JPG', caption: '' },
       { src: '/adventures/cabo/IMG_7478.JPG', caption: '' },
@@ -229,4 +238,46 @@ export const PAST_TRIPS = [
       { src: '/adventures/cabo/IMG_8166.JPG', caption: '' },
     ],
   },
+]
+
+// ─── Map-only visited locations (no trip card) ────────────────────────────────
+
+export const VISITED_LOCATIONS: { id: string; label: string; coordinates: [number, number] }[] = [
+  { id: 'bangalore',       label: 'Bangalore, India',        coordinates: [77.59,  12.97] },
+  { id: 'mysore',          label: 'Mysore, India',           coordinates: [76.64,  12.30] },
+  { id: 'madapura',        label: 'Madapura, India',         coordinates: [75.80,  13.95] },
+  { id: 'ballari',         label: 'Ballari, India',          coordinates: [76.92,  15.14] },
+  { id: 'delhi',           label: 'Delhi, India',            coordinates: [77.21,  28.63] },
+  { id: 'jammukashmir',    label: 'Jammu & Kashmir, India',  coordinates: [74.80,  34.08] },
+  { id: 'florida',         label: 'Florida',                 coordinates: [-81.52, 27.66] },
+  { id: 'minnesota',       label: 'Minnesota',               coordinates: [-94.34, 46.73] },
+  { id: 'newmexico',       label: 'New Mexico',              coordinates: [-106.02, 34.52] },
+  { id: 'hawaii',          label: 'Hawaii (Big Island)',     coordinates: [-155.50, 19.90] },
+  { id: 'maui',            label: 'Maui',                   coordinates: [-156.33, 20.80] },
+  { id: 'cancun',          label: 'Cancún, Mexico',         coordinates: [-86.85,  21.16] },
+  { id: 'westvirginia',    label: 'West Virginia',           coordinates: [-80.45,  38.59] },
+  { id: 'tahoe',           label: 'Lake Tahoe',              coordinates: [-120.03, 39.09] },
+  { id: 'slo',             label: 'San Luis Obispo',         coordinates: [-120.66, 35.28] },
+  { id: 'losangeles',      label: 'Los Angeles',             coordinates: [-118.24, 34.05] },
+  { id: 'lasvegas',        label: 'Las Vegas',               coordinates: [-115.14, 36.17] },
+  { id: 'detroit',         label: 'Detroit',                 coordinates: [-83.05,  42.33] },
+  { id: 'niagarafalls',    label: 'Niagara Falls, Canada',   coordinates: [-79.07,  43.10] },
+  { id: 'seattle',         label: 'Seattle',                 coordinates: [-122.33, 47.61] },
+  { id: 'olympic',         label: 'Olympic National Park',   coordinates: [-123.50, 47.80] },
+  { id: 'mtrainier',       label: 'Mt. Rainier National Park', coordinates: [-121.73, 46.85] },
+  { id: 'northcascades',   label: 'North Cascades National Park', coordinates: [-121.20, 48.70] },
+  { id: 'palmsprings',     label: 'Palm Springs',             coordinates: [-116.54, 33.83] },
+  { id: 'lavabeds',        label: 'Lava Beds National Monument', coordinates: [-121.51, 41.71] },
+  { id: 'sandiego',        label: 'San Diego',                coordinates: [-117.16, 32.72] },
+  { id: 'ensenada',        label: 'Ensenada, Mexico',         coordinates: [-116.60, 31.87] },
+  { id: 'calgary',         label: 'Calgary, Canada',          coordinates: [-114.07, 51.05] },
+  { id: 'banff',           label: 'Banff National Park',      coordinates: [-115.93, 51.50] },
+  { id: 'edmonton',        label: 'Edmonton, Canada',         coordinates: [-113.49, 53.55] },
+  { id: 'sacramento',      label: 'Sacramento',               coordinates: [-121.49, 38.58] },
+  { id: 'davis',           label: 'Davis',                    coordinates: [-121.74, 38.54] },
+  { id: 'reno',            label: 'Reno',                     coordinates: [-119.81, 39.53] },
+  { id: 'deathvalley',     label: 'Death Valley',             coordinates: [-116.82, 36.53] },
+  { id: 'santabarbara',    label: 'Santa Barbara',            coordinates: [-119.70, 34.42] },
+  { id: 'mojave',          label: 'Mojave National Preserve', coordinates: [-115.51, 35.05] },
+  { id: 'joshuatree',      label: 'Joshua Tree National Park', coordinates: [-115.90, 33.88] },
 ]
