@@ -3,7 +3,10 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import SectionWrapper from './ui/SectionWrapper'
-import { UPCOMING_TRIPS as TRIPS, PAST_TRIPS as PAST } from '@/content'
+import { UPCOMING_TRIPS as TRIPS, PAST_TRIPS as PAST, VISITED_LOCATIONS as VISITED } from '@/content'
+import dynamic from 'next/dynamic'
+
+const WorldMap = dynamic(() => import('./WorldMap'), { ssr: false })
 
 function useCountdown(target: Date) {
   const calc = () => {
@@ -128,6 +131,12 @@ function PastTrip({ past, index: _index }: { past: PastTripData; index: number }
   )
 }
 
+const MAP_MARKERS = [
+  ...PAST.map((t) => ({ id: t.id, label: t.label, description: t.description, coordinates: t.coordinates, type: 'past' as const })),
+  ...VISITED.map((t) => ({ id: t.id, label: t.label, description: '', coordinates: t.coordinates, type: 'past' as const })),
+  ...TRIPS.map((t) => ({ id: t.id, label: t.label, description: t.description, coordinates: t.coordinates, type: 'upcoming' as const })),
+]
+
 export default function Adventures() {
   return (
     <SectionWrapper id="adventures">
@@ -135,8 +144,10 @@ export default function Adventures() {
         Adventures
       </h2>
 
+      <WorldMap markers={MAP_MARKERS} />
+
       {/* Upcoming */}
-      <h3 className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-3">
+      <h3 className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-3 mt-8">
         Upcoming
       </h3>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">

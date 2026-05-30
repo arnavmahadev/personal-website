@@ -1,0 +1,168 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
+import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from 'react-simple-maps'
+
+const GEO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json'
+const MIN_ZOOM = 1
+const MAX_ZOOM = 8
+
+type MapMarker = {
+  id: string
+  label: string
+  description: string
+  coordinates: [number, number]
+  type: 'past' | 'upcoming'
+}
+
+type Tooltip = {
+  x: number
+  y: number
+  marker: MapMarker
+} | null
+
+export default function WorldMap({ markers }: { markers: MapMarker[] }) {
+  const [tooltip, setTooltip] = useState<Tooltip>(null)
+  const [zoom, setZoom] = useState(1)
+  const [center, setCenter] = useState<[number, number]>([0, 0])
+  const containerRef = useRef<HTMLDivElement>(null)
+
+
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const handler = (e: WheelEvent) => {
+      // Always block ZoomableGroup from seeing wheel events
+      e.stopPropagation()
+      if (e.metaKey || e.ctrlKey) {
+        // Cmd+scroll (Mac) or Ctrl+scroll (Windows) → zoom map
+        e.preventDefault()
+        setZoom((z) => {
+          const factor = e.deltaY < 0 ? 1.06 : 1 / 1.06
+          return Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, z * factor))
+        })
+      }
+      // Otherwise event propagation is stopped but default (page scroll) still happens
+    }
+    el.addEventListener('wheel', handler, { capture: true, passive: false })
+    return () => el.removeEventListener('wheel', handler, { capture: true })
+  }, [])
+
+  return (
+    <div ref={containerRef} className="relative w-full rounded-xl overflow-hidden border border-border bg-card">
+      <ComposableMap
+        projection="geoNaturalEarth1"
+        projectionConfig={{ scale: 155, translate: [400, 240] }}
+        width={800}
+        height={480}
+        style={{ width: '100%', height: 'auto' }}
+      >
+        <ZoomableGroup
+          zoom={zoom}
+          center={center}
+          minZoom={MIN_ZOOM}
+          maxZoom={MAX_ZOOM}
+          onMoveEnd={({ zoom: z, coordinates }) => {
+            setZoom(z)
+            setCenter(coordinates)
+          }}
+        >
+          <Geographies geography={GEO_URL}>
+            {({ geographies }: { geographies: import('react-simple-maps').GeoFeature[] }) =>
+              geographies.map((geo: import('react-simple-maps').GeoFeature) => (
+                <Geography
+                  key={geo.rsmKey}
+                  geography={geo}
+                  style={{
+                    default: { fill: 'var(--muted)', stroke: 'var(--border)', strokeWidth: 0.4 / zoom, outline: 'none' },
+                    hover:   { fill: 'var(--muted)', stroke: 'var(--border)', strokeWidth: 0.4 / zoom, outline: 'none' },
+                    pressed: { fill: 'var(--muted)', stroke: 'var(--border)', strokeWidth: 0.4 / zoom, outline: 'none' },
+                  }}
+                />
+              ))
+            }
+          </Geographies>
+
+          {markers.map((m) => (
+            <Marker
+              key={m.id}
+              coordinates={m.coordinates}
+              onMouseEnter={(e: React.MouseEvent<SVGGElement>) => {
+                const svgEl = (e.target as SVGElement).closest('svg') as SVGSVGElement | null
+                if (!svgEl) return
+                const rect = svgEl.getBoundingClientRect()
+                const pt = svgEl.createSVGPoint()
+                pt.x = e.clientX
+                pt.y = e.clientY
+                const svgPt = pt.matrixTransform(svgEl.getScreenCTM()!.inverse())
+                setTooltip({
+                  x: (svgPt.x / svgEl.viewBox.baseVal.width) * rect.width,
+                  y: (svgPt.y / svgEl.viewBox.baseVal.height) * rect.height,
+                  marker: m,
+                })
+              }}
+              onMouseLeave={() => setTooltip(null)}
+            >
+              <circle
+                r={(m.type === 'upcoming' ? 5.5 : 4.5) / zoom}
+                fill={m.type === 'upcoming' ? 'var(--marker-upcoming, var(--secondary))' : 'var(--primary)'}
+                stroke="var(--background)"
+                strokeWidth={1.5 / zoom}
+                className="cursor-pointer"
+              />
+              {m.type === 'upcoming' && (
+                <circle
+                  r={10 / zoom}
+                  fill="none"
+                  stroke="var(--marker-upcoming, var(--secondary))"
+                  strokeWidth={1.5 / zoom}
+                  opacity={0.5}
+                  className="animate-ping"
+                />
+              )}
+            </Marker>
+          ))}
+        </ZoomableGroup>
+      </ComposableMap>
+
+      {tooltip && (
+        <div
+          className="pointer-events-none absolute z-10 bg-popover border border-border rounded-lg px-3 py-2 shadow-lg text-sm max-w-[200px] -translate-x-1/2 -translate-y-full"
+          style={{ left: tooltip.x, top: tooltip.y - 12 }}
+        >
+          <p className="font-semibold text-foreground">{tooltip.marker.label}</p>
+          <p className="text-muted-foreground text-xs mt-0.5 leading-snug">{tooltip.marker.description}</p>
+          {tooltip.marker.type === 'upcoming' && (
+            <span className="inline-block mt-1 text-[10px] font-mono uppercase tracking-widest text-primary">
+              upcoming
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* Zoom buttons */}
+      <div className="absolute top-2 left-3 flex flex-col gap-1">
+        <button
+          onClick={() => setZoom((z) => Math.min(z * 2, MAX_ZOOM))}
+          className="w-7 h-7 rounded border border-border bg-card text-foreground text-lg leading-none flex items-center justify-center hover:bg-muted transition-colors"
+          aria-label="Zoom in"
+        >+</button>
+        <button
+          onClick={() => setZoom((z) => Math.max(z / 2, MIN_ZOOM))}
+          className="w-7 h-7 rounded border border-border bg-card text-foreground text-lg leading-none flex items-center justify-center hover:bg-muted transition-colors"
+          aria-label="Zoom out"
+        >−</button>
+      </div>
+
+      {/* Legend */}
+      <div className="absolute bottom-2 right-3 flex items-center gap-3 text-xs text-muted-foreground">
+        <span className="flex items-center gap-1">
+          <span className="w-2.5 h-2.5 rounded-full bg-primary inline-block" /> visited
+        </span>
+        <span className="flex items-center gap-1">
+          <span className="w-2.5 h-2.5 rounded-full inline-block" style={{ background: 'var(--marker-upcoming, var(--secondary))' }} /> upcoming
+        </span>
+      </div>
+    </div>
+  )
+}

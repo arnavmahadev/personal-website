@@ -46,6 +46,7 @@
     --border: oklch(0.4167 0.0650 248.1948);
     --input: oklch(0.4167 0.0650 248.1948);
     --ring: oklch(0.7432 0.1171 89.5111);
+    --marker-upcoming: white;
   }
 
   * {
