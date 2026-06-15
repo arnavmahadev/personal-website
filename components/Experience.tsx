@@ -10,7 +10,11 @@ export default function Experience() {
 
       <div className="relative">
         <div className="space-y-4">
-          {experiences.map((exp) => (
+          {experiences.map((exp) => {
+            const github = ('github' in exp ? exp.github : undefined) as string | undefined
+            const link = ('link' in exp ? exp.link : undefined) as string | undefined
+            const nexusLink = ('nexusLink' in exp ? exp.nexusLink : undefined) as string | undefined
+            return (
             <div key={exp.role + exp.org}>
               <div className="rounded-2xl border p-5 transition-colors duration-200 bg-card border-border hover:border-accent/50">
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-2 mb-3">
@@ -32,11 +36,11 @@ export default function Experience() {
                     </li>
                   ))}
                 </ul>
-                {('github' in exp && exp.github) || ('nexusLink' in exp && exp.nexusLink) || ('link' in exp && exp.link) ? (
+                {(github || link || nexusLink) ? (
                   <div className="flex items-center gap-3">
-                    {('link' in exp && exp.link || 'nexusLink' in exp && exp.nexusLink) && (
+                    {(link || nexusLink) && (
                       <a
-                        href={('link' in exp && exp.link) || ('nexusLink' in exp && exp.nexusLink) || ''}
+                        href={(link || nexusLink)!}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/30 transition-colors"
@@ -45,9 +49,9 @@ export default function Experience() {
                         Website
                       </a>
                     )}
-                    {'github' in exp && exp.github && (
+                    {github && (
                       <a
-                        href={exp.github}
+                        href={github}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors"
@@ -60,7 +64,8 @@ export default function Experience() {
                 ) : null}
               </div>
             </div>
-          ))}
+            )
+          })}
         </div>
       </div>
     </SectionWrapper>
