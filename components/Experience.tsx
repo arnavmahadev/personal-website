@@ -32,11 +32,11 @@ export default function Experience() {
                     </li>
                   ))}
                 </ul>
-                {('github' in exp && exp.github) || ('nexusLink' in exp && exp.nexusLink) ? (
+                {('github' in exp && exp.github) || ('nexusLink' in exp && exp.nexusLink) || ('link' in exp && exp.link) ? (
                   <div className="flex items-center gap-3">
-                    {'nexusLink' in exp && exp.nexusLink && (
+                    {('link' in exp && exp.link || 'nexusLink' in exp && exp.nexusLink) && (
                       <a
-                        href={exp.nexusLink}
+                        href={('link' in exp && exp.link) || ('nexusLink' in exp && exp.nexusLink) || ''}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/30 transition-colors"

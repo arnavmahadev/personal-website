@@ -19,15 +19,10 @@ export default function About() {
             development, data organization, and clean system design.
           </p>
           <p>
-            Currently, I&apos;m a Software Developer and Project Manager at iPick.ai, where I lead
-            a team of 15 developers building a graph-based platform that visualizes
-            relationships between thousands of companies. I previously interned at
-            Claythis as a Software Engineer, where I worked on their AI-driven 3D model generation technology.
-          </p>
-          <p>
-            I&apos;m currently looking for opportunities where I can
-            contribute to real products, learn from experienced engineers, and work
-            on projects that make a difference.
+            Currently, I&apos;m a Software Engineering Intern at Maadhev LLC, where I&apos;m building
+            a custom ACH payment system and Shopify integrations. I previously interned at iPick.ai,
+            where I built a graph-based platform that visualizes relationships between thousands of
+            companies, and at Claythis, where I worked on their AI-driven 3D model generation technology.
           </p>
         </div>
 
