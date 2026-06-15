@@ -58,13 +58,13 @@ export const PROJECTS = [
     demo: undefined as string | undefined,
   },
   {
-    name: 'Hexapod Robot',
-    hook: 'A 6-legged robot that moves, senses, and avoids obstacles.',
+    name: 'Build Your Own World',
+    hook: 'A procedurally generated 2D world from a single seed.',
     description:
-      'A hexapod robot with multi-directional movement, obstacle avoidance, and real-time sensor integration. I designed the breadboard layout and soldered connections for 18 servo motors, an ultrasonic sensor, and an LCD display.',
-    tech: ['C++'],
-    github: 'https://github.com/arnavmahadev/Arnav_BlueStampPortfolio',
-    demo: 'https://arnavmahadev.github.io/Arnav_BlueStampPortfolio/' as string | undefined,
+      'A deterministic, seed-based 2D world generator utilizing various data structures and algorithms. Implemented and tested a line of sight feature for the user and save/load functionality for the game state.',
+    tech: ['Java'],
+    github: undefined as string | undefined,
+    demo: undefined as string | undefined,
   },
   {
     name: 'Wordle',
@@ -75,34 +75,54 @@ export const PROJECTS = [
     github: 'https://github.com/arnavmahadev/Wordle',
     demo: 'https://arnavmahadev.github.io/Wordle/' as string | undefined,
   },
+  {
+    name: 'Hexapod Robot',
+    hook: 'A 6-legged robot that senses and avoids obstacles.',
+    description:
+      'A hexapod robot with multi-directional movement, obstacle avoidance, and real-time sensor integration. I designed the breadboard layout and soldered connections for 18 servo motors, an ultrasonic sensor, and an LCD display.',
+    tech: ['C++'],
+    github: 'https://github.com/arnavmahadev/Arnav_BlueStampPortfolio',
+    demo: 'https://arnavmahadev.github.io/Arnav_BlueStampPortfolio/' as string | undefined,
+  },
 ]
 
 // ─── Experience ───────────────────────────────────────────────────────────────
 
 export const EXPERIENCE = [
   {
-    role: 'Software Developer & Project Manager',
+    role: 'Software Engineering Intern',
+    org: 'Maadhev LLC',
+    period: 'May 2026 - Present',
+    location: 'Cupertino, CA',
+    link: 'https://maadhev.com',
+    bullets: [
+      'Built a custom ACH payment system using Python, Flask, and Stripe API, integrating a Shopify custom app to cut transaction fees by 70% compared to credit card processing.',
+      'Engineered Stripe webhook handlers to sync payment and fulfillment data between Stripe and Shopify in real time, automating order confirmation across 50+ transactions.',
+      'Developed custom Shopify theme components in Liquid, HTML, and CSS via the Shopify CLI, rebuilding 13 storefront pages to improve UX and streamline the checkout flow.',
+    ],
+  },
+  {
+    role: 'Software Engineering Intern',
     org: 'iPick.ai',
-    period: 'Jan 2026 — Present',
+    period: 'Jan 2026 - May 2026',
     location: 'Berkeley, CA',
     nexusLink: 'https://www.ipick.ai/nexus/',
-    github: 'https://github.com/andrewyzhou/nexus',
     bullets: [
-      'Architected a graph-based company relationship visualizer for iPick.ai using React, D3.js, and PostgreSQL.',
+      'Architected a graph-based company relationship visualizer using React, D3.js, and PostgreSQL.',
       'Built a supplier/subsidiary relationship extraction pipeline across 5,000+ public company tickers, storing structured supplier/subsidiary edges in PostgreSQL to power graph-based visualization in the frontend.',
-      'Led a team of engineers toward a May 2026 live demo milestone for a CEO-facing client deliverable.',
+      'Implemented Firebase authentication and AI-generated news summaries via an LLM pipeline, enriching company profiles with real-time context.',
     ],
   },
   {
     role: 'Software Engineering Intern',
     org: 'Claythis',
-    period: 'May 2025 — Aug 2025',
+    period: 'May 2025 - Aug 2025',
     location: 'San Mateo, CA',
     link: undefined as string | undefined,
     bullets: [
-      "Developed a Unity-based game showcasing Claythis’s AI-driven 3D model generation pipeline.",
+      "Developed a Unity-based game showcasing Claythis's AI-driven 3D model generation pipeline.",
       'Implemented modular weapon & health systems (reload, recoil, animations, armor, healing) enhancing code maintainability and reducing future implementation time by 40%.',
-      "Presented the project to 15 stakeholders and potential clients, demonstrating the product’s capabilities.",
+      'Tested and validated integration of the AI-generated 3D character models into Unity, verifying rigging, animation, and rendering behavior across the pipeline\'s outputs.',
     ],
   },
 ]
