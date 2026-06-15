@@ -43,13 +43,14 @@ function getMonthLabels(weeks: (Day | null)[][]): { label: string; col: number }
 }
 
 export default function GitHubCalendar() {
-  const [weeks, setWeeks] = useState<(Day | null)[][]>([])
+  const [weeks, setWeeks] = useState<(Day | null)[][] | undefined>(undefined)
   const [total, setTotal] = useState(0)
 
   useEffect(() => {
     fetch('/api/github')
       .then(r => r.json())
       .then(({ days }: { days: Day[] }) => {
+        if (!days?.length) { setWeeks([]); return }
         // Align to Sun–Sat columns: pad the first week with nulls so day 0 lands on its correct weekday
         const firstDow = new Date(days[0].date).getDay() // 0=Sun … 6=Sat
         const padded: (Day | null)[] = [...Array(firstDow).fill(null), ...days]
@@ -60,7 +61,7 @@ export default function GitHubCalendar() {
         setWeeks(grouped as Day[][])
         setTotal(days.reduce((sum, d) => sum + d.count, 0))
       })
-      .catch(() => {})
+      .catch(() => setWeeks([]))
   }, [])
 
   const CELL = 11
@@ -68,9 +69,9 @@ export default function GitHubCalendar() {
   const LABEL_COL_W = 28  // logical units for the day-label column inside the SVG
   const DAY_LABELS = ['', 'Mon', '', 'Wed', '', 'Fri', '']
 
-  const monthLabels = weeks.length ? getMonthLabels(weeks) : []
+  const monthLabels = weeks?.length ? getMonthLabels(weeks) : []
 
-  if (!weeks.length) {
+  if (weeks === undefined) {
     return (
       <div className="w-full">
         <div className="text-base text-muted-foreground mb-3 font-mono opacity-0 select-none" aria-hidden>
@@ -79,6 +80,22 @@ export default function GitHubCalendar() {
         <div className="overflow-x-auto -mx-1 px-1 pb-3">
           <div
             className="animate-pulse bg-muted rounded-lg w-full"
+            style={{ aspectRatio: '53 / 8' }}
+          />
+        </div>
+      </div>
+    )
+  }
+
+  if (!weeks.length) {
+    return (
+      <div className="w-full">
+        <div className="text-base text-muted-foreground mb-3 font-mono">
+          GitHub activity unavailable
+        </div>
+        <div className="overflow-x-auto -mx-1 px-1 pb-3">
+          <div
+            className="bg-muted rounded-lg w-full opacity-30"
             style={{ aspectRatio: '53 / 8' }}
           />
         </div>

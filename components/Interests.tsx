@@ -24,13 +24,14 @@ interface ValorantRank {
 }
 
 
+
 export default function Interests() {
-  const [barca, setBarca] = useState<BarcaResult | null>(null)
-  const [val, setVal] = useState<ValorantRank | null>(null)
+  const [barca, setBarca] = useState<BarcaResult | null | undefined>(undefined)
+  const [val, setVal] = useState<ValorantRank | null | undefined>(undefined)
 
   useEffect(() => {
-    fetch('/api/barca').then(r => r.json()).then(setBarca).catch(() => {})
-    fetch('/api/valorant').then(r => r.json()).then(setVal).catch(() => {})
+    fetch('/api/barca').then(r => r.json()).then(setBarca).catch(() => setBarca(null))
+    fetch('/api/valorant').then(r => r.json()).then(setVal).catch(() => setVal(null))
   }, [])
 
   return (
@@ -61,7 +62,17 @@ export default function Interests() {
               <div className="sm:hidden h-px bg-border flex-shrink-0" />
               <div className="flex flex-col items-center text-center sm:flex-1 sm:items-center sm:justify-center sm:self-stretch">
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Current rank</p>
-                {val ? (
+                {val === undefined ? (
+                  <div className="flex items-center justify-center gap-4">
+                    <div className="w-[72px] h-[72px] rounded animate-pulse bg-muted" />
+                    <div className="space-y-2">
+                      <div className="h-6 w-24 rounded animate-pulse bg-muted" />
+                      <div className="h-4 w-14 rounded animate-pulse bg-muted" />
+                    </div>
+                  </div>
+                ) : val === null ? (
+                  <p className="text-sm text-muted-foreground">Rank unavailable.</p>
+                ) : (
                   <div className="flex items-center justify-center gap-4">
                     {val.icon && (
                       <Image src={val.icon} alt={val.rank} width={72} height={72} />
@@ -69,14 +80,6 @@ export default function Interests() {
                     <div>
                       <p className="text-2xl font-bold font-serif text-foreground">{val.rank}</p>
                       <p className="text-sm text-muted-foreground">{val.rr} RR</p>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex items-center justify-center gap-4">
-                    <div className="w-[72px] h-[72px] rounded animate-pulse bg-muted" />
-                    <div className="space-y-2">
-                      <div className="h-6 w-24 rounded animate-pulse bg-muted" />
-                      <div className="h-4 w-14 rounded animate-pulse bg-muted" />
                     </div>
                   </div>
                 )}
@@ -100,7 +103,30 @@ export default function Interests() {
 
             <div>
               <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-3">Latest result</p>
-              {barca ? (
+              {barca === undefined ? (
+                <div className="flex flex-col items-start gap-2">
+                  <div className="flex items-center gap-2">
+                    <div className="h-5 w-7 rounded animate-pulse bg-muted" />
+                    <div className="h-4 w-28 rounded animate-pulse bg-muted" />
+                  </div>
+                  <div className="flex items-center justify-between w-full gap-3">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="w-[22px] h-[22px] rounded animate-pulse bg-muted" />
+                      <div className="h-5 w-32 rounded animate-pulse bg-muted" />
+                    </div>
+                    <div className="h-7 w-5 rounded animate-pulse bg-muted" />
+                  </div>
+                  <div className="flex items-center justify-between w-full gap-3">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="w-[22px] h-[22px] rounded animate-pulse bg-muted" />
+                      <div className="h-5 w-32 rounded animate-pulse bg-muted" />
+                    </div>
+                    <div className="h-7 w-5 rounded animate-pulse bg-muted" />
+                  </div>
+                </div>
+              ) : barca === null ? (
+                <p className="text-sm text-muted-foreground">No recent results — check back next season.</p>
+              ) : (
                 <div className="flex flex-col items-start gap-2">
                   <div className="flex items-center gap-2">
                     <span className={`text-xs font-mono font-bold px-1.5 py-0.5 rounded ${
@@ -137,27 +163,6 @@ export default function Interests() {
                     <p className="text-xl font-bold text-foreground shrink-0">
                       {barca.barcaHome ? barca.oppScore : barca.barcaScore}
                     </p>
-                  </div>
-                </div>
-              ) : (
-                <div className="flex flex-col items-start gap-2">
-                  <div className="flex items-center gap-2">
-                    <div className="h-5 w-7 rounded animate-pulse bg-muted" />
-                    <div className="h-4 w-28 rounded animate-pulse bg-muted" />
-                  </div>
-                  <div className="flex items-center justify-between w-full gap-3">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <div className="w-[22px] h-[22px] rounded animate-pulse bg-muted" />
-                      <div className="h-5 w-32 rounded animate-pulse bg-muted" />
-                    </div>
-                    <div className="h-7 w-5 rounded animate-pulse bg-muted" />
-                  </div>
-                  <div className="flex items-center justify-between w-full gap-3">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <div className="w-[22px] h-[22px] rounded animate-pulse bg-muted" />
-                      <div className="h-5 w-32 rounded animate-pulse bg-muted" />
-                    </div>
-                    <div className="h-7 w-5 rounded animate-pulse bg-muted" />
                   </div>
                 </div>
               )}

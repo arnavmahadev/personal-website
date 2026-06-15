@@ -12,7 +12,7 @@ export async function GET() {
   try {
     const today = new Date()
     const past = new Date(today)
-    past.setDate(past.getDate() - 21)
+    past.setDate(past.getDate() - 120)
     const range = `${dateStr(past)}-${dateStr(today)}`
 
     const results = await Promise.all(
