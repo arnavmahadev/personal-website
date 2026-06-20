@@ -131,14 +131,6 @@ export const EXPERIENCE = [
 
 export const UPCOMING_TRIPS = [
   {
-    id: 'dana',
-    label: 'Summit Mt. Dana',
-    image: '/adventures/dana.jpg' as string | null,
-    target: new Date('2026-06-19T14:00:00Z'),
-    description: '3,979 m (13,061 ft) · Yosemite National Park · California',
-    coordinates: [-119.22, 37.90] as [number, number],
-  },
-  {
     id: 'kili',
     label: 'Summit Mt. Kilimanjaro',
     image: '/adventures/kili.jpg' as string | null,
@@ -159,6 +151,16 @@ export const UPCOMING_TRIPS = [
 // ─── Past Adventures ──────────────────────────────────────────────────────────
 
 export const PAST_TRIPS = [
+  {
+    id: 'dana',
+    label: 'Summit Mt. Dana',
+    date: 'Jun 2026',
+    description: '3,979 m (13,061 ft) · Yosemite National Park · California',
+    coordinates: [-119.22, 37.90] as [number, number],
+    photos: [
+      { src: '/adventures/dana'}
+    ]
+  },
   {
     id: 'utah',
     label: 'Utah Road Trip',
