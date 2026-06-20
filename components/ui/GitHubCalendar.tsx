@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 interface Day {
   date: string
@@ -42,9 +42,41 @@ function getMonthLabels(weeks: (Day | null)[][]): { label: string; col: number }
   return labels
 }
 
+interface Tooltip {
+  day: Day
+  centerX: number
+  y: number
+  maxW: number
+}
+
+function formatDate(date: string): string {
+  return new Date(date + 'T00:00:00').toLocaleDateString('default', {
+    weekday: 'short',
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+  })
+}
+
 export default function GitHubCalendar() {
   const [weeks, setWeeks] = useState<(Day | null)[][] | undefined>(undefined)
   const [total, setTotal] = useState(0)
+  const [tooltip, setTooltip] = useState<Tooltip | null>(null)
+  const tooltipRef = useRef<HTMLDivElement>(null)
+  const [tooltipLeft, setTooltipLeft] = useState<number | null>(null)
+
+  // Clamp the tooltip horizontally so it never overflows the chart's width
+  useLayoutEffect(() => {
+    if (!tooltip || !tooltipRef.current) {
+      setTooltipLeft(null)
+      return
+    }
+    const w = tooltipRef.current.offsetWidth
+    const pad = 4
+    const half = w / 2 + pad
+    const clamped = Math.max(half, Math.min(tooltip.centerX, tooltip.maxW - half))
+    setTooltipLeft(clamped)
+  }, [tooltip])
 
   useEffect(() => {
     fetch('/api/github')
@@ -115,10 +147,12 @@ export default function GitHubCalendar() {
       <div className="text-base text-muted-foreground mb-3 font-mono">
         {total.toLocaleString()} contributions in the last year
       </div>
+      <div className="relative">
       <div className="overflow-x-auto -mx-1 px-1 pb-3">
       <svg
         viewBox={`0 0 ${totalW} ${totalH}`}
         style={{ display: 'block', minWidth: `${totalW * 1.4}px`, width: '100%' }}
+        onMouseLeave={() => setTooltip(null)}
       >
         {/* Day labels */}
         {DAY_LABELS.map((label, i) => (
@@ -162,13 +196,44 @@ export default function GitHubCalendar() {
                 height={CELL}
                 rx={2}
                 fill={getColor(day.count)}
-              >
-                <title>{day.date}: {day.count} contribution{day.count !== 1 ? 's' : ''}</title>
-              </rect>
+                className="transition-opacity hover:opacity-80"
+                onMouseEnter={(e) => {
+                  const svg = e.currentTarget.ownerSVGElement
+                  // The non-clipping `relative` wrapper that the tooltip is anchored to
+                  const anchor = svg?.parentElement?.parentElement
+                  if (!svg || !anchor) return
+                  const rect = e.currentTarget.getBoundingClientRect()
+                  const anchorRect = anchor.getBoundingClientRect()
+                  setTooltip({
+                    day,
+                    centerX: rect.left - anchorRect.left + rect.width / 2,
+                    y: rect.top - anchorRect.top,
+                    maxW: anchorRect.width,
+                  })
+                }}
+              />
             )
           )
         )}
       </svg>
+      </div>
+      {tooltip && (
+        <div
+          ref={tooltipRef}
+          className="pointer-events-none absolute z-10 -translate-x-1/2 -translate-y-full rounded-md border border-border bg-popover px-2 py-1 text-xs font-mono text-popover-foreground shadow-md whitespace-nowrap"
+          style={{
+            left: tooltipLeft ?? tooltip.centerX,
+            top: tooltip.y - 6,
+            visibility: tooltipLeft === null ? 'hidden' : 'visible',
+          }}
+        >
+          <span className="font-semibold">
+            {tooltip.day.count} contribution{tooltip.day.count !== 1 ? 's' : ''}
+          </span>
+          {' on '}
+          {formatDate(tooltip.day.date)}
+        </div>
+      )}
       </div>
     </div>
   )
