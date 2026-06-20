@@ -158,8 +158,9 @@ export const PAST_TRIPS = [
     description: '3,979 m (13,061 ft) · Yosemite National Park · California',
     coordinates: [-119.22, 37.90] as [number, number],
     photos: [
-      { src: '/adventures/dana'}
-    ]
+      { src: '/adventures/dana/IMG_5269.jpg', caption: 'Mt. Dana' },
+      { src: '/adventures/dana/IMG_5274.jpg', caption: 'Mt. Dana' },
+    ],
   },
   {
     id: 'utah',
