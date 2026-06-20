@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import SectionWrapper from './ui/SectionWrapper'
-import { UPCOMING_TRIPS as TRIPS, PAST_TRIPS as PAST, VISITED_LOCATIONS as VISITED } from '@/content'
+import { ADVENTURES, VISITED_LOCATIONS as VISITED, type Adventure } from '@/content'
 import dynamic from 'next/dynamic'
 
 const WorldMap = dynamic(() => import('./WorldMap'), { ssr: false })
@@ -27,8 +27,12 @@ function useCountdown(target: Date) {
   return time
 }
 
-function Countdown({ target }: { target: Date }) {
+function Countdown({ target, onExpire }: { target: Date; onExpire?: () => void }) {
   const time = useCountdown(target)
+  const done = time?.done ?? false
+  useEffect(() => {
+    if (done) onExpire?.()
+  }, [done, onExpire])
   if (!time) return (
     <div className="flex items-end gap-3">
       {['days', 'hrs', 'min', 'sec'].map((label) => (
@@ -41,8 +45,10 @@ function Countdown({ target }: { target: Date }) {
       ))}
     </div>
   )
-  const { days, hours, minutes, seconds, done } = time
-  if (done) return <p className="text-sm font-semibold text-green-400">It&apos;s happening! 🎉</p>
+  const { days, hours, minutes, seconds } = time
+  // Once the timer expires the trip is moved to Past adventures, so the card
+  // (and this countdown) unmounts — render nothing in the interim.
+  if (done) return null
 
   const units = [
     { label: 'days',    value: days    },
@@ -67,53 +73,68 @@ function Countdown({ target }: { target: Date }) {
   )
 }
 
-type PastTripData = typeof PAST[number]
+// Derive the "Month Year" label shown on Past cards from an adventure's date.
+function formatAdventureDate(d: Date) {
+  return d.toLocaleString('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' })
+}
 
-function PastTrip({ past, index: _index }: { past: PastTripData; index: number }) {
+function PastTrip({ past }: { past: Adventure }) {
   const [open, setOpen] = useState(false)
   const gridRef = useRef<HTMLDivElement>(null)
+  const photos = past.photos ?? []
+  const hasPhotos = photos.length > 0
+
+  const header = (
+    <div className="px-4 py-4 flex items-center justify-between">
+      <div>
+        <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-1">
+          {formatAdventureDate(past.date)}
+        </p>
+        <p className="text-lg font-semibold font-serif text-foreground leading-snug">
+          {past.label}
+        </p>
+        <p className="text-sm text-muted-foreground mt-0.5">{past.description}</p>
+      </div>
+      {hasPhotos && (
+        <span className="text-sm text-muted-foreground ml-4 flex-shrink-0 flex items-center gap-1 group-hover:text-foreground transition-colors">
+          {photos.length} photos
+          <svg
+            viewBox="0 0 24 24"
+            className={`w-3.5 h-3.5 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+            fill="none" stroke="currentColor" strokeWidth={2}
+          >
+            <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+      )}
+    </div>
+  )
 
   return (
     <div>
-      {/* Clickable header card */}
-      <button
-        onClick={() => setOpen((v) => !v)}
-        className="w-full text-left rounded-xl border border-border bg-card overflow-hidden relative group"
-      >
-        <div className="px-4 py-4 flex items-center justify-between">
-          <div>
-            <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-1">
-              {past.date}
-            </p>
-            <p className="text-lg font-semibold font-serif text-foreground leading-snug">
-              {past.label}
-            </p>
-            <p className="text-sm text-muted-foreground mt-0.5">{past.description}</p>
-          </div>
-          {past.photos.length > 0 && (
-            <span className="text-sm text-muted-foreground ml-4 flex-shrink-0 flex items-center gap-1 group-hover:text-foreground transition-colors">
-              {past.photos.length} photos
-              <svg
-                viewBox="0 0 24 24"
-                className={`w-3.5 h-3.5 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-                fill="none" stroke="currentColor" strokeWidth={2}
-              >
-                <path d="M6 9l6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </span>
-          )}
+      {/* Header card — only clickable / collapsible when there are photos */}
+      {hasPhotos ? (
+        <button
+          onClick={() => setOpen((v) => !v)}
+          className="w-full text-left rounded-xl border border-border bg-card overflow-hidden relative group"
+        >
+          {header}
+        </button>
+      ) : (
+        <div className="w-full text-left rounded-xl border border-border bg-card overflow-hidden relative">
+          {header}
         </div>
-      </button>
+      )}
 
       {/* Collapsible photo grid */}
-      {past.photos.length > 0 && (
+      {hasPhotos && (
         <div
           ref={gridRef}
           className="overflow-hidden transition-all duration-300 ease-in-out"
           style={{ maxHeight: open ? gridRef.current?.scrollHeight ?? 9999 : 0 }}
         >
           <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-2 pt-2">
-            {past.photos.map((photo) => (
+            {photos.map((photo) => (
               <div key={photo.src} className="aspect-square overflow-hidden rounded-lg shadow-md">
                 <Image
                   src={photo.src}
@@ -131,61 +152,82 @@ function PastTrip({ past, index: _index }: { past: PastTripData; index: number }
   )
 }
 
-const MAP_MARKERS = [
-  ...PAST.map((t) => ({ id: t.id, label: t.label, description: t.description, coordinates: t.coordinates, type: 'past' as const })),
-  ...VISITED.map((t) => ({ id: t.id, label: t.label, description: '', coordinates: t.coordinates, type: 'past' as const })),
-  ...TRIPS.map((t) => ({ id: t.id, label: t.label, description: t.description, coordinates: t.coordinates, type: 'upcoming' as const })),
-]
-
 export default function Adventures() {
+  // `now` drives the upcoming/past split. It's set once on mount, then bumped
+  // whenever a countdown hits zero so the trip moves to Past automatically.
+  const [now, setNow] = useState(() => Date.now())
+  const markExpired = useCallback(() => setNow(Date.now()), [])
+
+  const { upcoming, past, markers } = useMemo(() => {
+    // A single list, partitioned purely by date: future → upcoming (soonest
+    // first, with a countdown), past → past (most recent first).
+    const upcoming = ADVENTURES
+      .filter((a) => a.date.getTime() > now)
+      .sort((a, b) => a.date.getTime() - b.date.getTime())
+    const past = ADVENTURES
+      .filter((a) => a.date.getTime() <= now)
+      .sort((a, b) => b.date.getTime() - a.date.getTime())
+
+    const markers = [
+      ...past.map((t) => ({ id: t.id, label: t.label, description: t.description, coordinates: t.coordinates, type: 'past' as const })),
+      ...VISITED.map((t) => ({ id: t.id, label: t.label, description: '', coordinates: t.coordinates, type: 'past' as const })),
+      ...upcoming.map((t) => ({ id: t.id, label: t.label, description: t.description, coordinates: t.coordinates, type: 'upcoming' as const })),
+    ]
+    return { upcoming, past, markers }
+  }, [now])
+
   return (
     <SectionWrapper id="adventures">
       <h2 className="text-4xl sm:text-5xl font-bold font-serif tracking-tight text-foreground mb-5">
         Adventures
       </h2>
 
-      <WorldMap markers={MAP_MARKERS} />
+      <WorldMap markers={markers} />
 
       {/* Upcoming */}
-      <h3 className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-3 mt-8">
-        Upcoming
-      </h3>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
-        {TRIPS.map((trip) => (
-          <div
-            key={trip.id}
-            className="rounded-xl border border-border bg-card overflow-hidden relative flex flex-col"
-          >
-            {trip.image && (
-              <div className="relative w-full h-32 overflow-hidden">
-                <Image
-                  src={trip.image}
-                  alt={trip.label}
-                  fill
-                  className="object-cover object-center"
-                />
+      {upcoming.length > 0 && (
+        <>
+          <h3 className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-3 mt-8">
+            Upcoming
+          </h3>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+            {upcoming.map((trip) => (
+              <div
+                key={trip.id}
+                className="rounded-xl border border-border bg-card overflow-hidden relative flex flex-col"
+              >
+                {trip.image && (
+                  <div className="relative w-full h-32 overflow-hidden">
+                    <Image
+                      src={trip.image}
+                      alt={trip.label}
+                      fill
+                      className="object-cover object-center"
+                    />
+                  </div>
+                )}
+                <div className="px-4 py-4 flex flex-col gap-3 flex-1">
+                  <div>
+                    <p className="text-lg font-semibold font-serif text-foreground leading-snug">
+                      {trip.label}
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-0.5">{trip.description}</p>
+                  </div>
+                  <Countdown target={trip.date} onExpire={markExpired} />
+                </div>
               </div>
-            )}
-            <div className="px-4 py-4 flex flex-col gap-3 flex-1">
-              <div>
-                <p className="text-lg font-semibold font-serif text-foreground leading-snug">
-                  {trip.label}
-                </p>
-                <p className="text-sm text-muted-foreground mt-0.5">{trip.description}</p>
-              </div>
-              <Countdown target={trip.target} />
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
+        </>
+      )}
 
       {/* Past adventures */}
-      <h3 className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-3">
+      <h3 className={`text-sm font-mono text-muted-foreground uppercase tracking-widest mb-3${upcoming.length === 0 ? ' mt-8' : ''}`}>
         Past
       </h3>
       <div className="flex flex-col gap-3">
-        {PAST.map((past, i) => (
-          <PastTrip key={past.id} past={past} index={i} />
+        {past.map((trip) => (
+          <PastTrip key={trip.id} past={trip} />
         ))}
       </div>
     </SectionWrapper>

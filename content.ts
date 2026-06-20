@@ -127,34 +127,48 @@ export const EXPERIENCE = [
   },
 ]
 
-// ─── Upcoming Adventures ──────────────────────────────────────────────────────
+// ─── Adventures ───────────────────────────────────────────────────────────────
+//
+// One unified list. Each entry's `date` decides where it shows up:
+//   • date in the future → "Upcoming" card with a live countdown (uses `image`)
+//   • date in the past   → "Past" card (uses `photos`), auto-sorted newest first
+// When a countdown reaches zero the trip moves to Past automatically — no edits
+// needed. Just add `photos` to its entry once you have them.
 
-export const UPCOMING_TRIPS = [
+export type AdventurePhoto = { src: string; caption: string }
+
+export type Adventure = {
+  id: string
+  label: string
+  date: Date                      // when it happens / happened — decides the section
+  description: string
+  coordinates: [number, number]
+  image?: string | null           // shown on the upcoming countdown card
+  photos?: AdventurePhoto[]        // shown in the Past dropdown; add after the trip
+}
+
+export const ADVENTURES: Adventure[] = [
   {
     id: 'kili',
     label: 'Summit Mt. Kilimanjaro',
-    image: '/adventures/kili.jpg' as string | null,
-    target: new Date('2026-08-02T05:00:00Z'),
+    date: new Date('2026-08-02T05:00:00Z'),
     description: '5,895 m (19,341 ft) · Uhuru Peak · Tanzania',
-    coordinates: [37.36, -3.07] as [number, number],
+    coordinates: [37.36, -3.07],
+    image: '/adventures/kili.jpg',
   },
   {
     id: 'safari',
     label: 'Tanzania Safari',
-    image: '/adventures/safari.jpg' as string | null,
-    target: new Date('2026-08-10T03:00:00Z'),
+    date: new Date('2026-08-10T03:00:00Z'),
     description: 'Serengeti · Tarangire · Ngorongoro Crater',
-    coordinates: [34.83, -2.33] as [number, number],
+    coordinates: [34.83, -2.33],
+    image: '/adventures/safari.jpg',
   },
-]
 
-// ─── Past Adventures ──────────────────────────────────────────────────────────
-
-export const PAST_TRIPS = [
   {
     id: 'dana',
     label: 'Summit Mt. Dana',
-    date: 'Jun 2026',
+    date: new Date('2026-06-01'),
     description: '3,979 m (13,061 ft) · Yosemite National Park · California',
     coordinates: [-119.22, 37.90] as [number, number],
     photos: [
@@ -165,7 +179,7 @@ export const PAST_TRIPS = [
   {
     id: 'utah',
     label: 'Utah Road Trip',
-    date: 'May 2026',
+    date: new Date('2026-05-01'),
     description: 'Zion · Bryce · Arches · Canyonlands · Capitol Reef · Dead Horse Point · La Sal',
     coordinates: [-111.09, 39.32] as [number, number],
     photos: [
@@ -181,7 +195,7 @@ export const PAST_TRIPS = [
   {
     id: 'barcelona',
     label: 'Barcelona, Spain',
-    date: 'January 2026',
+    date: new Date('2026-01-01'),
     description: 'Gothic Quarter · La Sagrada Família · Park Güell · Montserrat · Sitges · Costa Brava · Castell de Montjuïc · Bunkers del Carmel · Camp Nou',
     coordinates: [2.17, 41.39] as [number, number],
     photos: [
@@ -205,7 +219,7 @@ export const PAST_TRIPS = [
   {
     id: 'norcal',
     label: 'Northern California Road Trip',
-    date: 'December 2025',
+    date: new Date('2025-12-01'),
     description: 'Redwood National Park · Avenue of the Giants · Humboldt Redwoods · Eureka',
     coordinates: [-124.00, 41.21] as [number, number],
     photos: [
@@ -219,7 +233,7 @@ export const PAST_TRIPS = [
   {
     id: 'colorado',
     label: 'Colorado Road Trip',
-    date: 'August 2025',
+    date: new Date('2025-08-01'),
     description: 'Rocky Mountain · Maroon Bells · Grand Mesa · Black Canyon · Garden of the Gods · Pikes Peak · Great Sand Dunes',
     coordinates: [-105.78, 39.55] as [number, number],
     photos: [
@@ -238,7 +252,7 @@ export const PAST_TRIPS = [
   {
     id: 'yosemite',
     label: 'Yosemite National Park',
-    date: 'April 2025',
+    date: new Date('2025-04-01'),
     description: 'Vernal Falls · Nevada Falls · Mist Trail · John Muir Trail',
     coordinates: [-119.54, 37.87] as [number, number],
     photos: [
@@ -251,7 +265,7 @@ export const PAST_TRIPS = [
   {
     id: 'cabo',
     label: 'Cabo San Lucas, Mexico',
-    date: 'December 2024',
+    date: new Date('2024-12-01'),
     description: 'El Arco · ATVs· Ziplining · Rappelling · Snorkeling',
     coordinates: [-109.92, 22.89] as [number, number],
     photos: [
