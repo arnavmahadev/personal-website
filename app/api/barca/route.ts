@@ -18,7 +18,7 @@ export async function GET() {
     const results = await Promise.all(
       LEAGUES.map(league =>
         fetch(
-          `https://site.api.espn.com/apis/site/v2/sports/soccer/${league}/scoreboard?dates=${range}`,
+          `https://site.api.espn.com/apis/site/v2/sports/soccer/${league}/scoreboard?dates=${range}&limit=1000`,
           { cache: 'no-store' }
         ).then(r => r.json())
       )
