@@ -36,6 +36,7 @@ export default function ProjectCard({
             {name}
           </h3>
           <p className="text-base text-primary font-medium mt-0.5">{hook}</p>
+          <p className="text-xs font-mono text-muted-foreground mt-2">{tech.join(' · ')}</p>
         </div>
       </div>
 
