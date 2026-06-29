@@ -1,11 +1,45 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { geoNaturalEarth1, geoPath } from 'd3-geo'
 import { ComposableMap, Geographies, Geography, Marker, ZoomableGroup } from 'react-simple-maps'
 
 const GEO_URL = '/world-110m.json'
 const MIN_ZOOM = 1
 const MAX_ZOOM = 8
+
+const MAP_WIDTH = 800
+const MAP_HEIGHT = 480
+const MAP_SCALE = 155
+
+// Projection mirroring the <ComposableMap> config, used to clamp panning so the
+// viewport can never show empty space beyond the edges of the world.
+const projection = geoNaturalEarth1()
+  .scale(MAP_SCALE)
+  .translate([MAP_WIDTH / 2, MAP_HEIGHT / 2])
+// Projected bounding box of the whole globe in SVG coordinates.
+const [[BOUNDS_X0, BOUNDS_Y0], [BOUNDS_X1, BOUNDS_Y1]] = geoPath(projection).bounds({
+  type: 'Sphere',
+})
+
+// Clamp a value into [lo, hi]; if the viewport is larger than the content
+// (lo > hi), center it instead.
+function clampValue(value: number, lo: number, hi: number) {
+  if (lo > hi) return (lo + hi) / 2
+  return Math.max(lo, Math.min(hi, value))
+}
+
+// Clamp a [lon, lat] center for the given zoom so the viewport stays inside the
+// projected world bounds (no blank space at any zoom level).
+function clampCenter(center: [number, number], zoom: number): [number, number] {
+  const projected = projection(center)
+  if (!projected) return center
+  const halfW = MAP_WIDTH / 2 / zoom
+  const halfH = MAP_HEIGHT / 2 / zoom
+  const x = clampValue(projected[0], BOUNDS_X0 + halfW, BOUNDS_X1 - halfW)
+  const y = clampValue(projected[1], BOUNDS_Y0 + halfH, BOUNDS_Y1 - halfH)
+  return (projection.invert?.([x, y]) as [number, number]) ?? center
+}
 
 type MapMarker = {
   id: string
@@ -27,6 +61,17 @@ export default function WorldMap({ markers }: { markers: MapMarker[] }) {
   const [center, setCenter] = useState<[number, number]>([0, 0])
   const containerRef = useRef<HTMLDivElement>(null)
 
+  // Latest view kept in a ref so the (effect-bound) wheel handler reads fresh values.
+  const viewRef = useRef({ zoom, center })
+  viewRef.current = { zoom, center }
+
+  // Programmatic zoom (wheel/buttons) bypasses d3-zoom's translateExtent, so we
+  // re-clamp the center ourselves to keep the viewport inside the world bounds.
+  const applyZoom = useCallback((nextZoom: number) => {
+    const z = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, nextZoom))
+    setZoom(z)
+    setCenter((c) => clampCenter(c, z))
+  }, [])
 
   useEffect(() => {
     const el = containerRef.current
@@ -37,16 +82,14 @@ export default function WorldMap({ markers }: { markers: MapMarker[] }) {
       if (e.metaKey || e.ctrlKey) {
         // Cmd+scroll (Mac) or Ctrl+scroll (Windows) → zoom map
         e.preventDefault()
-        setZoom((z) => {
-          const factor = e.deltaY < 0 ? 1.06 : 1 / 1.06
-          return Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, z * factor))
-        })
+        const factor = e.deltaY < 0 ? 1.06 : 1 / 1.06
+        applyZoom(viewRef.current.zoom * factor)
       }
       // Otherwise event propagation is stopped but default (page scroll) still happens
     }
     el.addEventListener('wheel', handler, { capture: true, passive: false })
     return () => el.removeEventListener('wheel', handler, { capture: true })
-  }, [])
+  }, [applyZoom])
 
   return (
     <div ref={containerRef} className="relative w-full rounded-xl overflow-hidden border border-border bg-card">
@@ -62,9 +105,10 @@ export default function WorldMap({ markers }: { markers: MapMarker[] }) {
           center={center}
           minZoom={MIN_ZOOM}
           maxZoom={MAX_ZOOM}
+          translateExtent={[[BOUNDS_X0, BOUNDS_Y0], [BOUNDS_X1, BOUNDS_Y1]]}
           onMoveEnd={({ zoom: z, coordinates }) => {
             setZoom(z)
-            setCenter(coordinates)
+            setCenter(clampCenter(coordinates, z))
           }}
         >
           <Geographies geography={GEO_URL}>
@@ -143,12 +187,12 @@ export default function WorldMap({ markers }: { markers: MapMarker[] }) {
       {/* Zoom buttons */}
       <div className="absolute top-2 left-3 flex flex-col gap-1">
         <button
-          onClick={() => setZoom((z) => Math.min(z * 2, MAX_ZOOM))}
+          onClick={() => applyZoom(viewRef.current.zoom * 2)}
           className="w-7 h-7 rounded border border-border bg-card text-foreground text-lg leading-none flex items-center justify-center hover:bg-muted transition-colors"
           aria-label="Zoom in"
         >+</button>
         <button
-          onClick={() => setZoom((z) => Math.max(z / 2, MIN_ZOOM))}
+          onClick={() => applyZoom(viewRef.current.zoom / 2)}
           className="w-7 h-7 rounded border border-border bg-card text-foreground text-lg leading-none flex items-center justify-center hover:bg-muted transition-colors"
           aria-label="Zoom out"
         >−</button>

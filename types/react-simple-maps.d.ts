@@ -42,6 +42,7 @@ declare module 'react-simple-maps' {
     center?: [number, number]
     minZoom?: number
     maxZoom?: number
+    translateExtent?: [[number, number], [number, number]]
     onMoveEnd?: (pos: { zoom: number; coordinates: [number, number] }) => void
     onMoveStart?: (pos: { zoom: number; coordinates: [number, number] }) => void
     children?: ReactNode
