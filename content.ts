@@ -49,6 +49,15 @@ export const SOCIALS = {
 
 export const PROJECTS = [
   {
+    name: 'SoccerBoard',
+    hook: 'Predicting goals with machine learning.',
+    description:
+      'A web app for visualizing soccer tactics and shot quality. An Expected Goals page scores any shot in real time using an XGBoost model trained on StatsBomb data, while a Tactics Board lets you arrange formations and draw runs and passes on a full pitch.',
+    tech: ['Python', 'FastAPI', 'XGBoost', 'JavaScript', 'SVG'],
+    github: 'https://github.com/arnavmahadev/SoccerBoard',
+    demo: 'https://arnavmahadev-soccerboard.hf.space/' as string | undefined,
+  },
+  {
     name: 'SaveBites',
     hook: 'Fight food waste, one receipt at a time.',
     description:
