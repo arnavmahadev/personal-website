@@ -52,7 +52,7 @@ export const PROJECTS = [
     name: 'SoccerBoard',
     hook: 'Predicting goals and forecasting the World Cup with machine learning.',
     description:
-      'A web app for visualizing soccer tactics and predicting match outcomes. An Expected Goals page scores any shot in real time using an XGBoost model trained on StatsBomb data, a Forecaster predicts the 2026 World Cup with a Dixon-Coles scoreline model and Monte Carlo tournament simulation, and a Tactics Board lets you arrange formations and draw runs and passes on a full pitch.',
+      'A machine learning app for soccer: a Forecaster simulates the 2026 World Cup with a Dixon-Coles scoreline model, an Expected Goals model scores shots in real time with XGBoost, and a Tactics Board visualizes formations and plays.',
     tech: ['Python', 'FastAPI', 'XGBoost', 'SciPy', 'JavaScript', 'SVG'],
     github: 'https://github.com/arnavmahadev/SoccerBoard',
     demo: 'https://arnavmahadev-soccerboard.hf.space/' as string | undefined,
