@@ -50,7 +50,7 @@ export const SOCIALS = {
 export const PROJECTS = [
   {
     name: 'SoccerBoard',
-    hook: 'Predicting goals and forecasting the World Cup with machine learning.',
+    hook: 'Forecasting the World Cup with machine learning.',
     description:
       'A machine learning app for soccer: a Forecaster simulates the 2026 World Cup with a Dixon-Coles scoreline model, an Expected Goals model scores shots in real time with XGBoost, and a Tactics Board visualizes formations and plays.',
     tech: ['Python', 'FastAPI', 'XGBoost', 'SciPy', 'JavaScript', 'SVG'],
