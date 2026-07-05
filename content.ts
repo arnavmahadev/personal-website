@@ -52,8 +52,8 @@ export const PROJECTS = [
     name: 'SoccerBoard',
     hook: 'Forecasting the World Cup with machine learning.',
     description:
-      'A machine learning app for soccer: a Forecaster simulates the 2026 World Cup with a Dixon-Coles scoreline model, an Expected Goals model scores shots in real time with XGBoost, and a Tactics Board visualizes formations and plays.',
-    tech: ['Python', 'FastAPI', 'XGBoost', 'SciPy', 'JavaScript', 'SVG'],
+      'A machine learning app for soccer. An Expected Goals model trained on StatsBomb data scores shots within 8% of the professional benchmark, and a match-outcome forecaster served via FastAPI and Docker predicts results at 60% accuracy.',
+    tech: ['Python', 'JavaScript', 'XGBoost', 'PyTorch', 'FastAPI', 'Docker'],
     github: 'https://github.com/arnavmahadev/SoccerBoard',
     demo: 'https://arnavmahadev-soccerboard.hf.space/' as string | undefined,
   },
@@ -105,9 +105,9 @@ export const EXPERIENCE = [
     location: 'Cupertino, CA',
     link: 'https://maadhev.com',
     bullets: [
-      'Built a custom ACH payment system using Python, Flask, and Stripe API, integrating a Shopify custom app to cut transaction fees by 70% compared to credit card processing.',
+      'Built a custom ACH payment system with Python, Flask, and the Stripe API, integrated with a Shopify app to enable bank transfer payments at 70% lower per-transaction cost than card processing.',
       'Engineered Stripe webhook handlers to sync payment and fulfillment data between Stripe and Shopify in real time, automating order confirmation across 50+ transactions.',
-      'Developed custom Shopify theme components in Liquid, HTML, and CSS via the Shopify CLI, rebuilding 13 storefront pages to improve UX and streamline the checkout flow.',
+      'Rebuilt the Shopify storefront and checkout flow in Liquid and HTML/CSS via the Shopify CLI, consolidating a multi-step checkout into a single-page flow.',
     ],
   },
   {
