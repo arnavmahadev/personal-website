@@ -49,10 +49,28 @@ export const SOCIALS = {
 
 export const PROJECTS = [
   {
+    name: 'Falsetto',
+    hook: 'Detecting AI Generated Music',
+    description:
+      'A deep learning system that detects AI-generated music using audio embeddings and attention-based classification through an end-to-end machine learning pipeline.',
+    tech: ['Python', 'PyTorch', 'Hugging Face Transformers', 'scikit-learn', 'Gradio', 'Modal', 'librosa'],
+    github: 'https://github.com/arnavmahadev/Falsetto',
+    demo: 'https://arnavmahadev.github.io/Falsetto/' as string | undefined,
+  },
+  {
+    name: 'DEFCON',
+    hook: 'Quantifying Defensive Contributions',
+    description:
+      'A graph neural network-based soccer analytics platform that quantifies defensive contributions using player tracking and event data.',
+    tech: ['Python', 'JavaScript', 'XGBoost', 'PyTorch', 'FastAPI', 'Docker'],
+    github: 'https://github.com/arnavmahadev/DEFCON',
+    demo: 'https://arnavmahadev-soccerboard.hf.space/' as string | undefined,
+  },
+  {
     name: 'SoccerBoard',
     hook: 'Forecasting the World Cup with machine learning.',
     description:
-      'A machine learning app for soccer. An Expected Goals model trained on StatsBomb data scores shots within 8% of the professional benchmark, and a match-outcome forecaster served via FastAPI and Docker predicts results at 60% accuracy.',
+      'A soccer analytics platform that predicts match outcomes and expected goals using statistical models, machine learning, and interactive visualizations.',
     tech: ['Python', 'JavaScript', 'XGBoost', 'PyTorch', 'FastAPI', 'Docker'],
     github: 'https://github.com/arnavmahadev/SoccerBoard',
     demo: 'https://arnavmahadev-soccerboard.hf.space/' as string | undefined,
