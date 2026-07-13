@@ -62,9 +62,9 @@ export const PROJECTS = [
     hook: 'Quantifying Defensive Contributions',
     description:
       'A graph neural network-based soccer analytics platform that quantifies defensive contributions using player tracking and event data.',
-    tech: ['Python', 'JavaScript', 'XGBoost', 'PyTorch', 'FastAPI', 'Docker'],
+    tech: ['Python', 'PyTorch Geometric', 'scikit-learn', 'XGBoost', 'pandas', 'Plotly', 'NumPy'],
     github: 'https://github.com/arnavmahadev/DEFCON',
-    demo: 'https://arnavmahadev-soccerboard.hf.space/' as string | undefined,
+    demo: undefined as string | undefined,
   },
   {
     name: 'SoccerBoard',
