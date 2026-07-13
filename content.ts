@@ -53,7 +53,7 @@ export const PROJECTS = [
     hook: 'Detecting AI Generated Music',
     description:
       'A deep learning system that detects AI-generated music using audio embeddings and attention-based classification through an end-to-end machine learning pipeline.',
-    tech: ['Python', 'PyTorch', 'Hugging Face Transformers', 'scikit-learn', 'Gradio', 'Modal', 'librosa'],
+    tech: ['Python', 'PyTorch', 'Hugging Face Transformers', 'scikit-learn'],
     github: 'https://github.com/arnavmahadev/Falsetto',
     demo: 'https://arnavmahadev.github.io/Falsetto/' as string | undefined,
   },
@@ -62,7 +62,7 @@ export const PROJECTS = [
     hook: 'Quantifying Defensive Contributions',
     description:
       'A graph neural network-based soccer analytics platform that quantifies defensive contributions using player tracking and event data.',
-    tech: ['Python', 'PyTorch Geometric', 'scikit-learn', 'XGBoost', 'pandas', 'Plotly', 'NumPy'],
+    tech: ['Python', 'PyTorch Geometric', 'scikit-learn', 'XGBoost', 'NumPy'],
     github: 'https://github.com/arnavmahadev/DEFCON',
     demo: undefined as string | undefined,
   },
