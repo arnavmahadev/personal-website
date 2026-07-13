@@ -114,9 +114,9 @@ export const EXPERIENCE = [
     location: 'Cupertino, CA',
     link: 'https://maadhev.com',
     bullets: [
-      'Built a custom ACH payment system with Python, Flask, and the Stripe API, integrated with a Shopify app to enable bank transfer payments at 70% lower per-transaction cost than card processing.',
+      'Built a custom ACH payment system (Python, Flask, Stripe API) integrated with a Shopify app, enabling bank transfer payments at 70% lower per-transaction cost than card processing.',
       'Engineered Stripe webhook handlers to sync payment and fulfillment data between Stripe and Shopify in real time, automating order confirmation across 50+ transactions.',
-      'Rebuilt the Shopify storefront and checkout flow in Liquid and HTML/CSS via the Shopify CLI, consolidating a multi-step checkout into a single-page flow.',
+      'Rebuilt the Shopify storefront and checkout flow, consolidating a multi step checkout into a single page.',
     ],
   },
   {
@@ -128,7 +128,7 @@ export const EXPERIENCE = [
     bullets: [
       'Architected a graph-based company relationship visualizer using React, D3.js, and PostgreSQL.',
       'Built a supplier/subsidiary relationship extraction pipeline across 5,000+ public company tickers, storing structured supplier/subsidiary edges in PostgreSQL to power graph-based visualization in the frontend.',
-      'Implemented Firebase authentication and AI-generated news summaries via an LLM pipeline, enriching company profiles with real-time context.',
+      'Integrated the Anthropic API to generate real-time news summaries, enriching company profiles with live information.',
     ],
   },
   {
@@ -138,9 +138,8 @@ export const EXPERIENCE = [
     location: 'San Mateo, CA',
     link: undefined as string | undefined,
     bullets: [
-      "Developed a Unity-based game showcasing Claythis's AI-driven 3D model generation pipeline.",
-      'Implemented modular weapon & health systems (reload, recoil, animations, armor, healing) enhancing code maintainability and reducing future implementation time by 40%.',
-      'Tested and validated integration of the AI-generated 3D character models into Unity, verifying rigging, animation, and rendering behavior across the pipeline\'s outputs.',
+      'Created a Unity-based game in C# showcasing Claythis\'s AI-driven 3D model generation pipeline, implementing core weapon & health systems such as reloading, recoil, animations, armor, and healing.',
+      'Tested and validated integration of the AI-generated 3D character models into Unity, verifying rigging, animation, and rendering behavior across the pipeline\'s outputs.'
     ],
   },
 ]
