@@ -85,15 +85,6 @@ export const PROJECTS = [
     demo: undefined as string | undefined,
   },
   {
-    name: 'Build Your Own World',
-    hook: 'A procedurally generated 2D world from a single seed.',
-    description:
-      'A deterministic, seed-based 2D world generator utilizing various data structures and algorithms. Implemented and tested a line of sight feature for the user and save/load functionality for the game state.',
-    tech: ['Java'],
-    github: undefined as string | undefined,
-    demo: undefined as string | undefined,
-  },
-  {
     name: 'Wordle',
     hook: 'A web-based Wordle clone with real-time feedback.',
     description:
