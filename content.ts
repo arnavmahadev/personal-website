@@ -64,7 +64,7 @@ export const PROJECTS = [
       'A graph neural network-based soccer analytics platform that quantifies defensive contributions using player tracking and event data.',
     tech: ['Python', 'PyTorch Geometric', 'scikit-learn', 'XGBoost', 'NumPy'],
     github: 'https://github.com/arnavmahadev/DEFCON',
-    demo: undefined as string | undefined,
+    demo: 'https://arnavmahadev.github.io/DEFCON/' as string | undefined,
   },
   {
     name: 'SoccerBoard',
