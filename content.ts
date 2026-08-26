@@ -33,6 +33,7 @@ export const COURSES: Course[] = [
   { code: 'CS 161',    name: 'Computer Security',                                 semester: 'Fall 2026',   cheatsheet: undefined },
   { code: 'CS 168',    name: 'Internet Architecture and Protocols',               semester: 'Fall 2026',   cheatsheet: undefined },
   { code: 'CS 189',    name: 'Introduction to Machine Learning',                  semester: 'Fall 2026',   cheatsheet: undefined },
+  { code: 'CS 162',    name: 'Operating Systems and System Programming',          semester: 'Fall 2026',   cheatsheet: undefined },
 ]
 
 export const RESUME_URL = '/resume/Arnav Mahadev Resume.pdf'
@@ -110,7 +111,7 @@ export const EXPERIENCE = [
   {
     role: 'Software Engineering Intern',
     org: 'Maadhev LLC',
-    period: 'May 2026 - Present',
+    period: 'May 2026 - Aug 2026',
     location: 'Cupertino, CA',
     link: 'https://maadhev.com',
     bullets: [
