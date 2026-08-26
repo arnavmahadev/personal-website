@@ -172,7 +172,10 @@ export const ADVENTURES: Adventure[] = [
     date: new Date('2026-08-02T05:00:00Z'),
     description: '5,895 m (19,341 ft) · Uhuru Peak · Tanzania',
     coordinates: [37.36, -3.07],
-    image: '/adventures/kili.jpg',
+    photos: [
+      { src: '/adventures/kili/IMG_5394.jpg', caption: 'Kilimanjaro' },
+      { src: '/adventures/kili/IMG_5874.jpg', caption: 'Kilimanjaro' },
+    ],
   },
   {
     id: 'safari',
@@ -180,7 +183,19 @@ export const ADVENTURES: Adventure[] = [
     date: new Date('2026-08-10T03:00:00Z'),
     description: 'Serengeti · Tarangire · Ngorongoro Crater',
     coordinates: [34.83, -2.33],
-    image: '/adventures/safari.jpg',
+    photos: [
+      { src: '/adventures/safari/IMG_0570.JPG', caption: 'Tanzania Safari' },
+      { src: '/adventures/safari/IMG_0951.jpg', caption: 'Tanzania Safari' },
+      { src: '/adventures/safari/IMG_1200.jpg', caption: 'Tanzania Safari' },
+      { src: '/adventures/safari/IMG_1371.jpg', caption: 'Tanzania Safari' },
+      { src: '/adventures/safari/IMG_1869.JPG', caption: 'Tanzania Safari' },
+      { src: '/adventures/safari/IMG_2770.jpg', caption: 'Tanzania Safari' },
+      { src: '/adventures/safari/IMG_3785.JPG', caption: 'Tanzania Safari' },
+      { src: '/adventures/safari/IMG_4284.jpg', caption: 'Tanzania Safari' },
+      { src: '/adventures/safari/IMG_4329.jpg', caption: 'Tanzania Safari' },
+      { src: '/adventures/safari/IMG_5495.jpg', caption: 'Tanzania Safari' },
+      { src: '/adventures/safari/IMG_5665.JPG', caption: 'Tanzania Safari' },
+    ],
   },
 
   {
