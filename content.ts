@@ -215,7 +215,6 @@ export const ADVENTURES: Adventure[] = [
     description: 'Zion · Bryce · Arches · Canyonlands · Capitol Reef · Dead Horse Point · La Sal',
     coordinates: [-111.09, 39.32] as [number, number],
     photos: [
-      { src: '/adventures/utah/IMG_4189.JPG', caption: 'Utah' },
       { src: '/adventures/utah/IMG_4661.JPG', caption: 'Utah' },
       { src: '/adventures/utah/IMG_4919.JPG', caption: 'Utah' },
       { src: '/adventures/utah/IMG_5023.JPG', caption: 'Utah' },
