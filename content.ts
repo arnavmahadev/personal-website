@@ -35,7 +35,7 @@ export const COURSES: Course[] = [
   { code: 'CS 162',    name: 'Operating Systems and System Programming',          semester: 'Fall 2026',   cheatsheet: undefined },
 ]
 
-export const RESUME_URL = '/resume/Arnav Mahadev Resume.pdf'
+export const RESUME_URL = '/resume/Arnav Mahadev SWE Resume.pdf'
 
 export const SOCIALS = {
   github:    'https://github.com/arnavmahadev',
