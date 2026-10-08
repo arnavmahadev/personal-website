@@ -109,6 +109,28 @@ export const PROJECTS = [
 export const EXPERIENCE = [
   {
     role: 'Software Engineering Intern',
+    org: 'LG NOVA',
+    period: 'Oct 2026 - Present',
+    location: 'Santa Clara, CA',
+    link: 'https://www.lgnova.com',
+    bullets: [
+      'Root-caused silent data loss in a platform-wide Flask/PostgreSQL endpoint capping all paginated downloads at 500 rows and shipped a keyset pagination redesign guaranteeing complete, deterministic results.',
+      'Deployed the fix across Python and React/TypeScript repos, expanding semantic search coverage of PitchBook financial fields by 233%, backed by a 38-test suite verifying gap-free pagination across 1,200+ rows.',
+    ],
+  },
+  {
+    role: 'Machine Learning Engineering Intern',
+    org: 'iPick.ai',
+    period: 'Aug 2026 - Oct 2026',
+    location: 'Berkeley, CA',
+    link: 'https://www.ipick.ai/',
+    bullets: [
+      'Built an LLM-based portfolio optimizer using the Claude API that segments holdings into investment tracks, prunes dominated positions, and provides per-stock and per-portfolio risk metrics.',
+      'Engineered a reinforcement learning pipeline of three trading agents (power picks, hidden gems, and a short-target detector) that uses realized returns over a fixed holding window as the reward signal to update each agent\'s policy.',
+    ],
+  },
+  {
+    role: 'Software Engineering Intern',
     org: 'Maadhev LLC',
     period: 'May 2026 - Aug 2026',
     location: 'Cupertino, CA',

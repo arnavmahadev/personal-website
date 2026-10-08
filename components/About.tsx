@@ -19,10 +19,12 @@ export default function About() {
             development, data organization, and clean system design.
           </p>
           <p>
-            Currently, I&apos;m a Software Engineering Intern at Maadhev LLC, where I&apos;m building
-            a custom ACH payment system and Shopify integrations. I previously interned at iPick.ai,
-            where I built a graph-based platform that visualizes relationships between thousands of
-            companies, and at Claythis, where I worked on their AI-driven 3D model generation technology.
+            Currently, I&apos;m a Software Engineering Intern at LG NOVA, where I work across a
+            Flask/PostgreSQL backend and a React/TypeScript frontend. I previously interned at iPick.ai,
+            where I built an LLM-based portfolio optimizer, a reinforcement learning pipeline of trading
+            agents, and a graph-based platform that visualizes relationships between thousands of
+            companies; at Maadhev LLC, where I built a custom ACH payment system and Shopify
+            integrations; and at Claythis, where I worked on their AI-driven 3D model generation technology.
           </p>
         </div>
 
