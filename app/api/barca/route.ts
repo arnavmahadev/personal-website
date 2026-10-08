@@ -4,25 +4,27 @@ export const dynamic = 'force-dynamic'
 
 const LEAGUES = ['esp.1', 'esp.copa_del_rey', 'uefa.champions']
 
-function dateStr(d: Date) {
-  return d.toISOString().slice(0, 10).replace(/-/g, '')
+const BARCA_ID = '83'
+
+// ESPN's scoreboard endpoint rejects date ranges, so read Barça's own schedule per competition.
+function fetchSchedule(league: string, season?: number) {
+  return fetch(
+    `https://site.api.espn.com/apis/site/v2/sports/soccer/${league}/teams/${BARCA_ID}/schedule${season ? `?season=${season}` : ''}`,
+    { cache: 'no-store' }
+  ).then(r => r.json())
 }
 
 export async function GET() {
   try {
-    const today = new Date()
-    const past = new Date(today)
-    past.setDate(past.getDate() - 120)
-    const range = `${dateStr(past)}-${dateStr(today)}`
+    let results = await Promise.all(LEAGUES.map(league => fetchSchedule(league)))
 
-    const results = await Promise.all(
-      LEAGUES.map(league =>
-        fetch(
-          `https://site.api.espn.com/apis/site/v2/sports/soccer/${league}/scoreboard?dates=${range}&limit=1000`,
-          { cache: 'no-store' }
-        ).then(r => r.json())
-      )
-    )
+    // Before the first match of a new season, fall back to last season's results.
+    const played = (r: { events?: Array<{ competitions?: Array<{ status?: { type?: { completed?: boolean } } }> }> }) =>
+      (r.events ?? []).some(e => (e.competitions ?? []).some(c => c.status?.type?.completed))
+    if (!results.some(played)) {
+      const year = results.find(r => r.season?.year)?.season.year
+      if (year) results = await Promise.all(LEAGUES.map(league => fetchSchedule(league, year - 1)))
+    }
 
     type Match = {
       date: string
@@ -40,19 +42,21 @@ export async function GET() {
 
     for (let i = 0; i < LEAGUES.length; i++) {
       const events = results[i].events ?? []
-      const rawLeague = results[i].leagues?.[0]?.name ?? LEAGUES[i]
-      const leagueName = rawLeague.includes('LALIGA') ? 'La Liga' : rawLeague
-
       for (const event of events) {
+        const rawLeague: string = event.league?.name ?? LEAGUES[i]
+        const leagueName = rawLeague.includes('LALIGA') ? 'La Liga' : rawLeague
         for (const comp of event.competitions ?? []) {
           if (!comp.status?.type?.completed) continue
-          const competitors: Array<{ homeAway: string; team: { displayName: string; logo?: string }; score: string }> =
-            comp.competitors ?? []
-          const barcaTeam = competitors.find(t => t.team.displayName === 'Barcelona')
-          if (!barcaTeam) continue
-          const oppTeam = competitors.find(t => t.team.displayName !== 'Barcelona')!
-          const barcaScore = barcaTeam.score
-          const oppScore = oppTeam.score
+          const competitors: Array<{
+            homeAway: string
+            team: { id: string; displayName: string; logos?: Array<{ href: string }> }
+            score?: { displayValue: string }
+          }> = comp.competitors ?? []
+          const barcaTeam = competitors.find(t => t.team.id === BARCA_ID)
+          const oppTeam = competitors.find(t => t.team.id !== BARCA_ID)
+          if (!barcaTeam?.score || !oppTeam?.score) continue
+          const barcaScore = barcaTeam.score.displayValue
+          const oppScore = oppTeam.score.displayValue
           const bg = parseInt(barcaScore)
           const og = parseInt(oppScore)
           matches.push({
@@ -63,8 +67,8 @@ export async function GET() {
             barcaHome: barcaTeam.homeAway === 'home',
             result: bg > og ? 'W' : bg < og ? 'L' : 'D',
             league: leagueName,
-            barcaLogo: barcaTeam.team.logo ?? null,
-            oppLogo: oppTeam.team.logo ?? null,
+            barcaLogo: barcaTeam.team.logos?.[0]?.href ?? null,
+            oppLogo: oppTeam.team.logos?.[0]?.href ?? null,
           })
         }
       }
