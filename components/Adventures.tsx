@@ -203,6 +203,7 @@ export default function Adventures() {
                       alt={trip.label}
                       fill
                       className="object-cover object-center"
+                      style={trip.imagePosition ? { objectPosition: trip.imagePosition } : undefined}
                     />
                   </div>
                 )}

@@ -183,10 +183,29 @@ export type Adventure = {
   description: string
   coordinates: [number, number]
   image?: string | null           // shown on the upcoming countdown card
+  imagePosition?: string          // CSS object-position for that image, e.g. 'center 25%' (default: center)
   photos?: AdventurePhoto[]        // shown in the Past dropdown; add after the trip
 }
 
 export const ADVENTURES: Adventure[] = [
+  {
+    id: 'patagonia',
+    label: 'Patagonia',
+    date: new Date('2027-12-01'),
+    description: 'Chile · Argentina',
+    coordinates: [-72.97, -50.94],
+    image: '/adventures/patagonia/patagonia.avif',
+    imagePosition: 'center 32%',
+  },
+  {
+    id: 'antarctica',
+    label: 'Antarctica',
+    date: new Date('2027-12-01'),
+    description: 'Antarctic Peninsula',
+    coordinates: [-62.5, -64.8],
+    image: '/adventures/antarctica/antarctica.jpg',
+    imagePosition: 'center 38%',
+  },
   {
     id: 'kili',
     label: 'Summit Mt. Kilimanjaro',
