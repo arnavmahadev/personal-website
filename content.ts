@@ -53,7 +53,7 @@ export const PROJECTS = [
     hook: 'Detecting AI Generated Music',
     description:
       'A deep learning system that detects AI-generated music using audio embeddings and attention-based classification through an end-to-end machine learning pipeline.',
-    tech: ['Python', 'PyTorch', 'Hugging Face Transformers', 'scikit-learn'],
+    tech: ['Python', 'PyTorch', 'Hugging Face Transformers', 'scikit-learn', 'Gradio', 'Modal', 'librosa'],
     github: 'https://github.com/arnavmahadev/Falsetto',
     demo: 'https://arnavmahadev.github.io/Falsetto/' as string | undefined,
   },
