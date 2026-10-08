@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Image from 'next/image'
 import SectionWrapper from './ui/SectionWrapper'
 import NowPlaying from './ui/NowPlaying'
+import CutProgress from './ui/CutProgress'
 
 interface BarcaResult {
   opponent: string
@@ -169,6 +170,9 @@ export default function Interests() {
             </div>
           </div>
         </div>
+
+        {/* Gym / cut progress */}
+        <CutProgress />
 
       </div>
     </SectionWrapper>
