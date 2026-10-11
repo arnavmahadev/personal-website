@@ -152,17 +152,56 @@
     }
   }
 
-  /* Contour lines, drawn in the primary colour through an SVG mask. */
-  .topo {
-    background-color: var(--primary);
-    opacity: 0.16;
-    -webkit-mask: url('/topo.svg') center / cover no-repeat;
-    mask: url('/topo.svg') center / cover no-repeat;
+  /* Contour lines behind the hero. Plain vector strokes and a gradient overlay,
+     with no masks, so the layer is painted once and then only moved and faded. */
+  .topo-layer {
+    position: fixed;
+    inset-inline: 0;
+    top: 0;
+    height: 140vh;
+    z-index: -10;
+    pointer-events: none;
+    will-change: transform, opacity;
   }
 
-  .topo-fade {
-    -webkit-mask-image: radial-gradient(ellipse 55% 36% at 50% 36%, rgb(0 0 0 / 0.25) 0%, black 100%);
-    mask-image: radial-gradient(ellipse 55% 36% at 50% 36%, rgb(0 0 0 / 0.25) 0%, black 100%);
+  .topo {
+    color: var(--primary);
+    opacity: 0.16;
+  }
+
+  .topo-clearing {
+    background: radial-gradient(
+      ellipse 55% 36% at 50% 36%,
+      color-mix(in oklch, var(--background) 75%, transparent) 0%,
+      transparent 100%
+    );
+  }
+
+  @keyframes topo-drift {
+    to {
+      opacity: 0;
+      transform: translate3d(0, -30vh, 0);
+    }
+  }
+
+  @keyframes topo-fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .topo-layer {
+      animation: topo-drift linear both;
+      animation-timeline: scroll(root);
+      animation-range: 0 85vh;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .topo-layer {
+        animation-name: topo-fade-out;
+      }
+    }
   }
 
   /* The ring of type around a trip postmark turns a little when its card is hovered. */

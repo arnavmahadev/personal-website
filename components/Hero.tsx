@@ -1,6 +1,7 @@
 'use client'
 
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { Download } from 'lucide-react'
 import Image from 'next/image'
 import { RESUME_URL } from '@/content'
@@ -17,26 +18,28 @@ const item = {
 }
 
 export default function Hero() {
-  // The contour map is pinned behind the page. As you scroll it drifts upward
-  // at a fraction of the scroll speed, grows slightly, and fades out by the
-  // time the hero has left the screen.
+  // The contour map is pinned behind the page and drifts up and fades as you scroll.
+  // Browsers with scroll-driven animations run that entirely in CSS, off the main
+  // thread. Elsewhere only the fade is driven from here: moving a pinned layer from
+  // script trails the scroll by a frame, which reads as jitter on phones.
   const { scrollY } = useScroll()
-  const reduceMotion = useReducedMotion()
-  const progress = (v: number) => (typeof window === 'undefined' ? 0 : Math.min(1, v / (window.innerHeight * 0.85)))
-  const topoOpacity = useTransform(scrollY, (v) => 1 - progress(v))
-  const topoY = useTransform(scrollY, (v) => (reduceMotion ? 0 : -v * 0.35))
-  const topoScale = useTransform(scrollY, (v) => (reduceMotion ? 1 : 1 + progress(v) * 0.12))
+  const [scriptedFade, setScriptedFade] = useState(false)
+  useEffect(() => {
+    setScriptedFade(!CSS.supports('animation-timeline: scroll()'))
+  }, [])
+  const topoOpacity = useTransform(scrollY, (v) =>
+    typeof window === 'undefined' ? 1 : Math.max(0, 1 - v / (window.innerHeight * 0.85))
+  )
 
   return (
     <section className="relative h-screen sm:min-h-screen flex items-start sm:items-center pt-16">
-      {/* Contour-map backdrop, thinned out behind the text. Taller than the screen so its
-          bottom edge never shows while it drifts up. */}
-      <motion.div
-        aria-hidden
-        className="topo-fade fixed inset-x-0 top-0 h-[140vh] -z-10 pointer-events-none origin-top will-change-transform"
-        style={{ opacity: topoOpacity, y: topoY, scale: topoScale }}
-      >
-        <div className="topo absolute inset-0" />
+      {/* Contour-map backdrop, taller than the screen so its bottom edge never shows while it drifts up */}
+      <motion.div aria-hidden className="topo-layer" style={scriptedFade ? { opacity: topoOpacity } : undefined}>
+        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" className="topo absolute inset-0 w-full h-full">
+          <use href="/topo.svg#c" />
+        </svg>
+        {/* Thins the lines out behind the text */}
+        <div className="topo-clearing absolute inset-0" />
       </motion.div>
 
       <div className="relative max-w-[96rem] mx-auto px-4 sm:px-8 w-full py-2 sm:py-16">
