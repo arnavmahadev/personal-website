@@ -29,6 +29,13 @@ function MarqueeText({ text, className }: { text: string; className?: string }) 
   )
 }
 
+interface RecentTrack {
+  title: string
+  artist: string
+  albumArt?: string
+  songUrl: string
+}
+
 interface Track {
   isPlaying: boolean
   title: string | null
@@ -36,6 +43,7 @@ interface Track {
   album: string
   albumArt: string
   songUrl: string
+  recent?: RecentTrack[]
 }
 
 function TrackPanel({ track }: { track: Track | null }) {
@@ -101,9 +109,12 @@ export default function NowPlaying() {
     return () => clearInterval(interval)
   }, [])
 
+  const recent = (track?.recent ?? []).filter(t => t.albumArt)
+
   return (
-    <div className="relative rounded-xl bg-card border border-border overflow-hidden h-full">
-      <div className="px-4 py-4 h-full flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-8">
+    <div className="relative rounded-xl bg-card border border-border overflow-hidden h-full flex flex-col card-glow">
+      <div aria-hidden className="absolute inset-x-0 top-0 h-[3px] bg-[#1DB954]" />
+      <div className="px-4 py-4 flex-1 flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-8">
         {/* Mobile-only title */}
         <p className="sm:hidden text-sm font-mono text-muted-foreground uppercase tracking-widest">Spotify</p>
 
@@ -122,6 +133,28 @@ export default function NowPlaying() {
         {/* Track info */}
         <TrackPanel track={track} />
       </div>
+
+      {/* Recently played strip */}
+      {recent.length > 0 && (
+        <div className="px-4 py-3 border-t border-border flex items-center justify-between gap-3">
+          <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest">Recently played</p>
+          <div className="flex gap-2">
+            {recent.map(t => (
+              <a
+                key={t.songUrl}
+                href={t.songUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={`${t.title} · ${t.artist}`}
+                aria-label={`${t.title} by ${t.artist}`}
+                className="block transition-transform duration-200 hover:-translate-y-0.5"
+              >
+                <Image src={t.albumArt!} alt="" width={36} height={36} className="rounded" />
+              </a>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   )
 }
