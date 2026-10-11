@@ -1,8 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
-import CountUp from './CountUp'
+import { useEffect, useRef, useState, type RefObject } from 'react'
+import { motion, useInView } from 'framer-motion'
 
 // Signed pounds with a real minus sign, e.g. "−15.4" / "+0.6" / "0.0".
 function formatChange(v: number) {
@@ -16,8 +15,27 @@ function tickStep(span: number) {
   return [1, 2, 5, 10, 20, 50].find(s => span / s <= 4) ?? 100
 }
 
-function Chart({ changes, goal }: { changes: number[]; goal: number | null }) {
+function Chart({
+  changes,
+  goal,
+  cardRef,
+}: {
+  changes: number[]
+  goal: number | null
+  cardRef: RefObject<HTMLDivElement>
+}) {
   const [hover, setHover] = useState<number | null>(null)
+
+  // The line draws once the whole widget is on screen. On screens too short to
+  // ever fit the whole card, the plot itself being fully visible is enough.
+  const plotRef = useRef<HTMLDivElement>(null)
+  const cardInView = useInView(cardRef, { once: true, amount: 'all' })
+  const plotInView = useInView(plotRef, { once: true, amount: 'all' })
+  const [cardFits, setCardFits] = useState(true)
+  useEffect(() => {
+    setCardFits((cardRef.current?.offsetHeight ?? 0) <= window.innerHeight)
+  }, [cardRef])
+  const drawn = cardInView || (!cardFits && plotInView)
 
   const n = changes.length
   // The goal is part of the range so its line is always on the plot.
@@ -62,6 +80,7 @@ function Chart({ changes, goal }: { changes: number[]; goal: number | null }) {
 
         {/* Plot */}
         <div
+          ref={plotRef}
           className="relative flex-1 h-36 touch-pan-y"
           onPointerMove={track}
           onPointerDown={track}
@@ -81,15 +100,16 @@ function Chart({ changes, goal }: { changes: number[]; goal: number | null }) {
             </div>
           )}
 
-          {/* The line wipes in from the left the first time it scrolls into view */}
+          {/* The line wipes in from the left, once */}
           <motion.svg
             viewBox="0 0 100 100"
             preserveAspectRatio="none"
             className="absolute inset-0 w-full h-full overflow-visible"
-            initial={{ clipPath: 'inset(-8px 100% -8px -8px)' }}
-            whileInView={{ clipPath: 'inset(-8px -8px -8px -8px)' }}
-            viewport={{ once: true, margin: '-60px 0px' }}
-            transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+            // Both ends are in percentages: mixed units can't be interpolated, and the
+            // wipe would start partway across instead of at the y axis.
+            initial={{ clipPath: 'inset(-10% 100% -10% -5%)' }}
+            animate={drawn ? { clipPath: 'inset(-10% -5% -10% -5%)' } : undefined}
+            transition={{ duration: 1.6, ease: 'easeInOut' }}
           >
             <path d={area} fill="var(--primary)" opacity={0.1} />
             <path
@@ -112,9 +132,8 @@ function Chart({ changes, goal }: { changes: number[]; goal: number | null }) {
             className="absolute w-2.5 h-2.5 -ml-[5px] -mt-[5px] rounded-full bg-primary ring-2 ring-card"
             style={{ left: `${x(active)}%`, top: `${y(changes[active])}%` }}
             initial={{ opacity: 0, scale: 0 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: '-60px 0px' }}
-            transition={{ duration: 0.3, delay: 1.1 }}
+            animate={drawn ? { opacity: 1, scale: 1 } : undefined}
+            transition={{ duration: 0.3, delay: 1.5 }}
           />
 
           {hover !== null && (
@@ -154,6 +173,7 @@ interface Lift {
 export default function CutProgress() {
   const [data, setData] = useState<{ changes: number[]; goal?: number | null } | null | undefined>(undefined)
   const [lifts, setLifts] = useState<Lift[] | null>(null)
+  const cardRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     fetch('/api/weight').then(r => r.json()).then(setData).catch(() => setData(null))
@@ -167,7 +187,7 @@ export default function CutProgress() {
   const reached = goal !== null && latest !== null && (goal <= 0 ? latest <= goal : latest >= goal)
 
   return (
-    <div className="sm:col-span-2 rounded-xl border overflow-hidden relative bg-card border-border card-glow">
+    <div ref={cardRef} className="sm:col-span-2 rounded-xl border overflow-hidden relative bg-card border-border card-glow">
       <div className="px-4 py-4 flex flex-col sm:flex-row gap-4 sm:gap-6">
         <div className="sm:w-1/3 flex flex-col gap-3">
           <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Gym</p>
@@ -183,7 +203,7 @@ export default function CutProgress() {
             ) : (
               <>
                 <p className="text-3xl font-bold font-serif tabular-nums text-foreground">
-                  <CountUp value={latest} format={formatChange} />{' '}
+                  {formatChange(latest)}{' '}
                   <span className="text-lg font-medium text-muted-foreground">lb</span>
                 </p>
                 {toGo !== null && (
@@ -218,7 +238,7 @@ export default function CutProgress() {
               <p className="text-sm text-muted-foreground">No weigh-ins to show yet.</p>
             </div>
           ) : (
-            <Chart changes={data.changes} goal={goal} />
+            <Chart changes={data.changes} goal={goal} cardRef={cardRef} />
           )}
         </div>
       </div>

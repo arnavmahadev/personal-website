@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import SectionWrapper from './ui/SectionWrapper'
-import CountUp from './ui/CountUp'
 import { ADVENTURES, VISITED_LOCATIONS as VISITED, CONTINENTS, DEFAULT_COUNTRY, type Adventure } from '@/content'
 import dynamic from 'next/dynamic'
 
@@ -249,7 +248,7 @@ export default function Adventures() {
           <div key={stat.label} className="rounded-xl border border-border bg-card px-4 py-4 card-glow">
             <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-1">{stat.label}</p>
             <p className="text-3xl font-bold font-serif tabular-nums text-foreground">
-              <CountUp value={stat.value} />
+              {stat.value.toLocaleString('en-US')}
               {'unit' in stat && <span className="text-lg font-medium text-muted-foreground"> {stat.unit}</span>}
             </p>
             <p className="text-sm text-muted-foreground mt-0.5">{stat.note}</p>
