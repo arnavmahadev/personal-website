@@ -110,7 +110,7 @@ export const EXPERIENCE = [
   {
     role: 'Software Engineering Intern',
     org: 'LG NOVA',
-    period: 'Oct 2026 - Present',
+    period: 'Aug 2026 - Present',
     location: 'Santa Clara, CA',
     bullets: [
       'Root-caused silent data loss in a platform-wide Flask/PostgreSQL endpoint capping all paginated downloads at 500 rows and shipped a keyset pagination redesign guaranteeing complete, deterministic results.',
@@ -120,7 +120,7 @@ export const EXPERIENCE = [
   {
     role: 'Machine Learning Engineering Intern',
     org: 'iPick.ai',
-    period: 'Aug 2026 - Oct 2026',
+    period: 'Aug 2026 - Present',
     location: 'Berkeley, CA',
     bullets: [
       'Built an LLM-based portfolio optimizer using the Claude API that segments holdings into investment tracks, prunes dominated positions, and provides per-stock and per-portfolio risk metrics.',
