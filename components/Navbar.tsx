@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { flushSync } from 'react-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Github, Linkedin, Mail, Menu, X, Sun, Moon } from 'lucide-react'
 import { RESUME_URL, SOCIALS } from '@/content'
@@ -53,11 +54,32 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  function toggleTheme() {
+  function toggleTheme(e: React.MouseEvent) {
     const next = !isDark
-    setIsDark(next)
-    document.documentElement.classList.toggle('dark', next)
-    localStorage.setItem('theme', next ? 'dark' : 'light')
+    const apply = () => {
+      setIsDark(next)
+      document.documentElement.classList.toggle('dark', next)
+      localStorage.setItem('theme', next ? 'dark' : 'light')
+    }
+
+    // Where the browser supports it, the new theme spreads out in a circle from the button.
+    const doc = document as Document & { startViewTransition?: (cb: () => void) => { ready: Promise<void> } }
+    if (!doc.startViewTransition || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      apply()
+      return
+    }
+
+    const { clientX: x, clientY: y } = e
+    const radius = Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y))
+    doc
+      .startViewTransition(() => flushSync(apply))
+      .ready.then(() => {
+        document.documentElement.animate(
+          { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+          { duration: 550, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', pseudoElement: '::view-transition-new(root)' }
+        )
+      })
+      .catch(() => {})
   }
 
   return (

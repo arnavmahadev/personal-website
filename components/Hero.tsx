@@ -1,6 +1,6 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
 import { Download } from 'lucide-react'
 import Image from 'next/image'
 import { RESUME_URL } from '@/content'
@@ -17,10 +17,29 @@ const item = {
 }
 
 export default function Hero() {
+  // The contour map is pinned behind the page. As you scroll it drifts upward
+  // at a fraction of the scroll speed, grows slightly, and fades out by the
+  // time the hero has left the screen.
+  const { scrollY } = useScroll()
+  const reduceMotion = useReducedMotion()
+  const progress = (v: number) => (typeof window === 'undefined' ? 0 : Math.min(1, v / (window.innerHeight * 0.85)))
+  const topoOpacity = useTransform(scrollY, (v) => 1 - progress(v))
+  const topoY = useTransform(scrollY, (v) => (reduceMotion ? 0 : -v * 0.35))
+  const topoScale = useTransform(scrollY, (v) => (reduceMotion ? 1 : 1 + progress(v) * 0.12))
 
   return (
-    <section className="relative h-screen sm:min-h-screen flex items-start sm:items-center overflow-hidden pt-16">
-      <div className="max-w-[96rem] mx-auto px-4 sm:px-8 w-full py-2 sm:py-16">
+    <section className="relative h-screen sm:min-h-screen flex items-start sm:items-center pt-16">
+      {/* Contour-map backdrop, thinned out behind the text. Taller than the screen so its
+          bottom edge never shows while it drifts up. */}
+      <motion.div
+        aria-hidden
+        className="topo-fade fixed inset-x-0 top-0 h-[140vh] -z-10 pointer-events-none origin-top will-change-transform"
+        style={{ opacity: topoOpacity, y: topoY, scale: topoScale }}
+      >
+        <div className="topo absolute inset-0" />
+      </motion.div>
+
+      <div className="relative max-w-[96rem] mx-auto px-4 sm:px-8 w-full py-2 sm:py-16">
         <div className="grid gap-8 sm:gap-16">
           {/* Left — text */}
           <motion.div

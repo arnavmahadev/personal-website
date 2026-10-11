@@ -16,7 +16,7 @@ export default function Experience() {
             const nexusLink = ('nexusLink' in exp ? exp.nexusLink : undefined) as string | undefined
             return (
             <div key={exp.role + exp.org}>
-              <div className="rounded-2xl border p-5 transition-colors duration-200 bg-card border-border hover:border-accent/50">
+              <div className="rounded-2xl border p-5 bg-card border-border card-glow">
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-2 mb-3">
                   <div>
                     <h3 className="text-lg font-semibold font-serif text-foreground">{exp.role}</h3>
