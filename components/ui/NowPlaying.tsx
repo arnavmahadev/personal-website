@@ -60,79 +60,105 @@ const SLIDE_MS = 5000
 // A strip that rotates through sets of thumbnails: recently played, top tracks,
 // top artists. The active marker fills up like a progress bar and the strip moves
 // on when it is full, so the fill is the timer. It holds while a mouse is over the
-// strip or something in it has focus, and the markers jump straight to a slide.
+// strip or something in it has focus. Clicking anywhere on the strip skips to the
+// next slide, and the markers jump straight to one.
 function StatSlides({ slides }: { slides: Slide[] }) {
   const [index, setIndex] = useState(0)
   const [paused, setPaused] = useState(false)
   const active = index % slides.length
   const current = slides[active]
+  const rotates = slides.length > 1
+  const next = () => setIndex(n => (n + 1) % slides.length)
+
+  const slideIn = {
+    initial: { opacity: 0, x: 28 },
+    animate: { opacity: 1, x: 0 },
+    exit: { opacity: 0, x: -28 },
+    transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+  }
 
   return (
     <div
-      className="px-4 py-3 border-t border-border overflow-hidden"
+      className={`px-4 py-3 border-t border-border overflow-hidden flex items-center justify-between gap-3 ${
+        rotates ? 'cursor-pointer' : ''
+      }`}
+      onClick={rotates ? next : undefined}
       // Mouse only: a tap also fires "enter" and would leave the strip stuck on pause.
       onPointerEnter={e => e.pointerType === 'mouse' && setPaused(true)}
       onPointerLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
       onBlur={() => setPaused(false)}
     >
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={current.label}
-          className="flex items-center justify-between gap-3"
-          initial={{ opacity: 0, x: 28 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -28 }}
-          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest">{current.label}</p>
-          <div className="flex gap-2">
-            {current.items.map(item => (
-              <a
-                key={item.href}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={item.title}
-                aria-label={item.title}
-                className="block transition-transform duration-200 hover:-translate-y-0.5"
+      {/* Label with its markers centred underneath. Every label is laid out invisibly
+          in the same grid cell, so the cell is always as big as the largest one and the
+          markers below never shift when the visible label changes. */}
+      <div className="flex flex-col items-center gap-2.5">
+        <div className="grid place-items-center text-xs font-mono text-muted-foreground uppercase tracking-widest text-center">
+          {slides.map(slide => (
+            <p key={slide.label} aria-hidden className="col-start-1 row-start-1 invisible">
+              {slide.label}
+            </p>
+          ))}
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.p key={current.label} className="col-start-1 row-start-1" {...slideIn}>
+              {current.label}
+            </motion.p>
+          </AnimatePresence>
+        </div>
+
+        {rotates && (
+          <div className="flex gap-1.5">
+            {slides.map((slide, i) => (
+              <button
+                key={slide.label}
+                onClick={e => {
+                  e.stopPropagation()
+                  setIndex(i)
+                }}
+                aria-label={`Show ${slide.label.toLowerCase()}`}
+                aria-current={i === active}
+                className={`relative h-1 rounded-full overflow-hidden bg-border transition-all duration-300 ${
+                  i === active ? 'w-10' : 'w-2 hover:bg-muted-foreground'
+                }`}
               >
-                <Image
-                  src={item.image}
-                  alt=""
-                  width={36}
-                  height={36}
-                  className={`object-cover aspect-square ${current.round ? 'rounded-full' : 'rounded'}`}
-                />
-              </a>
+                {i === active && (
+                  <span
+                    className="slide-fill absolute inset-0 bg-primary"
+                    style={{ animationDuration: `${SLIDE_MS}ms`, animationPlayState: paused ? 'paused' : 'running' }}
+                    onAnimationEnd={next}
+                  />
+                )}
+              </button>
             ))}
           </div>
+        )}
+      </div>
+
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div key={current.label} className="flex gap-2" {...slideIn}>
+          {current.items.map(item => (
+            <a
+              key={item.href}
+              href={item.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={item.title}
+              aria-label={item.title}
+              // A thumbnail opens its link; it shouldn't also skip the slide.
+              onClick={e => e.stopPropagation()}
+              className="block transition-transform duration-200 hover:-translate-y-0.5"
+            >
+              <Image
+                src={item.image}
+                alt=""
+                width={36}
+                height={36}
+                className={`object-cover aspect-square ${current.round ? 'rounded-full' : 'rounded'}`}
+              />
+            </a>
+          ))}
         </motion.div>
       </AnimatePresence>
-
-      {slides.length > 1 && (
-        <div className="flex gap-1.5 mt-2.5">
-          {slides.map((slide, i) => (
-            <button
-              key={slide.label}
-              onClick={() => setIndex(i)}
-              aria-label={`Show ${slide.label.toLowerCase()}`}
-              aria-current={i === active}
-              className={`relative h-1 rounded-full overflow-hidden bg-border transition-all duration-300 ${
-                i === active ? 'w-10' : 'w-2 hover:bg-muted-foreground'
-              }`}
-            >
-              {i === active && (
-                <span
-                  className="slide-fill absolute inset-0 bg-primary"
-                  style={{ animationDuration: `${SLIDE_MS}ms`, animationPlayState: paused ? 'paused' : 'running' }}
-                  onAnimationEnd={() => setIndex(n => (n + 1) % slides.length)}
-                />
-              )}
-            </button>
-          ))}
-        </div>
-      )}
     </div>
   )
 }
