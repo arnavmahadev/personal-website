@@ -138,6 +138,7 @@ export default function GitHubCalendar() {
   const gridW = weeks.length * (CELL + GAP) - GAP
   const gridH = 7 * (CELL + GAP) - GAP
   const MONTH_ROW_H = 20
+  const MONTH_CHAR_W = 5  // roughly one monospace character at the label font size
   // Total viewBox: day-label column + gap + grid columns
   const totalW = LABEL_COL_W + 4 + gridW
   const totalH = MONTH_ROW_H + gridH
@@ -171,10 +172,16 @@ export default function GitHubCalendar() {
         ))}
 
         {/* Month labels */}
-        {monthLabels.map(({ label, col }) => (
+        {monthLabels.map(({ label, col }) => {
+          const x = LABEL_COL_W + 4 + col * (CELL + GAP)
+          // A month that starts in the last column or two has no room to its right,
+          // so pin that label to the grid's right edge instead of letting it clip.
+          const overflows = x + label.length * MONTH_CHAR_W > totalW
+          return (
           <text
             key={label + col}
-            x={LABEL_COL_W + 4 + col * (CELL + GAP)}
+            x={overflows ? totalW : x}
+            textAnchor={overflows ? 'end' : 'start'}
             y={MONTH_ROW_H - 6}
             fontSize={8}
             fill="var(--muted-foreground)"
@@ -182,7 +189,8 @@ export default function GitHubCalendar() {
           >
             {label}
           </text>
-        ))}
+          )
+        })}
 
         {/* Cells */}
         {weeks.map((week, wi) =>
