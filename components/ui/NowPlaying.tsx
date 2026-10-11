@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 import Image from 'next/image'
 
 function MarqueeText({ text, className }: { text: string; className?: string }) {
@@ -44,6 +45,96 @@ interface Track {
   albumArt: string
   songUrl: string
   recent?: RecentTrack[]
+  topTracks?: RecentTrack[]
+  topArtists?: Array<{ name: string; image?: string; url: string }>
+}
+
+interface Slide {
+  label: string
+  round?: boolean
+  items: Array<{ href: string; image: string; title: string }>
+}
+
+const SLIDE_MS = 5000
+
+// A strip that rotates through sets of thumbnails: recently played, top tracks,
+// top artists. The active marker fills up like a progress bar and the strip moves
+// on when it is full, so the fill is the timer. It holds while a mouse is over the
+// strip or something in it has focus, and the markers jump straight to a slide.
+function StatSlides({ slides }: { slides: Slide[] }) {
+  const [index, setIndex] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const active = index % slides.length
+  const current = slides[active]
+
+  return (
+    <div
+      className="px-4 py-3 border-t border-border overflow-hidden"
+      // Mouse only: a tap also fires "enter" and would leave the strip stuck on pause.
+      onPointerEnter={e => e.pointerType === 'mouse' && setPaused(true)}
+      onPointerLeave={() => setPaused(false)}
+      onFocus={() => setPaused(true)}
+      onBlur={() => setPaused(false)}
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.div
+          key={current.label}
+          className="flex items-center justify-between gap-3"
+          initial={{ opacity: 0, x: 28 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -28 }}
+          transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest">{current.label}</p>
+          <div className="flex gap-2">
+            {current.items.map(item => (
+              <a
+                key={item.href}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={item.title}
+                aria-label={item.title}
+                className="block transition-transform duration-200 hover:-translate-y-0.5"
+              >
+                <Image
+                  src={item.image}
+                  alt=""
+                  width={36}
+                  height={36}
+                  className={`object-cover aspect-square ${current.round ? 'rounded-full' : 'rounded'}`}
+                />
+              </a>
+            ))}
+          </div>
+        </motion.div>
+      </AnimatePresence>
+
+      {slides.length > 1 && (
+        <div className="flex gap-1.5 mt-2.5">
+          {slides.map((slide, i) => (
+            <button
+              key={slide.label}
+              onClick={() => setIndex(i)}
+              aria-label={`Show ${slide.label.toLowerCase()}`}
+              aria-current={i === active}
+              className={`relative h-1 rounded-full overflow-hidden bg-border transition-all duration-300 ${
+                i === active ? 'w-10' : 'w-2 hover:bg-muted-foreground'
+              }`}
+            >
+              {i === active && (
+                <span
+                  className="slide-fill absolute inset-0 bg-primary"
+                  style={{ animationDuration: `${SLIDE_MS}ms`, animationPlayState: paused ? 'paused' : 'running' }}
+                  onAnimationEnd={() => setIndex(n => (n + 1) % slides.length)}
+                />
+              )}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  )
 }
 
 function TrackPanel({ track }: { track: Track | null }) {
@@ -109,7 +200,19 @@ export default function NowPlaying() {
     return () => clearInterval(interval)
   }, [])
 
-  const recent = (track?.recent ?? []).filter(t => t.albumArt)
+  const trackItems = (tracks: RecentTrack[] = []) =>
+    tracks
+      .filter(t => t.albumArt)
+      .map(t => ({ href: t.songUrl, image: t.albumArt!, title: `${t.title} · ${t.artist}` }))
+  const slides: Slide[] = [
+    { label: 'Recently played', items: trackItems(track?.recent) },
+    { label: 'Top tracks', items: trackItems(track?.topTracks) },
+    {
+      label: 'Top artists',
+      round: true,
+      items: (track?.topArtists ?? []).filter(a => a.image).map(a => ({ href: a.url, image: a.image!, title: a.name })),
+    },
+  ].filter(slide => slide.items.length > 0)
 
   return (
     <div className="relative rounded-xl bg-card border border-border overflow-hidden h-full flex flex-col card-glow">
@@ -134,27 +237,7 @@ export default function NowPlaying() {
         <TrackPanel track={track} />
       </div>
 
-      {/* Recently played strip */}
-      {recent.length > 0 && (
-        <div className="px-4 py-3 border-t border-border flex items-center justify-between gap-3">
-          <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest">Recently played</p>
-          <div className="flex gap-2">
-            {recent.map(t => (
-              <a
-                key={t.songUrl}
-                href={t.songUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={`${t.title} · ${t.artist}`}
-                aria-label={`${t.title} by ${t.artist}`}
-                className="block transition-transform duration-200 hover:-translate-y-0.5"
-              >
-                <Image src={t.albumArt!} alt="" width={36} height={36} className="rounded" />
-              </a>
-            ))}
-          </div>
-        </div>
-      )}
+      {slides.length > 0 && <StatSlides slides={slides} />}
     </div>
   )
 }

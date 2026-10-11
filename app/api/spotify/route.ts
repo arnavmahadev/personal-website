@@ -7,6 +7,10 @@ const REFRESH_TOKEN = process.env.SPOTIFY_REFRESH_TOKEN!
 const TOKEN_ENDPOINT = 'https://accounts.spotify.com/api/token'
 const NOW_PLAYING_ENDPOINT = 'https://api.spotify.com/v1/me/player/currently-playing'
 const RECENTLY_PLAYED_ENDPOINT = 'https://api.spotify.com/v1/me/player/recently-played?limit=20'
+// Both "top" endpoints need the user-top-read scope on the refresh token; without it
+// they return 403 and those slides are simply left out.
+const TOP_TRACKS_ENDPOINT = 'https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=5'
+const TOP_ARTISTS_ENDPOINT = 'https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=5'
 
 type RecentTrack = {
   title: string
@@ -23,7 +27,15 @@ type TrackResult = {
   albumArt?: string
   songUrl?: string
   recent?: RecentTrack[]
+  topTracks?: RecentTrack[]
+  topArtists?: TopArtist[]
   error?: string
+}
+
+type TopArtist = {
+  name: string
+  image?: string
+  url: string
 }
 
 const RECENT_COUNT = 5
@@ -62,9 +74,11 @@ async function fetchTrack(): Promise<TrackResult> {
   }
 
   const headers = { Authorization: `Bearer ${access_token}` }
-  const [nowRes, recentRes] = await Promise.all([
+  const [nowRes, recentRes, topTracksRes, topArtistsRes] = await Promise.all([
     fetch(NOW_PLAYING_ENDPOINT, { headers, next: { revalidate: 10 } }),
     fetch(RECENTLY_PLAYED_ENDPOINT, { headers, next: { revalidate: 10 } }),
+    fetch(TOP_TRACKS_ENDPOINT, { headers, next: { revalidate: 3600 } }),
+    fetch(TOP_ARTISTS_ENDPOINT, { headers, next: { revalidate: 3600 } }),
   ])
 
   // Distinct tracks from the listening history, newest first.
@@ -76,12 +90,27 @@ async function fetchTrack(): Promise<TrackResult> {
       if (track && !history.some(t => t.id === track.id)) history.push(track)
     }
   }
+
   const toRecent = (track: SpotifyTrack): RecentTrack => ({
     title: track.name,
     artist: track.artists.map(a => a.name).join(', '),
     albumArt: track.album.images.at(-1)?.url,
     songUrl: track.external_urls.spotify,
   })
+
+  // Spotify's own four-week rankings.
+  const topTracks: RecentTrack[] = topTracksRes.ok
+    ? ((await topTracksRes.json()).items ?? []).map(toRecent)
+    : []
+  const topArtists: TopArtist[] = topArtistsRes.ok
+    ? ((await topArtistsRes.json()).items ?? []).map(
+        (artist: { name: string; images?: Array<{ url: string }>; external_urls: { spotify: string } }) => ({
+          name: artist.name,
+          image: artist.images?.at(-1)?.url,
+          url: artist.external_urls.spotify,
+        })
+      )
+    : []
 
   if (nowRes.status === 200) {
     const data = await nowRes.json()
@@ -94,6 +123,8 @@ async function fetchTrack(): Promise<TrackResult> {
         albumArt: data.item.album.images[0]?.url,
         songUrl: data.item.external_urls.spotify,
         recent: history.filter(t => t.id !== data.item.id).slice(0, RECENT_COUNT).map(toRecent),
+        topTracks,
+        topArtists,
       }
     }
   }
@@ -113,6 +144,8 @@ async function fetchTrack(): Promise<TrackResult> {
       albumArt: track.album.images[0]?.url,
       songUrl: track.external_urls.spotify,
       recent: history.slice(1, RECENT_COUNT + 1).map(toRecent),
+      topTracks,
+      topArtists,
     }
   }
 
