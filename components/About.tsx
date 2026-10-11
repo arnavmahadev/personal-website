@@ -13,16 +13,18 @@ export default function About() {
 
         <div className="space-y-4 text-muted-foreground text-base leading-relaxed">
           <p>
-            I&apos;m an undergraduate at UC Berkeley studying Electrical Engineering &amp; Computer Science.
+            I&apos;m an undergraduate at UC Berkeley studying{' '}
+            <a href="#coursework" className={linkClass}>Electrical Engineering &amp; Computer Science</a>.
             I&apos;m interested in software engineering and backend systems.
           </p>
           <p>
             I enjoy building systems that are technically sound but also helpful
-            for people. Most of my projects involve some mix of full-stack
+            for people. Most of my <a href="#projects" className={linkClass}>projects</a> involve some mix of full-stack
             development, data organization, and clean system design.
           </p>
           <p>
-            Currently, I&apos;m a Software Engineering Intern at LG NOVA, where I work across a
+            Currently, I&apos;m a{' '}
+            <a href="#experience" className={linkClass}>Software Engineering Intern at LG NOVA</a>, where I work across a
             Flask/PostgreSQL backend and a React/TypeScript frontend. I previously interned at iPick.ai,
             where I built an LLM-based portfolio optimizer, a reinforcement learning pipeline of trading
             agents, and a graph-based platform that visualizes relationships between thousands of
