@@ -5,6 +5,7 @@ import Image from 'next/image'
 import SectionWrapper from './ui/SectionWrapper'
 import NowPlaying from './ui/NowPlaying'
 import CutProgress from './ui/CutProgress'
+import Sparkline from './ui/Sparkline'
 
 interface BarcaResult {
   opponent: string
@@ -16,12 +17,32 @@ interface BarcaResult {
   date: string
   barcaLogo: string | null
   oppLogo: string | null
+  form?: Array<{ result: 'W' | 'L' | 'D'; opponent: string; score: string }>
+  next?: { date: string; opponent: string; oppLogo: string | null; barcaHome: boolean; league: string } | null
+  position?: { rank: number; points: number } | null
+}
+
+const RESULT_TONE = {
+  W: 'bg-green-500/15 text-green-500',
+  L: 'bg-red-500/15 text-red-500',
+  D: 'bg-muted text-muted-foreground',
+}
+
+function ordinal(n: number) {
+  const suffix = n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] ?? 'th'
+  return `${n}${suffix}`
+}
+
+// Kickoff in the visitor's own timezone, e.g. "Sat, Oct 17".
+function formatKickoff(iso: string) {
+  return new Date(iso).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
 }
 
 interface ValorantRank {
   rank: string
   rr: number
   icon: string | null
+  trend?: number[]
 }
 
 
@@ -50,7 +71,8 @@ export default function Interests() {
           </div>
 
           {/* Valorant — moved here */}
-          <div className="flex-1 rounded-xl border overflow-hidden relative bg-card border-border">
+          <div className="flex-1 rounded-xl border overflow-hidden relative bg-card border-border card-glow">
+            <div aria-hidden className="absolute inset-x-0 top-0 h-[3px] bg-[#FF4655]" />
             <div className="px-4 py-4 pb-6 sm:pb-4 sm:h-full flex flex-col sm:flex-row sm:items-start gap-4">
               <div className="sm:flex-1 sm:self-stretch sm:relative flex flex-col sm:justify-center">
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2 sm:mb-0 sm:absolute sm:top-0 sm:left-0">Valorant</p>
@@ -84,13 +106,28 @@ export default function Interests() {
                     </div>
                   </div>
                 )}
+                {/* Rating trend, built up from one reading a day */}
+                {val?.trend && val.trend.length > 1 && (
+                  <div className="mt-3 flex items-center gap-2">
+                    <Sparkline values={val.trend} className="w-24 h-6" />
+                    <p className="text-xs font-mono tabular-nums text-muted-foreground">
+                      {val.trend[val.trend.length - 1] >= 0 ? '+' : '−'}
+                      {Math.abs(val.trend[val.trend.length - 1])} RR
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </div>
 
         {/* Soccer / Barca */}
-        <div className="rounded-xl border overflow-hidden relative bg-card border-border">
+        <div className="rounded-xl border overflow-hidden relative bg-card border-border card-glow">
+          <div
+            aria-hidden
+            className="absolute inset-x-0 top-0 h-[3px]"
+            style={{ background: 'repeating-linear-gradient(90deg, #004D98 0 28px, #A50044 28px 56px)' }}
+          />
           <div className="px-4 py-4 sm:py-4 h-full flex flex-col space-y-3">
             <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Soccer &amp; FC Barcelona</p>
             <p className="text-base text-foreground/80 leading-relaxed">
@@ -130,11 +167,7 @@ export default function Interests() {
               ) : (
                 <div className="flex flex-col items-start gap-2">
                   <div className="flex items-center gap-2">
-                    <span className={`text-xs font-mono font-bold px-1.5 py-0.5 rounded ${
-                      barca.result === 'W' ? 'bg-green-500/15 text-green-500' :
-                      barca.result === 'L' ? 'bg-red-500/15 text-red-500' :
-                      'bg-muted text-muted-foreground'
-                    }`}>{barca.result}</span>
+                    <span className={`text-xs font-mono font-bold px-1.5 py-0.5 rounded ${RESULT_TONE[barca.result]}`}>{barca.result}</span>
                     <p className="text-sm text-muted-foreground">{barca.league}</p>
                   </div>
                   {/* Home team */}
@@ -168,6 +201,49 @@ export default function Interests() {
                 </div>
               )}
             </div>
+
+            {/* Form, next fixture and league position */}
+            {barca && (barca.form?.length || barca.next || barca.position) && (
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 border-t border-border">
+                {barca.form && barca.form.length > 0 && (
+                  <div>
+                    <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Last {barca.form.length}</p>
+                    <div className="flex gap-1">
+                      {barca.form.map((m, i) => (
+                        <span
+                          key={i}
+                          title={`${m.score} vs ${m.opponent}`}
+                          className={`w-6 h-6 rounded flex items-center justify-center text-xs font-mono font-bold ${RESULT_TONE[m.result]}`}
+                        >
+                          {m.result}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {barca.next && (
+                  <div className="min-w-0">
+                    <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Next up</p>
+                    <div className="flex items-center gap-2 min-w-0">
+                      {barca.next.oppLogo && (
+                        <Image src={barca.next.oppLogo} alt="" width={22} height={22} className="object-contain shrink-0" />
+                      )}
+                      <p className="text-base font-medium text-foreground/90 truncate">
+                        {barca.next.barcaHome ? 'vs' : 'at'} {barca.next.opponent}
+                      </p>
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-0.5">{formatKickoff(barca.next.date)}</p>
+                  </div>
+                )}
+                {barca.position && (
+                  <div>
+                    <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">La Liga</p>
+                    <p className="text-base font-medium text-foreground/90">{ordinal(barca.position.rank)}</p>
+                    <p className="text-sm text-muted-foreground mt-0.5">{barca.position.points} pts</p>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
 

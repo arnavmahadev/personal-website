@@ -8,15 +8,24 @@ const REGION = 'na'
 
 const RANK_KEY = 'valorant:rank' // last-known-good value, only overwritten on a successful fetch
 const CHECK_KEY = 'valorant:checked' // presence acts as "refreshed recently, skip upstream"
+const HISTORY_KEY = 'valorant:history' // one rating per day, appended on each successful refresh
 
 const PERSIST_TTL = 60 * 60 * 24 * 30 // keep the last-known-good rank for 30 days
 const REFRESH_TTL = 60 * 60 * 24 // only re-hit the upstream API once a day
 const RETRY_TTL = 60 * 30 // after a failed refresh, back off for 30 min before retrying
+const HISTORY_TTL = 60 * 60 * 24 * 365
+const HISTORY_DAYS = 30
 
 interface ValorantRank {
   rank: string
   rr: number
   icon: string | null
+}
+
+// `rating` puts every rank on one scale (100 per tier) so the trend survives rank-ups.
+interface HistoryPoint {
+  date: string
+  rating: number
 }
 
 async function redisGet(key: string): Promise<string | null> {
@@ -37,7 +46,7 @@ async function redisSet(key: string, value: string, ttl: number) {
 
 // Pull the live rank from the upstream API. Returns null if it's unreachable
 // or the response can't be parsed into a rank.
-async function fetchRank(): Promise<ValorantRank | null> {
+async function fetchRank(): Promise<(ValorantRank & { rating: number | null }) | null> {
   const [mmrRes, tiersRes] = await Promise.all([
     fetch(`https://api.kyroskoh.xyz/valorant/v1/mmr/${REGION}/${NAME}/${TAG}`),
     fetch('https://valorant-api.com/v1/competitivetiers', { next: { revalidate: 86400 } }),
@@ -51,40 +60,69 @@ async function fetchRank(): Promise<ValorantRank | null> {
   const rr = parseInt(match[2])
 
   const tiersData = await tiersRes.json()
-  const latestTiers: Array<{ tierName: string; largeIcon: string }> =
+  const latestTiers: Array<{ tier: number; tierName: string; largeIcon: string }> =
     tiersData.data?.at(-1)?.tiers ?? []
   const tierEntry = latestTiers.find(
     t => t.tierName.toLowerCase() === rank.toLowerCase()
   )
 
-  return { rank, rr, icon: tierEntry?.largeIcon ?? null }
+  return {
+    rank,
+    rr,
+    icon: tierEntry?.largeIcon ?? null,
+    rating: tierEntry ? tierEntry.tier * 100 + rr : null,
+  }
+}
+
+function parseHistory(raw: string | null): HistoryPoint[] {
+  try {
+    const parsed = raw ? JSON.parse(raw) : []
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
+}
+
+// Only the day-to-day movement leaves the server, relative to the first point.
+function respond(rank: ValorantRank | null, history: HistoryPoint[]) {
+  if (!rank) return NextResponse.json(null)
+  return NextResponse.json({ ...rank, trend: history.map(h => h.rating - history[0].rating) })
 }
 
 export async function GET() {
   let cached: ValorantRank | null = null
+  let history: HistoryPoint[] = []
   let checkedRecently = false
 
   try {
-    const [rankRaw, checkRaw] = await Promise.all([
+    const [rankRaw, checkRaw, historyRaw] = await Promise.all([
       redisGet(RANK_KEY),
       redisGet(CHECK_KEY),
+      redisGet(HISTORY_KEY),
     ])
     if (rankRaw) cached = JSON.parse(rankRaw)
     checkedRecently = checkRaw !== null
+    history = parseHistory(historyRaw)
   } catch {}
 
   // Already refreshed within the freshness window — serve cache, leave upstream alone.
   if (checkedRecently) {
-    return NextResponse.json(cached)
+    return respond(cached, history)
   }
 
   // Freshness window elapsed (or nothing cached yet) — try to refresh.
   try {
     const fresh = await fetchRank()
     if (fresh) {
-      await redisSet(RANK_KEY, JSON.stringify(fresh), PERSIST_TTL)
+      const { rating, ...rank } = fresh
+      if (rating !== null) {
+        const date = new Date().toISOString().slice(0, 10)
+        history = [...history.filter(h => h.date !== date), { date, rating }].slice(-HISTORY_DAYS)
+        await redisSet(HISTORY_KEY, JSON.stringify(history), HISTORY_TTL)
+      }
+      await redisSet(RANK_KEY, JSON.stringify(rank), PERSIST_TTL)
       await redisSet(CHECK_KEY, '1', REFRESH_TTL)
-      return NextResponse.json(fresh)
+      return respond(rank, history)
     }
   } catch {}
 
@@ -93,5 +131,5 @@ export async function GET() {
   try {
     await redisSet(CHECK_KEY, '1', RETRY_TTL)
   } catch {}
-  return NextResponse.json(cached)
+  return respond(cached, history)
 }
