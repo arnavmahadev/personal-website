@@ -2,6 +2,9 @@ import SectionWrapper from './ui/SectionWrapper'
 import SectionHeading from './ui/SectionHeading'
 import GitHubCalendar from './ui/GitHubCalendar'
 
+const linkClass =
+  'text-foreground underline decoration-border underline-offset-4 hover:decoration-primary transition-colors'
+
 export default function About() {
   return (
     <SectionWrapper id="about">
@@ -25,6 +28,17 @@ export default function About() {
             agents, and a graph-based platform that visualizes relationships between thousands of
             companies; at Maadhev LLC, where I built a custom ACH payment system and Shopify
             integrations; and at Claythis, where I worked on their AI-driven 3D model generation technology.
+          </p>
+          <p>
+            Away from the keyboard, I&apos;m usually doing something active or yapping with my friends
+            about nothing in particular. I&apos;ve played soccer since I was 4 and still jump into pickup
+            and intramural games whenever I can, and I&apos;ve been a Barça fan for just as long, for
+            better or worse. I lift regularly and I&apos;m on a cut right now, which I track a little
+            too publicly in the{' '}
+            <a href="#interests" className={linkClass}>hobbies section</a>. When I&apos;m not doing any
+            of that, I&apos;m probably playing video games with the same friends, or planning the next{' '}
+            <a href="#adventures" className={linkClass}>trip</a>; the most recent big one was summiting
+            Kilimanjaro.
           </p>
         </div>
 
