@@ -74,7 +74,7 @@ export default function Interests() {
           <div className="flex-1 rounded-xl border overflow-hidden relative bg-card border-border card-glow">
             <div aria-hidden className="absolute inset-x-0 top-0 h-[3px] bg-[#FF4655]" />
             <div className="px-4 py-4 pb-6 sm:pb-4 sm:h-full flex flex-col sm:flex-row sm:items-start gap-4">
-              <div className="sm:flex-1 sm:self-stretch sm:relative flex flex-col sm:justify-center">
+              <div className="sm:flex-1 sm:self-stretch sm:relative flex flex-col sm:justify-center sm:pt-8">
                 <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2 sm:mb-0 sm:absolute sm:top-0 sm:left-0">Valorant</p>
                 <p className="text-base text-foreground/80 leading-relaxed">
                   If I&apos;m not playing sports, I&apos;m probably playing video games with my friends.
@@ -139,7 +139,7 @@ export default function Interests() {
               depends on the result. (jk… mostly.)
             </p>
 
-            <div>
+            <div className="pb-3">
               <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-3">Latest result</p>
               {barca === undefined ? (
                 <div className="flex flex-col items-start gap-2">
@@ -204,7 +204,7 @@ export default function Interests() {
 
             {/* Form, next fixture and league position */}
             {barca && (barca.form?.length || barca.next || barca.position) && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 border-t border-border">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 border-t border-border !mt-auto">
                 {barca.form && barca.form.length > 0 && (
                   <div>
                     <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Last {barca.form.length}</p>
