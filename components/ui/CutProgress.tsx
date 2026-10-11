@@ -1,11 +1,14 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { motion } from 'framer-motion'
+import CountUp from './CountUp'
 
 // Signed pounds with a real minus sign, e.g. "−15.4" / "+0.6" / "0.0".
 function formatChange(v: number) {
-  const abs = Math.abs(v).toFixed(1)
-  return v < 0 ? `−${abs}` : v > 0 ? `+${abs}` : abs
+  const rounded = Math.round(v * 10) / 10
+  const abs = Math.abs(rounded).toFixed(1)
+  return rounded < 0 ? `−${abs}` : rounded > 0 ? `+${abs}` : abs
 }
 
 // Pick a round tick step that gives at most ~4 gridlines across the range.
@@ -13,13 +16,16 @@ function tickStep(span: number) {
   return [1, 2, 5, 10, 20, 50].find(s => span / s <= 4) ?? 100
 }
 
-function Chart({ changes }: { changes: number[] }) {
+function Chart({ changes, goal }: { changes: number[]; goal: number | null }) {
   const [hover, setHover] = useState<number | null>(null)
 
   const n = changes.length
-  const step = tickStep(Math.max(...changes, 0) - Math.min(...changes, 0))
-  const top = Math.ceil(Math.max(...changes, 0) / step) * step
-  const bottom = Math.floor(Math.min(...changes, 0) / step) * step
+  // The goal is part of the range so its line is always on the plot.
+  const high = Math.max(...changes, goal ?? 0, 0)
+  const low = Math.min(...changes, goal ?? 0, 0)
+  const step = tickStep(high - low)
+  const top = Math.ceil(high / step) * step
+  const bottom = Math.floor(low / step) * step
   const ticks: number[] = []
   for (let t = top; t >= bottom; t -= step) ticks.push(t)
 
@@ -67,7 +73,24 @@ function Chart({ changes }: { changes: number[] }) {
             <div key={t} className="absolute inset-x-0 h-px bg-border opacity-60" style={{ top: `${y(t)}%` }} />
           ))}
 
-          <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-full overflow-visible">
+          {goal !== null && (
+            <div className="absolute inset-x-0 border-t border-dashed border-accent" style={{ top: `${y(goal)}%` }}>
+              <span className="absolute right-0 -top-5 text-xs font-mono uppercase tracking-widest text-accent">
+                Goal
+              </span>
+            </div>
+          )}
+
+          {/* The line wipes in from the left the first time it scrolls into view */}
+          <motion.svg
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            className="absolute inset-0 w-full h-full overflow-visible"
+            initial={{ clipPath: 'inset(-8px 100% -8px -8px)' }}
+            whileInView={{ clipPath: 'inset(-8px -8px -8px -8px)' }}
+            viewport={{ once: true, margin: '-60px 0px' }}
+            transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+          >
             <path d={area} fill="var(--primary)" opacity={0.1} />
             <path
               d={line}
@@ -78,16 +101,20 @@ function Chart({ changes }: { changes: number[] }) {
               strokeLinecap="round"
               vectorEffect="non-scaling-stroke"
             />
-          </svg>
+          </motion.svg>
 
           {hover !== null && (
             <div className="absolute inset-y-0 w-px bg-muted-foreground opacity-60" style={{ left: `${x(hover)}%` }} />
           )}
 
           {/* Marker on the latest weigh-in, or on the hovered one */}
-          <div
-            className="absolute w-2.5 h-2.5 rounded-full bg-primary ring-2 ring-card -translate-x-1/2 -translate-y-1/2"
+          <motion.div
+            className="absolute w-2.5 h-2.5 -ml-[5px] -mt-[5px] rounded-full bg-primary ring-2 ring-card"
             style={{ left: `${x(active)}%`, top: `${y(changes[active])}%` }}
+            initial={{ opacity: 0, scale: 0 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: '-60px 0px' }}
+            transition={{ duration: 0.3, delay: 1.1 }}
           />
 
           {hover !== null && (
@@ -119,17 +146,28 @@ function Chart({ changes }: { changes: number[] }) {
   )
 }
 
+interface Lift {
+  name: string
+  change: number
+}
+
 export default function CutProgress() {
-  const [data, setData] = useState<{ changes: number[] } | null | undefined>(undefined)
+  const [data, setData] = useState<{ changes: number[]; goal?: number | null } | null | undefined>(undefined)
+  const [lifts, setLifts] = useState<Lift[] | null>(null)
 
   useEffect(() => {
     fetch('/api/weight').then(r => r.json()).then(setData).catch(() => setData(null))
+    fetch('/api/lifts').then(r => r.json()).then(d => setLifts(d?.lifts ?? null)).catch(() => {})
   }, [])
 
   const latest = data ? data.changes[data.changes.length - 1] : null
+  const goal = data?.goal ?? null
+  // Works for a cut (negative goal) or a bulk (positive goal).
+  const toGo = goal !== null && latest !== null ? Math.abs(goal - latest) : null
+  const reached = goal !== null && latest !== null && (goal <= 0 ? latest <= goal : latest >= goal)
 
   return (
-    <div className="sm:col-span-2 rounded-xl border overflow-hidden relative bg-card border-border">
+    <div className="sm:col-span-2 rounded-xl border overflow-hidden relative bg-card border-border card-glow">
       <div className="px-4 py-4 flex flex-col sm:flex-row gap-4 sm:gap-6">
         <div className="sm:w-1/3 flex flex-col gap-3">
           <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Gym</p>
@@ -143,11 +181,32 @@ export default function CutProgress() {
             ) : latest === null ? (
               <p className="text-sm text-muted-foreground">Progress unavailable.</p>
             ) : (
-              <p className="text-3xl font-bold font-serif tabular-nums text-foreground">
-                {formatChange(latest)} <span className="text-lg font-medium text-muted-foreground">lb</span>
-              </p>
+              <>
+                <p className="text-3xl font-bold font-serif tabular-nums text-foreground">
+                  <CountUp value={latest} format={formatChange} />{' '}
+                  <span className="text-lg font-medium text-muted-foreground">lb</span>
+                </p>
+                {toGo !== null && (
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {reached ? 'Goal reached.' : `${toGo.toFixed(1)} lb to go.`}
+                  </p>
+                )}
+              </>
             )}
           </div>
+          {lifts && (
+            <div>
+              <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-1">Lifts</p>
+              <ul className="space-y-0.5">
+                {lifts.map(lift => (
+                  <li key={lift.name} className="flex items-baseline justify-between gap-3 text-sm">
+                    <span className="text-foreground/80">{lift.name}</span>
+                    <span className="font-mono tabular-nums text-foreground">{formatChange(lift.change)} lb</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
 
         <div className="sm:flex-1 min-w-0">
@@ -159,7 +218,7 @@ export default function CutProgress() {
               <p className="text-sm text-muted-foreground">No weigh-ins to show yet.</p>
             </div>
           ) : (
-            <Chart changes={data.changes} />
+            <Chart changes={data.changes} goal={goal} />
           )}
         </div>
       </div>
