@@ -197,6 +197,8 @@ function TrackPanel({ track }: { track: Track | null }) {
             <MarqueeText text={track.artist} className="text-sm text-muted-foreground" />
           </div>
         </a>
+      ) : track ? (
+        <p className="text-sm text-muted-foreground">Spotify isn&apos;t answering right now.</p>
       ) : (
         <div className="flex flex-row items-center gap-3 min-w-0 w-fit mx-auto">
           <div className="rounded-md bg-muted flex-shrink-0 animate-pulse w-16 h-16 sm:w-24 sm:h-24" />
