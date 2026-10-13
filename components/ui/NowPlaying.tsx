@@ -243,7 +243,7 @@ export default function NowPlaying() {
   ].filter(slide => slide.items.length > 0)
 
   return (
-    <div className="relative rounded-xl bg-card border border-border overflow-hidden h-full flex flex-col card-glow">
+    <div className="relative rounded-xl bg-card border border-border overflow-hidden h-full flex flex-col">
       <div aria-hidden className="absolute inset-x-0 top-0 h-[3px] bg-[#1DB954]" />
       <div className="px-4 py-4 flex-1 flex flex-col sm:flex-row sm:items-start gap-3 sm:gap-8">
         {/* Mobile-only title */}

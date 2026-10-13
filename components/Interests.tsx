@@ -71,7 +71,7 @@ export default function Interests() {
           </div>
 
           {/* Valorant — moved here */}
-          <div className="flex-1 rounded-xl border overflow-hidden relative bg-card border-border card-glow">
+          <div className="flex-1 rounded-xl border overflow-hidden relative bg-card border-border">
             <div aria-hidden className="absolute inset-x-0 top-0 h-[3px] bg-[#FF4655]" />
             <div className="px-4 py-4 pb-6 sm:pb-4 sm:h-full flex flex-col sm:flex-row sm:items-start gap-4">
               <div className="sm:flex-1 sm:self-stretch sm:relative flex flex-col sm:justify-center sm:pt-8">
@@ -122,7 +122,7 @@ export default function Interests() {
         </div>
 
         {/* Soccer / Barca */}
-        <div className="rounded-xl border overflow-hidden relative bg-card border-border card-glow">
+        <div className="rounded-xl border overflow-hidden relative bg-card border-border">
           <div
             aria-hidden
             className="absolute inset-x-0 top-0 h-[3px]"

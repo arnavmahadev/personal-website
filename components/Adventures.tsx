@@ -171,7 +171,7 @@ function PastTrip({ past, openSignal }: { past: Adventure; openSignal: number })
           {header}
         </button>
       ) : (
-        <div className="w-full text-left rounded-xl border border-border bg-card overflow-hidden relative card-glow">
+        <div className="w-full text-left rounded-xl border border-border bg-card overflow-hidden relative">
           {header}
         </div>
       )}
@@ -257,7 +257,7 @@ export default function Adventures() {
       {/* Stats strip */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
         {stats.map((stat) => (
-          <div key={stat.label} className="rounded-xl border border-border bg-card px-4 py-4 card-glow">
+          <div key={stat.label} className="rounded-xl border border-border bg-card px-4 py-4">
             <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-1">{stat.label}</p>
             <p className="text-3xl font-bold font-display tabular-nums text-foreground">
               {stat.value.toLocaleString('en-US')}
@@ -281,7 +281,7 @@ export default function Adventures() {
               <div
                 key={trip.id}
                 id={`adventure-${trip.id}`}
-                className="scroll-mt-24 rounded-xl border border-border bg-card overflow-hidden relative flex flex-col card-glow"
+                className="scroll-mt-24 rounded-xl border border-border bg-card overflow-hidden relative flex flex-col"
               >
                 {trip.image && (
                   <div className="relative w-full h-32 overflow-hidden">

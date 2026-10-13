@@ -21,8 +21,12 @@ export default function ProjectCard({
   featured,
   index,
 }: ProjectCardProps) {
+  // The first link is stretched over the whole card, so clicking anywhere on the card opens it.
+  // Only that link gets the stretch; a second link sits above it and keeps its own target.
+  const stretch = "after:absolute after:inset-0 after:rounded-2xl after:content-['']"
+
   return (
-    <div className="relative flex flex-col bg-card border border-border rounded-2xl p-6 card-glow">
+    <div className={`relative flex flex-col bg-card border border-border rounded-2xl p-6${demo || github ? ' card-glow' : ''}`}>
 
       <div className="flex items-start justify-between mb-4">
         <div>
@@ -49,9 +53,9 @@ export default function ProjectCard({
             href={demo}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg
                        border border-border text-muted-foreground hover:text-primary
-                       hover:border-primary/30 transition-colors"
+                       hover:border-primary/30 transition-colors ${stretch}`}
           >
             <ExternalLink size={14} />
             Website
@@ -62,9 +66,9 @@ export default function ProjectCard({
             href={github}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg
                        border border-border text-muted-foreground hover:text-foreground
-                       hover:border-foreground/30 transition-colors"
+                       hover:border-foreground/30 transition-colors ${demo ? 'relative z-10' : stretch}`}
           >
             <Github size={14} />
             GitHub

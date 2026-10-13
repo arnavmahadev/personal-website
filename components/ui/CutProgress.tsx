@@ -187,7 +187,7 @@ export default function CutProgress() {
   const reached = goal !== null && latest !== null && (goal <= 0 ? latest <= goal : latest >= goal)
 
   return (
-    <div ref={cardRef} className="sm:col-span-2 rounded-xl border overflow-hidden relative bg-card border-border card-glow">
+    <div ref={cardRef} className="sm:col-span-2 rounded-xl border overflow-hidden relative bg-card border-border">
       <div className="px-4 py-4 flex flex-col sm:flex-row gap-4 sm:gap-6">
         <div className="sm:w-1/3 flex flex-col gap-3">
           <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Gym</p>

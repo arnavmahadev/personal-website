@@ -16,7 +16,8 @@ export default function Experience() {
             const nexusLink = ('nexusLink' in exp ? exp.nexusLink : undefined) as string | undefined
             return (
             <div key={exp.role + exp.org}>
-              <div className="rounded-2xl border p-5 bg-card border-border card-glow">
+              {/* A card with a link is clickable as a whole (its first link is stretched over it) and lifts on hover; one without stays still. */}
+              <div className={`relative rounded-2xl border p-5 bg-card border-border${github || link || nexusLink ? ' card-glow' : ''}`}>
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-2 mb-3">
                   <div>
                     <h3 className="text-lg font-semibold font-display text-foreground">{exp.role}</h3>
@@ -43,7 +44,7 @@ export default function Experience() {
                         href={(link || nexusLink)!}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/30 transition-colors"
+                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg border border-border text-muted-foreground hover:text-primary hover:border-primary/30 transition-colors after:absolute after:inset-0 after:rounded-2xl after:content-['']"
                       >
                         <ExternalLink size={14} />
                         Website
@@ -54,7 +55,7 @@ export default function Experience() {
                         href={github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors"
+                        className={`flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors ${link || nexusLink ? 'relative z-10' : "after:absolute after:inset-0 after:rounded-2xl after:content-['']"}`}
                       >
                         <Github size={14} />
                         GitHub
