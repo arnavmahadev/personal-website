@@ -207,7 +207,7 @@ export default function WorldMap({ markers, onSelect }: { markers: MapMarker[]; 
       </div>
 
       {/* Legend */}
-      <div className="absolute bottom-2 right-3 flex items-center gap-3 text-xs text-muted-foreground">
+      <div className="absolute top-2 right-3 flex items-center gap-3 text-xs text-muted-foreground">
         <span className="flex items-center gap-1">
           <span className="w-2.5 h-2.5 rounded-full bg-primary inline-block" /> visited
         </span>
