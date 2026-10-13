@@ -63,7 +63,7 @@ export default function Hero() {
             </motion.div>
 
             <motion.div variants={item}>
-              <span className="inline-block text-primary text-sm font-mono font-medium mb-4 sm:mb-8">
+              <span className="inline-block text-primary text-lg font-mono font-medium mb-4 sm:mb-8">
                 Open to Opportunities
               </span>
             </motion.div>
