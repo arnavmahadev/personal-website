@@ -37,7 +37,7 @@ export default function Contact() {
   return (
     <SectionWrapper id="contact">
       <div>
-        <h2 className="text-4xl sm:text-5xl font-bold font-serif tracking-tight text-foreground mb-4">
+        <h2 className="text-4xl sm:text-5xl font-bold font-display tracking-tight text-foreground mb-4">
           Contact
         </h2>
         <p className="text-muted-foreground text-base leading-relaxed mb-10">

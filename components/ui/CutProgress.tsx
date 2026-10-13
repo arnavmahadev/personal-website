@@ -202,7 +202,7 @@ export default function CutProgress() {
               <p className="text-sm text-muted-foreground">Progress unavailable.</p>
             ) : (
               <>
-                <p className="text-3xl font-bold font-serif tabular-nums text-foreground">
+                <p className="text-3xl font-bold font-display tabular-nums text-foreground">
                   {formatChange(latest)}{' '}
                   <span className="text-lg font-medium text-muted-foreground">lb</span>
                 </p>

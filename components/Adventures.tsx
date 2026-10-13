@@ -138,7 +138,7 @@ function PastTrip({ past, openSignal }: { past: Adventure; openSignal: number })
         <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-1">
           {formatAdventureDate(past.date)}
         </p>
-        <p className="text-lg font-semibold font-serif text-foreground leading-snug">
+        <p className="text-lg font-semibold font-display text-foreground leading-snug">
           {past.label}
         </p>
         <p className="text-sm text-muted-foreground mt-0.5">{past.description}</p>
@@ -250,7 +250,7 @@ export default function Adventures() {
 
   return (
     <SectionWrapper id="adventures">
-      <h2 className="text-4xl sm:text-5xl font-bold font-serif tracking-tight text-foreground mb-5">
+      <h2 className="text-4xl sm:text-5xl font-bold font-display tracking-tight text-foreground mb-5">
         Adventures
       </h2>
 
@@ -259,7 +259,7 @@ export default function Adventures() {
         {stats.map((stat) => (
           <div key={stat.label} className="rounded-xl border border-border bg-card px-4 py-4 card-glow">
             <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-1">{stat.label}</p>
-            <p className="text-3xl font-bold font-serif tabular-nums text-foreground">
+            <p className="text-3xl font-bold font-display tabular-nums text-foreground">
               {stat.value.toLocaleString('en-US')}
               {'unit' in stat && <span className="text-lg font-medium text-muted-foreground"> {stat.unit}</span>}
             </p>
@@ -296,7 +296,7 @@ export default function Adventures() {
                 )}
                 <div className="px-4 py-4 flex flex-col gap-3 flex-1">
                   <div>
-                    <p className="text-lg font-semibold font-serif text-foreground leading-snug">
+                    <p className="text-lg font-semibold font-display text-foreground leading-snug">
                       {trip.label}
                     </p>
                     <p className="text-sm text-muted-foreground mt-0.5">{trip.description}</p>

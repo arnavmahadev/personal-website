@@ -58,7 +58,7 @@ export default function Interests() {
 
   return (
     <SectionWrapper id="interests">
-      <h2 className="text-4xl sm:text-5xl font-bold font-serif tracking-tight text-foreground mb-5">
+      <h2 className="text-4xl sm:text-5xl font-bold font-display tracking-tight text-foreground mb-5">
         Hobbies
       </h2>
 
@@ -101,7 +101,7 @@ export default function Interests() {
                       <Image src={val.icon} alt={val.rank} width={72} height={72} />
                     )}
                     <div>
-                      <p className="text-2xl font-bold font-serif text-foreground">{val.rank}</p>
+                      <p className="text-2xl font-bold font-display text-foreground">{val.rank}</p>
                       <p className="text-sm text-muted-foreground">{val.rr} RR</p>
                     </div>
                   </div>

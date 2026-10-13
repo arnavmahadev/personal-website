@@ -1,29 +1,28 @@
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/next'
 import { SpeedInsights } from '@vercel/speed-insights/next'
-import { Libre_Baskerville, Lora, IBM_Plex_Mono } from 'next/font/google'
+import { Fraunces, Newsreader, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
 
-const libreBaskerville = Libre_Baskerville({
+// To change the site's type, swap the fonts here; the rest of the site only sees the three variables.
+const bodyFont = Newsreader({
   subsets: ['latin'],
-  weight: ['400', '700'],
   style: ['normal', 'italic'],
-  variable: '--font-libre-baskerville',
+  variable: '--font-body',
+  display: 'swap',
+  adjustFontFallback: false,
+})
+
+const displayFont = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-display',
   display: 'swap',
 })
 
-const lora = Lora({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  style: ['normal', 'italic'],
-  variable: '--font-lora',
-  display: 'swap',
-})
-
-const ibmPlexMono = IBM_Plex_Mono({
+const monoFont = IBM_Plex_Mono({
   subsets: ['latin'],
   weight: ['400', '500', '600'],
-  variable: '--font-ibm-plex-mono',
+  variable: '--font-mono',
   display: 'swap',
 })
 
@@ -46,7 +45,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`scroll-smooth ${libreBaskerville.variable} ${lora.variable} ${ibmPlexMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`scroll-smooth ${bodyFont.variable} ${displayFont.variable} ${monoFont.variable}`} suppressHydrationWarning>
       <head>
         {/* Prevent flash of wrong theme */}
         <meta name="format-detection" content="telephone=no, address=no, email=no" />

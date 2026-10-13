@@ -32,7 +32,7 @@ export default function ProjectCard({
               Featured
             </span>
           )}
-          <h3 className="text-xl font-semibold font-serif text-foreground group-hover:text-foreground transition-colors">
+          <h3 className="text-xl font-semibold font-display text-foreground group-hover:text-foreground transition-colors">
             {name}
           </h3>
           <p className="text-base text-primary font-medium mt-0.5">{hook}</p>

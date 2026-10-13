@@ -62,7 +62,7 @@
   body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: var(--font-libre-baskerville), serif;
+    font-family: var(--font-body), Georgia, serif;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 

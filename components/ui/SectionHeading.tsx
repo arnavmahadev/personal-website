@@ -12,7 +12,7 @@ export default function SectionHeading({ label, title, subtitle }: SectionHeadin
           {label}
         </span>
       )}
-      <h2 className="mt-2 text-4xl sm:text-5xl font-bold font-serif tracking-tight text-foreground">
+      <h2 className="mt-2 text-4xl sm:text-5xl font-bold font-display tracking-tight text-foreground">
         {title}
       </h2>
       {subtitle && (

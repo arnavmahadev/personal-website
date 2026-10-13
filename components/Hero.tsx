@@ -70,7 +70,7 @@ export default function Hero() {
 
             <motion.h1
               variants={item}
-              className="text-5xl sm:text-7xl lg:text-8xl font-extrabold font-serif tracking-tight leading-[1.05] mb-4 sm:mb-6"
+              className="text-5xl sm:text-7xl lg:text-8xl font-extrabold font-display tracking-tight leading-[1.05] mb-4 sm:mb-6"
             >
               <span className="text-foreground">Arnav</span>
               <br />
@@ -78,10 +78,10 @@ export default function Hero() {
             </motion.h1>
 
             <motion.div variants={item} className="mb-4 sm:mb-8">
-              <p className="text-2xl text-foreground/80 font-medium font-serif">
+              <p className="text-2xl text-foreground/80 font-medium font-display">
                 EECS @ UC Berkeley
               </p>
-              <p className="text-muted-foreground text-xl mt-1 font-serif">
+              <p className="text-muted-foreground text-xl mt-1 font-display">
                 Software Engineer
               </p>
             </motion.div>
