@@ -47,6 +47,8 @@ type MapMarker = {
   description: string
   coordinates: [number, number]
   type: 'past' | 'upcoming'
+  // Set when the place has a card further down the page that a click can jump to.
+  linked?: boolean
 }
 
 type Tooltip = {
@@ -55,7 +57,7 @@ type Tooltip = {
   marker: MapMarker
 } | null
 
-export default function WorldMap({ markers }: { markers: MapMarker[] }) {
+export default function WorldMap({ markers, onSelect }: { markers: MapMarker[]; onSelect?: (id: string) => void }) {
   const [tooltip, setTooltip] = useState<Tooltip>(null)
   const [zoom, setZoom] = useState(1)
   const [center, setCenter] = useState<[number, number]>([0, 0])
@@ -146,13 +148,14 @@ export default function WorldMap({ markers }: { markers: MapMarker[] }) {
                 })
               }}
               onMouseLeave={() => setTooltip(null)}
+              onClick={m.linked ? () => onSelect?.(m.id) : undefined}
             >
               <circle
                 r={(m.type === 'upcoming' ? 5.5 : 4.5) / zoom}
                 fill={m.type === 'upcoming' ? 'var(--marker-upcoming, var(--secondary))' : 'var(--primary)'}
                 stroke="var(--background)"
                 strokeWidth={1.5 / zoom}
-                className="cursor-pointer"
+                className={m.linked ? 'cursor-pointer' : undefined}
               />
               {m.type === 'upcoming' && (
                 <circle
@@ -180,6 +183,11 @@ export default function WorldMap({ markers }: { markers: MapMarker[] }) {
             <span className="inline-block mt-1 text-[10px] font-mono uppercase tracking-widest text-primary">
               upcoming
             </span>
+          )}
+          {tooltip.marker.linked && (
+            <p className="mt-1 text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
+              click to view
+            </p>
           )}
         </div>
       )}

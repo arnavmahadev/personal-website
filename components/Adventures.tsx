@@ -122,8 +122,12 @@ function Postmark({ trip }: { trip: Adventure }) {
   )
 }
 
-function PastTrip({ past }: { past: Adventure }) {
+// `openSignal` changes each time the trip is picked on the map, which opens its photos.
+function PastTrip({ past, openSignal }: { past: Adventure; openSignal: number }) {
   const [open, setOpen] = useState(false)
+  useEffect(() => {
+    if (openSignal) setOpen(true)
+  }, [openSignal])
   const gridRef = useRef<HTMLDivElement>(null)
   const photos = past.photos ?? []
   const hasPhotos = photos.length > 0
@@ -157,7 +161,7 @@ function PastTrip({ past }: { past: Adventure }) {
   )
 
   return (
-    <div>
+    <div id={`adventure-${past.id}`} className="scroll-mt-24">
       {/* Header card — only clickable / collapsible when there are photos */}
       {hasPhotos ? (
         <button
@@ -204,6 +208,14 @@ export default function Adventures() {
   const [now, setNow] = useState(() => Date.now())
   const markExpired = useCallback(() => setNow(Date.now()), [])
 
+  // Clicking a trip's pin on the map scrolls to its card, and opens its photos if it has any.
+  const [picked, setPicked] = useState<{ id: string; tick: number } | null>(null)
+  const jumpToTrip = useCallback((id: string) => {
+    setPicked((p) => ({ id, tick: (p?.tick ?? 0) + 1 }))
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    document.getElementById(`adventure-${id}`)?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' })
+  }, [])
+
   const { upcoming, past, markers, stats } = useMemo(() => {
     // A single list, partitioned purely by date: future → upcoming (soonest
     // first, with a countdown), past → past (most recent first).
@@ -215,9 +227,9 @@ export default function Adventures() {
       .sort((a, b) => b.date.getTime() - a.date.getTime())
 
     const markers = [
-      ...past.map((t) => ({ id: t.id, label: t.label, description: t.description, coordinates: t.coordinates, type: 'past' as const })),
+      ...past.map((t) => ({ id: t.id, label: t.label, description: t.description, coordinates: t.coordinates, type: 'past' as const, linked: true })),
       ...VISITED.map((t) => ({ id: t.id, label: t.label, description: '', coordinates: t.coordinates, type: 'past' as const })),
-      ...upcoming.map((t) => ({ id: t.id, label: t.label, description: t.description, coordinates: t.coordinates, type: 'upcoming' as const })),
+      ...upcoming.map((t) => ({ id: t.id, label: t.label, description: t.description, coordinates: t.coordinates, type: 'upcoming' as const, linked: true })),
     ]
 
     // Totals for the stats strip: only places already visited count.
@@ -256,7 +268,7 @@ export default function Adventures() {
         ))}
       </div>
 
-      <WorldMap markers={markers} />
+      <WorldMap markers={markers} onSelect={jumpToTrip} />
 
       {/* Upcoming */}
       {upcoming.length > 0 && (
@@ -268,7 +280,8 @@ export default function Adventures() {
             {upcoming.map((trip) => (
               <div
                 key={trip.id}
-                className="rounded-xl border border-border bg-card overflow-hidden relative flex flex-col card-glow"
+                id={`adventure-${trip.id}`}
+                className="scroll-mt-24 rounded-xl border border-border bg-card overflow-hidden relative flex flex-col card-glow"
               >
                 {trip.image && (
                   <div className="relative w-full h-32 overflow-hidden">
@@ -302,7 +315,7 @@ export default function Adventures() {
       </h3>
       <div className="flex flex-col gap-3">
         {past.map((trip) => (
-          <PastTrip key={trip.id} past={trip} />
+          <PastTrip key={trip.id} past={trip} openSignal={picked?.id === trip.id ? picked.tick : 0} />
         ))}
       </div>
     </SectionWrapper>
