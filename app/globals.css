@@ -59,11 +59,28 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Everything is sized in rem, so on wide screens this scales type and spacing together.
+     Below 1280px the navbar has no room to grow. */
+  @media (min-width: 1280px) {
+    html {
+      font-size: 112.5%;
+    }
+  }
+
   body {
     background-color: var(--background);
     color: var(--foreground);
     font-family: var(--font-body), Georgia, serif;
     font-feature-settings: "rlig" 1, "calt" 1;
+    /* Sizes on the site assume a body face whose lowercase is half the font size. Newsreader's
+       is 0.44, so this scales it up to match; a different body font is corrected the same way. */
+    font-size-adjust: 0.5;
+  }
+
+  /* Headings and mono labels are sized by eye already. */
+  .font-display,
+  .font-mono {
+    font-size-adjust: none;
   }
 
   /* Paper grain over the whole page: dark speckle on parchment, light speckle on navy. */

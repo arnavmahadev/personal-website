@@ -47,7 +47,7 @@ export default function Contact() {
         </p>
       </div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 w-full overflow-hidden">
+      <div className="grid sm:grid-cols-2 gap-4 w-full overflow-hidden">
         {links.map((link) => (
           <a
             key={link.label}
