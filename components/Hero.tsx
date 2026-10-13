@@ -63,10 +63,7 @@ export default function Hero() {
             </motion.div>
 
             <motion.div variants={item}>
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full
-                               bg-primary/10 border border-primary/20 text-primary
-                               text-sm font-mono font-medium mb-4 sm:mb-8">
-                <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+              <span className="inline-block text-primary text-sm font-mono font-medium mb-4 sm:mb-8">
                 Open to Opportunities
               </span>
             </motion.div>
