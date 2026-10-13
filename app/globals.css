@@ -152,9 +152,9 @@
     }
   }
 
-  /* Contour lines behind the hero. Plain vector strokes and a gradient overlay,
+  /* Line art behind the hero. Plain vector shapes and a gradient overlay,
      with no masks, so the layer is painted once and then only moved and faded. */
-  .topo-layer {
+  .backdrop-layer {
     position: fixed;
     inset-inline: 0;
     top: 0;
@@ -164,12 +164,12 @@
     will-change: transform, opacity;
   }
 
-  .topo {
+  .backdrop {
     color: var(--primary);
     opacity: 0.16;
   }
 
-  .topo-clearing {
+  .backdrop-clearing {
     background: radial-gradient(
       ellipse 55% 36% at 50% 36%,
       color-mix(in oklch, var(--background) 75%, transparent) 0%,
@@ -177,29 +177,29 @@
     );
   }
 
-  @keyframes topo-drift {
+  @keyframes backdrop-drift {
     to {
       opacity: 0;
       transform: translate3d(0, -30vh, 0);
     }
   }
 
-  @keyframes topo-fade-out {
+  @keyframes backdrop-fade-out {
     to {
       opacity: 0;
     }
   }
 
   @supports (animation-timeline: scroll()) {
-    .topo-layer {
-      animation: topo-drift linear both;
+    .backdrop-layer {
+      animation: backdrop-drift linear both;
       animation-timeline: scroll(root);
       animation-range: 0 85vh;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .topo-layer {
-        animation-name: topo-fade-out;
+      .backdrop-layer {
+        animation-name: backdrop-fade-out;
       }
     }
   }

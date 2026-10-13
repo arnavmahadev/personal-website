@@ -18,7 +18,7 @@ const item = {
 }
 
 export default function Hero() {
-  // The contour map is pinned behind the page and drifts up and fades as you scroll.
+  // The backdrop is pinned behind the page and drifts up and fades as you scroll.
   // Browsers with scroll-driven animations run that entirely in CSS, off the main
   // thread. Elsewhere only the fade is driven from here: moving a pinned layer from
   // script trails the scroll by a frame, which reads as jitter on phones.
@@ -27,19 +27,19 @@ export default function Hero() {
   useEffect(() => {
     setScriptedFade(!CSS.supports('animation-timeline: scroll()'))
   }, [])
-  const topoOpacity = useTransform(scrollY, (v) =>
+  const backdropOpacity = useTransform(scrollY, (v) =>
     typeof window === 'undefined' ? 1 : Math.max(0, 1 - v / (window.innerHeight * 0.85))
   )
 
   return (
     <section className="relative h-screen sm:min-h-screen flex items-start sm:items-center pt-16">
-      {/* Contour-map backdrop, taller than the screen so its bottom edge never shows while it drifts up */}
-      <motion.div aria-hidden className="topo-layer" style={scriptedFade ? { opacity: topoOpacity } : undefined}>
-        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" className="topo absolute inset-0 w-full h-full">
-          <use href="/topo.svg#c" />
+      {/* Circuit-trace backdrop, taller than the screen so its bottom edge never shows while it drifts up */}
+      <motion.div aria-hidden className="backdrop-layer" style={scriptedFade ? { opacity: backdropOpacity } : undefined}>
+        <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" className="backdrop absolute inset-0 w-full h-full">
+          <use href="/circuit.svg#c" />
         </svg>
         {/* Thins the lines out behind the text */}
-        <div className="topo-clearing absolute inset-0" />
+        <div className="backdrop-clearing absolute inset-0" />
       </motion.div>
 
       <div className="relative max-w-[96rem] mx-auto px-4 sm:px-8 w-full py-2 sm:py-16">
