@@ -30,7 +30,7 @@ export const COURSES: Course[] = [
   { code: 'EECS 126',  name: 'Probability and Random Processes',                  semester: 'Spring 2026', cheatsheet: '/cheatsheets/EECS 126 Cheatsheet.pdf' },
 
   // ── Fall 2026 ──────────────────────────────────────────────────────────────
-  { code: 'CS 168',    name: 'Internet Architecture and Protocols',               semester: 'Fall 2026',   cheatsheet: undefined },
+  { code: 'CS 168',    name: 'Internet Architecture and Protocols',               semester: 'Fall 2026',   cheatsheet: '/cheatsheets/CS 168 Cheatsheet.pdf' },
   { code: 'CS 189',    name: 'Introduction to Machine Learning',                  semester: 'Fall 2026',   cheatsheet: undefined },
   { code: 'CS 162',    name: 'Operating Systems and System Programming',          semester: 'Fall 2026',   cheatsheet: undefined },
 ]
