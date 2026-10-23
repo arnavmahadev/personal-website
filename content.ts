@@ -108,6 +108,13 @@ export const PROJECTS = [
 
 export const EXPERIENCE = [
   {
+    role: 'Software Engineering Intern (Incoming)',
+    org: 'Wealthfront',
+    period: 'Jun 2027 - Aug 2027',
+    location: 'Palo Alto, CA',
+    bullets: [] as string[],
+  },
+  {
     role: 'Software Engineering Intern',
     org: 'LG NOVA',
     period: 'Aug 2026 - Present',

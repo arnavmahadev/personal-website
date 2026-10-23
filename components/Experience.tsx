@@ -18,7 +18,7 @@ export default function Experience() {
             <div key={exp.role + exp.org}>
               {/* A card with a link is clickable as a whole (its first link is stretched over it) and lifts on hover; one without stays still. */}
               <div className={`relative rounded-2xl border p-5 bg-card border-border${github || link || nexusLink ? ' card-glow' : ''}`}>
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-2 mb-3">
+                <div className={`flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1 sm:gap-2${exp.bullets.length > 0 ? ' mb-3' : ''}`}>
                   <div>
                     <h3 className="text-lg font-semibold font-display text-foreground">{exp.role}</h3>
                     <p className="text-base font-medium text-primary">{exp.org}</p>
@@ -29,6 +29,7 @@ export default function Experience() {
                   </div>
                 </div>
 
+                {exp.bullets.length > 0 && (
                 <ul className="space-y-2 mb-3">
                   {exp.bullets.map((bullet, j) => (
                     <li key={j} className="flex gap-3 text-base text-muted-foreground leading-relaxed">
@@ -37,6 +38,7 @@ export default function Experience() {
                     </li>
                   ))}
                 </ul>
+                )}
                 {(github || link || nexusLink) ? (
                   <div className="flex items-center gap-3">
                     {(link || nexusLink) && (
