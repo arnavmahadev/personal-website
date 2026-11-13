@@ -162,13 +162,23 @@ export default function Interests() {
           stripe="repeating-linear-gradient(90deg, #1D428A 0 28px, #FFC72C 28px 56px)"
           data={warriors}
           emptyText="No recent games — check back next season."
-        />
+        >
+          <p className="text-base text-foreground/80 leading-relaxed">
+            Growing up in the Bay, I&apos;ve rooted for the Warriors as long as I can remember. I still try to catch
+            as many games as I can, and I&apos;ll always argue that Steph is the greatest shooter ever.
+          </p>
+        </TeamCard>
         <TeamCard
           title="San Francisco 49ers"
           stripe="repeating-linear-gradient(90deg, #AA0000 0 28px, #B3995D 28px 56px)"
           data={niners}
           emptyText="No recent games — check back next season."
-        />
+        >
+          <p className="text-base text-foreground/80 leading-relaxed">
+            Sundays in the fall are for the Niners. I watch every game I can, usually with friends, and yes, I&apos;m
+            still waiting on that sixth ring.
+          </p>
+        </TeamCard>
 
         {/* Gym / cut progress */}
         <CutProgress />
