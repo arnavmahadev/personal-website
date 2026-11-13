@@ -38,7 +38,7 @@ My personal portfolio site.
 │   ├── Experience.tsx     # Work experience
 │   ├── Projects.tsx       # Featured projects
 │   ├── Coursework.tsx     # Relevant coursework
-│   ├── Interests.tsx      # Spotify, Valorant, Barca widgets
+│   ├── Interests.tsx      # Spotify, Valorant, Barca, Warriors, 49ers widgets
 │   ├── Adventures.tsx     # Upcoming and past trips
 │   ├── Contact.tsx        # Contact info
 │   ├── Footer.tsx         # Footer
@@ -48,6 +48,7 @@ My personal portfolio site.
 │   ├── spotify/           # Now-playing endpoint
 │   ├── valorant/          # Rank endpoint (Redis-cached)
 │   ├── barca/             # Latest result endpoint
+│   ├── team/[team]/       # Warriors / 49ers results (ESPN)
 │   └── github/            # Contribution activity endpoint
 │
 └── content.ts             # All editable site content

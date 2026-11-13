@@ -6,6 +6,7 @@ import SectionWrapper from './ui/SectionWrapper'
 import NowPlaying from './ui/NowPlaying'
 import CutProgress from './ui/CutProgress'
 import Sparkline from './ui/Sparkline'
+import TeamCard, { type TeamResult } from './ui/TeamCard'
 
 interface BarcaResult {
   opponent: string
@@ -22,20 +23,33 @@ interface BarcaResult {
   position?: { rank: number; points: number } | null
 }
 
-const RESULT_TONE = {
-  W: 'bg-green-500/15 text-green-500',
-  L: 'bg-red-500/15 text-red-500',
-  D: 'bg-muted text-muted-foreground',
-}
-
 function ordinal(n: number) {
   const suffix = n % 100 >= 11 && n % 100 <= 13 ? 'th' : ['th', 'st', 'nd', 'rd'][n % 10] ?? 'th'
   return `${n}${suffix}`
 }
 
-// Kickoff in the visitor's own timezone, e.g. "Sat, Oct 17".
-function formatKickoff(iso: string) {
-  return new Date(iso).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
+// Reshape the /api/barca payload into the shape TeamCard shares with the other teams.
+function fromBarca(b: BarcaResult | null): TeamResult | null {
+  if (!b) return null
+  return {
+    teamName: 'FC Barcelona',
+    opponent: b.opponent,
+    teamScore: b.barcaScore,
+    oppScore: b.oppScore,
+    home: b.barcaHome,
+    result: b.result,
+    league: b.league,
+    date: b.date,
+    teamLogo: b.barcaLogo,
+    oppLogo: b.oppLogo,
+    form: b.form,
+    next: b.next && { date: b.next.date, opponent: b.next.opponent, oppLogo: b.next.oppLogo, home: b.next.barcaHome },
+    standing: b.position && { label: 'La Liga', value: ordinal(b.position.rank), detail: `${b.position.points} pts` },
+  }
+}
+
+function loadJson<T>(url: string, set: (v: T | null) => void) {
+  fetch(url).then(r => r.json()).then(set).catch(() => set(null))
 }
 
 interface ValorantRank {
@@ -48,12 +62,16 @@ interface ValorantRank {
 
 
 export default function Interests() {
-  const [barca, setBarca] = useState<BarcaResult | null | undefined>(undefined)
+  const [barca, setBarca] = useState<TeamResult | null | undefined>(undefined)
+  const [warriors, setWarriors] = useState<TeamResult | null | undefined>(undefined)
+  const [niners, setNiners] = useState<TeamResult | null | undefined>(undefined)
   const [val, setVal] = useState<ValorantRank | null | undefined>(undefined)
 
   useEffect(() => {
-    fetch('/api/barca').then(r => r.json()).then(setBarca).catch(() => setBarca(null))
-    fetch('/api/valorant').then(r => r.json()).then(setVal).catch(() => setVal(null))
+    loadJson<BarcaResult>('/api/barca', b => setBarca(fromBarca(b)))
+    loadJson<TeamResult>('/api/team/warriors', setWarriors)
+    loadJson<TeamResult>('/api/team/niners', setNiners)
+    loadJson<ValorantRank>('/api/valorant', setVal)
   }, [])
 
   return (
@@ -122,130 +140,35 @@ export default function Interests() {
         </div>
 
         {/* Soccer / Barca */}
-        <div className="rounded-xl border overflow-hidden relative bg-card border-border">
-          <div
-            aria-hidden
-            className="absolute inset-x-0 top-0 h-[3px]"
-            style={{ background: 'repeating-linear-gradient(90deg, #004D98 0 28px, #A50044 28px 56px)' }}
-          />
-          <div className="px-4 py-4 sm:py-4 h-full flex flex-col space-y-3">
-            <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest">Soccer &amp; FC Barcelona</p>
-            <p className="text-base text-foreground/80 leading-relaxed">
-              I&apos;ve loved soccer since I was 4 and I played competitively until college.
-              I was captain of both my club team and high school varsity team, made the all league first team all 4 years of high school, and finished with <span className="font-semibold text-foreground">45 goals and 20 assists</span> over 4 years. You can still find me playing pickup or intramural games :)
-            </p>
-            <p className="text-base text-foreground/80 leading-relaxed">
-              I&apos;ve been a Barça fan since age 4 because of my older brother. I catch most of their games, and honestly my mood heavily
-              depends on the result. (jk… mostly.)
-            </p>
+        <TeamCard
+          title="Soccer & FC Barcelona"
+          stripe="repeating-linear-gradient(90deg, #004D98 0 28px, #A50044 28px 56px)"
+          data={barca}
+          emptyText="No recent results — check back next season."
+        >
+          <p className="text-base text-foreground/80 leading-relaxed">
+            I&apos;ve loved soccer since I was 4 and I played competitively until college.
+            I was captain of both my club team and high school varsity team, made the all league first team all 4 years of high school, and finished with <span className="font-semibold text-foreground">45 goals and 20 assists</span> over 4 years. You can still find me playing pickup or intramural games :)
+          </p>
+          <p className="text-base text-foreground/80 leading-relaxed">
+            I&apos;ve been a Barça fan since age 4 because of my older brother. I catch most of their games, and honestly my mood heavily
+            depends on the result. (jk… mostly.)
+          </p>
+        </TeamCard>
 
-            <div className="pb-3">
-              <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-3">Latest result</p>
-              {barca === undefined ? (
-                <div className="flex flex-col items-start gap-2">
-                  <div className="flex items-center gap-2">
-                    <div className="h-5 w-7 rounded animate-pulse bg-muted" />
-                    <div className="h-4 w-28 rounded animate-pulse bg-muted" />
-                  </div>
-                  <div className="flex items-center justify-between w-full gap-3">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <div className="w-[22px] h-[22px] rounded animate-pulse bg-muted" />
-                      <div className="h-5 w-32 rounded animate-pulse bg-muted" />
-                    </div>
-                    <div className="h-7 w-5 rounded animate-pulse bg-muted" />
-                  </div>
-                  <div className="flex items-center justify-between w-full gap-3">
-                    <div className="flex items-center gap-2 min-w-0">
-                      <div className="w-[22px] h-[22px] rounded animate-pulse bg-muted" />
-                      <div className="h-5 w-32 rounded animate-pulse bg-muted" />
-                    </div>
-                    <div className="h-7 w-5 rounded animate-pulse bg-muted" />
-                  </div>
-                </div>
-              ) : barca === null ? (
-                <p className="text-sm text-muted-foreground">No recent results — check back next season.</p>
-              ) : (
-                <div className="flex flex-col items-start gap-2">
-                  <div className="flex items-center gap-2">
-                    <span className={`text-xs font-mono font-bold px-1.5 py-0.5 rounded ${RESULT_TONE[barca.result]}`}>{barca.result}</span>
-                    <p className="text-sm text-muted-foreground">{barca.league}</p>
-                  </div>
-                  {/* Home team */}
-                  <div className="flex items-center justify-between w-full gap-3">
-                    <div className="flex items-center gap-2 min-w-0">
-                      {(barca.barcaHome ? barca.barcaLogo : barca.oppLogo) && (
-                        <Image src={(barca.barcaHome ? barca.barcaLogo : barca.oppLogo)!} alt="" width={22} height={22} className="object-contain shrink-0" />
-                      )}
-                      <p className="text-base font-medium text-foreground/90 truncate">
-                        {barca.barcaHome ? 'FC Barcelona' : barca.opponent}
-                      </p>
-                    </div>
-                    <p className="text-xl font-bold text-foreground shrink-0">
-                      {barca.barcaHome ? barca.barcaScore : barca.oppScore}
-                    </p>
-                  </div>
-                  {/* Away team */}
-                  <div className="flex items-center justify-between w-full gap-3">
-                    <div className="flex items-center gap-2 min-w-0">
-                      {(barca.barcaHome ? barca.oppLogo : barca.barcaLogo) && (
-                        <Image src={(barca.barcaHome ? barca.oppLogo : barca.barcaLogo)!} alt="" width={22} height={22} className="object-contain shrink-0" />
-                      )}
-                      <p className="text-base font-medium text-foreground/90 truncate">
-                        {barca.barcaHome ? barca.opponent : 'FC Barcelona'}
-                      </p>
-                    </div>
-                    <p className="text-xl font-bold text-foreground shrink-0">
-                      {barca.barcaHome ? barca.oppScore : barca.barcaScore}
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Form, next fixture and league position */}
-            {barca && (barca.form?.length || barca.next || barca.position) && (
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-3 border-t border-border !mt-auto">
-                {barca.form && barca.form.length > 0 && (
-                  <div>
-                    <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Last {barca.form.length}</p>
-                    <div className="flex gap-1">
-                      {barca.form.map((m, i) => (
-                        <span
-                          key={i}
-                          title={`${m.score} vs ${m.opponent}`}
-                          className={`w-6 h-6 rounded flex items-center justify-center text-xs font-mono font-bold ${RESULT_TONE[m.result]}`}
-                        >
-                          {m.result}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-                {barca.next && (
-                  <div className="min-w-0">
-                    <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">Next up</p>
-                    <div className="flex items-center gap-2 min-w-0">
-                      {barca.next.oppLogo && (
-                        <Image src={barca.next.oppLogo} alt="" width={22} height={22} className="object-contain shrink-0" />
-                      )}
-                      <p className="text-base font-medium text-foreground/90 truncate">
-                        {barca.next.barcaHome ? 'vs' : 'at'} {barca.next.opponent}
-                      </p>
-                    </div>
-                    <p className="text-sm text-muted-foreground mt-0.5">{formatKickoff(barca.next.date)}</p>
-                  </div>
-                )}
-                {barca.position && (
-                  <div>
-                    <p className="text-sm font-mono text-muted-foreground uppercase tracking-widest mb-2">La Liga</p>
-                    <p className="text-base font-medium text-foreground/90">{ordinal(barca.position.rank)}</p>
-                    <p className="text-sm text-muted-foreground mt-0.5">{barca.position.points} pts</p>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
+        {/* Bay Area teams */}
+        <TeamCard
+          title="Golden State Warriors"
+          stripe="repeating-linear-gradient(90deg, #1D428A 0 28px, #FFC72C 28px 56px)"
+          data={warriors}
+          emptyText="No recent games — check back next season."
+        />
+        <TeamCard
+          title="San Francisco 49ers"
+          stripe="repeating-linear-gradient(90deg, #AA0000 0 28px, #B3995D 28px 56px)"
+          data={niners}
+          emptyText="No recent games — check back next season."
+        />
 
         {/* Gym / cut progress */}
         <CutProgress />
