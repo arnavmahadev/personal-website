@@ -206,16 +206,6 @@ export const ADVENTURES: Adventure[] = [
     imagePosition: 'center 32%',
   },
   {
-    id: 'antarctica',
-    label: 'Antarctica',
-    date: new Date('2027-12-01'),
-    description: 'Antarctic Peninsula',
-    coordinates: [-62.5, -64.8],
-    countries: ['Antarctica'],
-    image: '/adventures/antarctica/antarctica.jpg',
-    imagePosition: 'center 38%',
-  },
-  {
     id: 'kili',
     label: 'Summit Mt. Kilimanjaro',
     date: new Date('2026-08-02T05:00:00Z'),
@@ -419,5 +409,4 @@ export const CONTINENTS: Record<string, string> = {
   Tanzania: 'Africa',
   Chile: 'South America',
   Argentina: 'South America',
-  Antarctica: 'Antarctica',
 }
