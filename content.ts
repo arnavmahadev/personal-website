@@ -120,8 +120,9 @@ export const EXPERIENCE = [
     period: 'Aug 2026 - Present',
     location: 'Santa Clara, CA',
     bullets: [
-      'Root-caused silent data loss in a platform-wide Flask/PostgreSQL endpoint capping all paginated downloads at 500 rows and shipped a keyset pagination redesign guaranteeing complete, deterministic results.',
-      'Deployed the fix across Python and React/TypeScript repos, expanding semantic search coverage of PitchBook financial fields by 233%, backed by a 38-test suite verifying gap-free pagination across 1,200+ rows.',
+      'Root-caused silent data loss in the Flask/PostgreSQL endpoint behind every platform table, which capped paginated downloads at 500 rows, and redesigned keyset pagination with primary-key tiebreakers and cursor-safe projection to guarantee complete, deterministic results.',
+      'Shipped the fix across Python and React/TypeScript repos, expanding semantic search from 3 to 10 PitchBook financial fields, backed by a 38-test suite run against the endpoint\'s real generated SQL to verify gap-free pagination across 1,200+ rows.',
+      'Building the EIR Pipeline feature end to end: a new table and Alembic migration, CRUD endpoints with role-based permissions enforced in the backend (Admins across all verticals, Vertical Leads scoped to their own), and a Projects board row with edit controls limited to authorized users.',
     ],
   },
   {
