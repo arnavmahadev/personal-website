@@ -26,11 +26,14 @@ export default function About() {
             Currently, I&apos;m a{' '}
             <a href="#experience" className={linkClass}>Software Engineering Intern at LG NOVA</a>, where I work across a
             Flask/PostgreSQL backend and a React/TypeScript frontend. In summer 2027, I&apos;ll be joining
-            Wealthfront as a Software Engineering Intern. I previously interned at iPick.ai,
-            where I built an LLM-based portfolio optimizer, a reinforcement learning pipeline of trading
-            agents, and a graph-based platform that visualizes relationships between thousands of
-            companies; at Maadhev LLC, where I built a custom ACH payment system and Shopify
-            integrations; and at Claythis, where I worked on their AI-driven 3D model generation technology.
+            Wealthfront as a Software Engineering Intern.
+          </p>
+          <p>
+            I previously interned at iPick.ai, where I built an LLM-based portfolio optimizer, a
+            reinforcement learning pipeline of trading agents, and a graph-based platform that visualizes
+            relationships between thousands of companies. I also built a custom ACH payment system and
+            Shopify integrations at Maadhev LLC, and worked on Claythis&apos;s AI-driven 3D model
+            generation technology.
           </p>
           <p>
             Away from the keyboard, I&apos;m usually doing something active or yapping with my friends
@@ -40,7 +43,7 @@ export default function About() {
             too publicly in the{' '}
             <a href="#interests" className={linkClass}>hobbies section</a>. When I&apos;m not doing any
             of that, I&apos;m probably playing video games with the same friends, or planning the next{' '}
-            <a href="#adventures" className={linkClass}>trip</a>; the most recent big one was summiting
+            <a href="#adventures" className={linkClass}>trip</a>. The most recent big one was summiting
             Kilimanjaro.
           </p>
         </div>
