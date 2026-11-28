@@ -164,8 +164,8 @@ export default function Interests() {
           emptyText="No recent games — check back next season."
         >
           <p className="text-base text-foreground/80 leading-relaxed">
-            Growing up in the Bay, I&apos;ve rooted for the Warriors as long as I can remember. I still try to catch
-            as many games as I can, and I&apos;ll always argue that Steph is the greatest shooter ever.
+            I grew up in the Bay, so I&apos;ve been a Warriors fan for as long as I can remember. I catch as
+            many games as I can, and I recently went to the Heat game, where we got the dub.
           </p>
         </TeamCard>
         <TeamCard
@@ -175,8 +175,8 @@ export default function Interests() {
           emptyText="No recent games — check back next season."
         >
           <p className="text-base text-foreground/80 leading-relaxed">
-            Sundays in the fall are for the Niners. I watch every game I can, usually with friends, and yes, I&apos;m
-            still waiting on that sixth ring.
+            Same story with the Niners. I try to watch every game, usually with my friends, but I&apos;ve
+            never actually been to one. Still waiting on that sixth ring too.
           </p>
         </TeamCard>
 
