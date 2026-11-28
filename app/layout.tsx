@@ -29,11 +29,11 @@ const monoFont = IBM_Plex_Mono({
 export const metadata: Metadata = {
   title: 'Arnav Mahadev',
   description:
-    'EECS student at UC Berkeley. I build full-stack tools and data-driven products that make complex systems more usable.',
+    'EECS student at UC Berkeley and incoming Software Engineering Intern at Wealthfront. I build full-stack tools and data-driven products that make complex systems more usable.',
   openGraph: {
     title: 'Arnav Mahadev',
     description:
-      'EECS student at UC Berkeley. Full-stack developer with experience in backend systems and data pipelines.',
+      'EECS student at UC Berkeley and incoming Software Engineering Intern at Wealthfront. Full-stack developer with experience in backend systems and data pipelines.',
     type: 'website',
     images: [{ url: 'https://arnavmaha.dev/avatar.jpg' }],
   },

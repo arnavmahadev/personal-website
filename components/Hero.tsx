@@ -76,7 +76,7 @@ export default function Hero() {
                 EECS @ UC Berkeley
               </p>
               <p className="text-muted-foreground text-xl mt-1 font-display">
-                Software Engineer
+                Incoming SWE Intern @ Wealthfront
               </p>
             </motion.div>
 

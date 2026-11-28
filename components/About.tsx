@@ -25,7 +25,8 @@ export default function About() {
           <p>
             Currently, I&apos;m a{' '}
             <a href="#experience" className={linkClass}>Software Engineering Intern at LG NOVA</a>, where I work across a
-            Flask/PostgreSQL backend and a React/TypeScript frontend. I previously interned at iPick.ai,
+            Flask/PostgreSQL backend and a React/TypeScript frontend. In summer 2027, I&apos;ll be joining
+            Wealthfront as a Software Engineering Intern. I previously interned at iPick.ai,
             where I built an LLM-based portfolio optimizer, a reinforcement learning pipeline of trading
             agents, and a graph-based platform that visualizes relationships between thousands of
             companies; at Maadhev LLC, where I built a custom ACH payment system and Shopify
